@@ -3,6 +3,7 @@ package com.example.appy.locationidentifier;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -109,6 +110,14 @@ public class MapsActivity extends FragmentActivity implements
                 Log.i(TAG, "Address: " + result);
             }
         }
+
+    }
+
+    public void postAd(View arg0) {
+        final Context context = this;
+
+        Intent intent = new Intent(context, PostMyAdForm.class);
+        startActivity(intent);
 
     }
 
