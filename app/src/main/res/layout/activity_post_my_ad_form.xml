@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_post_my_ad_form"
     android:layout_width="match_parent"
@@ -108,6 +109,18 @@
         android:layout_alignStart="@+id/post_ad_desc"
         android:layout_marginTop="23dp"
         android:id="@+id/post_ad_phone" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/common_google_signin_btn_icon_dark_focused"
+        android:layout_below="@+id/post_ad_phone"
+        android:layout_alignLeft="@+id/post_ad_phone"
+        android:layout_alignStart="@+id/post_ad_phone"
+        android:layout_marginLeft="61dp"
+        android:layout_marginStart="61dp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/imageView" />
 
 
 </RelativeLayout>
