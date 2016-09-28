@@ -44,5 +44,15 @@
         android:text="Post Ad"
         android:onClick="postAd"
         />
+
+    <Button
+        android:text="Click Ad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/clickAd"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="171dp" />
 </RelativeLayout>
 
