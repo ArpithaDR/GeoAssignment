@@ -54,5 +54,17 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="171dp" />
+
+    <Button
+        android:text="View List"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ViewList"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="1dp"
+        android:onClick="listOfHouses"/>
+
 </RelativeLayout>
 

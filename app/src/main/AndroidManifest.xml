@@ -41,8 +41,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PostMyAdForm"></activity>
-        <activity android:name=".ClickedAdActivity"></activity>
+        <activity android:name=".PostMyAdForm" />
+        <activity android:name=".ClickedAdActivity" />
+        <activity android:name=".ListOfHouses" />
+        <activity android:name=".HouseCard"></activity>
     </application>
 
 </manifest>
