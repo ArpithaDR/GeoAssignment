@@ -1,7 +1,6 @@
 package com.example.appy.locationidentifier;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -9,11 +8,10 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -22,16 +20,9 @@ import android.widget.EditText;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStates;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -43,6 +34,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+
+//This is the main screen page
 
 public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -62,11 +55,7 @@ public class MapsActivity extends FragmentActivity implements
         EditText editText = (EditText) findViewById(R.id.searchView1);
         String address = editText.getText().toString();
         Log.i(TAG,"Text Values: " + address);
-        //String g = searchview.getText().toString();
 
-        /*AddressToLatLong locationAddress = new AddressToLatLong();
-        locationAddress.getAddressFromLocation(address,
-                getApplicationContext()); */
         search(address,getApplicationContext());
     }
 
@@ -88,7 +77,7 @@ public class MapsActivity extends FragmentActivity implements
 
                 markerOptions.position(latLng);
                 markerOptions.title(locationAddress);
-
+                mMap.clear();
                 mMap.addMarker(markerOptions);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
@@ -122,6 +111,13 @@ public class MapsActivity extends FragmentActivity implements
 
     }
 
+    public void listOfHouses(View arg0) {
+        final Context context = this;
+
+        Intent intent = new Intent(context, ListOfHouses.class);
+        startActivity(intent);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,46 +148,6 @@ public class MapsActivity extends FragmentActivity implements
                 .setInterval(10 * 1000)        // 10 seconds, in milliseconds
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
 
-        /* The below code is required to check location access setting */
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                .addLocationRequest(mLocationRequest);
-        PendingResult<LocationSettingsResult> result =
-                LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient,
-                        builder.build());
-        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-            @Override
-            public void onResult(LocationSettingsResult result) {
-                final Status status = result.getStatus();
-                //final LocationSettingsStates = result.getLocationSettingsStates();
-                switch (status.getStatusCode()) {
-                    case LocationSettingsStatusCodes.SUCCESS:
-                        // All location settings are satisfied. The client can
-                        // initialize location requests here.
-                        Log.i(TAG, "LocationSettingsStatusCodes.SUCCESS.");
-                        break;
-                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                        // Location settings are not satisfied, but this can be fixed
-                        // by showing the user a dialog.
-                        /*try {
-                            // Show the dialog by calling startResolutionForResult(),
-                            // and check the result in onActivityResult().
-                            /*status.startResolutionForResult(
-                                    OuterClass.this,
-                                    REQUEST_CHECK_SETTINGS);
-                        } catch (IntentSender.SendIntentException e) {
-                            // Ignore the error.
-                        }*/
-                        Log.i(TAG, "LocationSettingsStatusCodes.RESOLUTION_REQUIRED.");
-                        break;
-                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                        // Location settings are not satisfied. However, we have no way
-                        // to fix the settings so we won't show the dialog.
-                        Log.i(TAG, "LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE.");
-                        break;
-                }
-            }
-        } );
-
     }
 
 
@@ -220,7 +176,6 @@ public class MapsActivity extends FragmentActivity implements
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
-            //LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
             Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
             if (location == null) {
@@ -232,9 +187,7 @@ public class MapsActivity extends FragmentActivity implements
         }
         else {
             Log.d(TAG, "Location services permissions not granted");
-            /*ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_LOCATION); */
+            //TODO Show the pop up to provide location access request
 
         }
     }
@@ -278,7 +231,6 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        //setUpMapIfNeeded();
         mGoogleApiClient.connect();
     }
 
