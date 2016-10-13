@@ -66,5 +66,30 @@
         android:layout_marginBottom="1dp"
         android:onClick="listOfHouses"/>
 
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/clickAd"
+        android:layout_alignRight="@+id/searchView1"
+        android:layout_alignEnd="@+id/searchView1"
+        android:layout_marginRight="70dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="75dp"
+        android:id="@+id/getTest" />
+
+    <Button
+        android:text="Request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ViewList"
+        android:layout_alignLeft="@+id/searchView1"
+        android:layout_alignStart="@+id/searchView1"
+        android:layout_marginLeft="43dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginBottom="55dp"
+        android:id="@+id/requestBtn"
+        android:onClick="requestTest" />
+
 </RelativeLayout>
 

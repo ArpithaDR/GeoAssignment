@@ -1,6 +1,7 @@
 package com.example.appy.locationidentifier;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -8,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -30,7 +33,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,15 +58,22 @@ public class MapsActivity extends FragmentActivity implements
     public static final String TAG = MapsActivity.class.getSimpleName();
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private LocationRequest mLocationRequest;
+    private ProgressDialog progress;
 
     //Called when user clicks search button
     public void sendLocation(View view) {
-
         EditText editText = (EditText) findViewById(R.id.searchView1);
         String address = editText.getText().toString();
         Log.i(TAG,"Text Values: " + address);
 
+        //new GetRequestDemo(this).execute();
+
         search(address,getApplicationContext());
+    }
+
+    // Called when the request button gets called
+    public void requestTest(View view) {
+        new GetRequestDemo(this).execute();
     }
 
     protected void search(String locationAddress, final Context context) {
@@ -259,5 +276,81 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onLocationChanged(Location location) {
         handleNewLocation(location);
+    }
+
+    private class GetRequestDemo extends AsyncTask<String, Void, Void> {
+        private final Context context;
+
+        public GetRequestDemo(Context c) {
+            this.context = c;
+        }
+
+        protected void onPreExecute() {
+            progress = new ProgressDialog(this.context);
+            progress.setMessage("Loading");
+            progress.show();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+
+                final TextView outputView = (TextView) findViewById(R.id.getTest);
+                URL url = new URL("http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/login?username=isha&password=123");
+
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                //String urlParameters = "fizz=buzz";
+                connection.setRequestMethod("GET");
+                //connection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
+                //connection.setRequestProperty("ACCEPT-LANGUAGE", "en-US,en;0.5");
+
+                int responseCode = connection.getResponseCode();
+
+                System.out.println("\nSending 'POST' request to URL : " + url);
+//                System.out.println("Post parameters : " + urlParameters);
+                System.out.println("Response Code : " + responseCode);
+
+                final StringBuilder output = new StringBuilder("Request URL " + url);
+                //output.append(System.getProperty("line.separator") + "Request Parameters " + urlParameters);
+//                output.append(System.getProperty("line.separator") + "Response Code " + responseCode);
+//                output.append(System.getProperty("line.separator") + "Type " + "GET");
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String line = "";
+                StringBuilder responseOutput = new StringBuilder();
+                System.out.println("output===============" + br);
+                while ((line = br.readLine()) != null) {
+                    responseOutput.append(line);
+                }
+
+                String testtest = responseOutput.toString();
+                System.out.print(" testtest - " + testtest);
+                br.close();
+
+                output.append(System.getProperty("line.separator") + "Response " + System.getProperty("line.separator") + System.getProperty("line.separator") + responseOutput.toString());
+
+                MapsActivity.this.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        outputView.setText(output);
+                        progress.dismiss();
+
+                    }
+                });
+
+
+            } catch (MalformedURLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+//        protected void onPostExecute() {
+//            progress.dismiss();
+//        }
     }
 }
