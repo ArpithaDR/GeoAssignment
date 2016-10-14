@@ -10,6 +10,7 @@
     <string name="post_ad_end_date">End Date</string>
     <string name="post_ad_desc">Description</string>
     <string name="post_ad_phone">Phone Number</string>
+    <string name="post_ad_submit">Submit</string>
     <string name="post_ad_user_email">Email Id</string>
 
     <string name="drawer_open">Open navigation drawer</string>
