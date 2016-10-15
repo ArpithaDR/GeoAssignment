@@ -110,17 +110,15 @@
         android:layout_marginTop="23dp"
         android:id="@+id/post_ad_phone" />
 
-    <ImageView
+    <Button
+        android:text="@string/post_ad_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark_focused"
+        android:id="@+id/post_ad_submit"
+        android:onClick="submitAddress"
         android:layout_below="@+id/post_ad_phone"
-        android:layout_alignLeft="@+id/post_ad_phone"
-        android:layout_alignStart="@+id/post_ad_phone"
-        android:layout_marginLeft="61dp"
-        android:layout_marginStart="61dp"
-        android:layout_marginTop="18dp"
-        android:id="@+id/imageView" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp" />
 
 
 </RelativeLayout>
