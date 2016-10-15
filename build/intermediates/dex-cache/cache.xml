@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-24.2.1_50bd64af4f5e36006b76065c316e68f81527af2a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/9.0.2/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="94d9cedd04b124aed044ac71c451a292856d854c">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-9.0.2_93a247b94cc4bdf65c04554517a704b40eb84312/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c5e6490573cd2cc8018417f60ddd251138b6ed61">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-24.2.1_40a4dfc96f6cf13810ac783b03e7e5df0f58ee1b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_07126b13b3a49109e71050eab2636b4d129673db/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-24.2.1_b860b30ad735741568ec71154e591de7cf6b0a1a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-24.2.1_f5d98306bf6cb46b143785947edaf20982fc27f0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b1de41e0da7ef97b39c7b3e7a7febd6bdceb1100">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_71638699b730218fd919681f12317e0c2adf92e7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.0.2/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9919563cffd8e3732e944d3c437d4b9575a08448">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-common-9.0.2_d1f62559183633a7a6ddca83bbae0ffd71b34238/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-24.2.1_e0979c9fffd5bf4b54a8d6bb13dd6489e38ea959/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-24.2.1_044a90e324806f710fa9c5090dd761eea09664b8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-24.2.1_2609a69cd9f4394ae1396fb7ad90152c502120f9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.7.0/9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4/glide-3.7.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/glide-3.7.0_c79ff26bfae5d31141ea197b13223b896b1fe0d7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-24.2.1_437602c6cba0ff92ecc9af507423192df8eba612/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-24.2.1_a0b239267478a8b4237158c6ba6d1ee25c965746/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9f5ce2693df26f0c10b9f5e27394220520520a40">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_88144d9df481680131ae14645da02e9598924f99/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.0.2/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="aec1bc54964a85d851c2c1b1cb7f90f7dbd755ab">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tasks-9.0.2_496503dd14624b608b3808a7efdda48de9b84562/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_9e18ae3d4a9646621ace14db11e4a36217825e6a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-24.2.1_769597639d73bcd733f6318117ff4623e81d92a9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/9.0.2/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="20e1a0f0de6276a5f36062b655f8b20f8cc00cc4">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-maps-9.0.2_c2ead778f67e5d4fc6cb1f12dbd370dce76dca1c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/9.0.2/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="92a1d5f71b0fc8938f1d3f2e6ef984b52b894b4d">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-location-9.0.2_4d5fbd12d9a21e03b7dfe32d7a6979d2750a6151/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.0.2/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="4022261eeea0d92eb2997a68d2c1f084a16abad9">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-9.0.2_f96568b4410fe483e3252e7d4cc60a122329066c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_21b70efe80e8ea2c25710de941520249b54ab3a2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.1/support-annotations-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.2.1_a124c5e29b095a7a203a005753f412b56f655b27/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_3593fbad70c41f101919e90872f54a0a10fc23ab/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.2.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-24.2.1_501354e1e102599393325f663d9b4998db73fa1f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="/home/shivalik/Documents/GitHub Projects/GeoSpatialProj/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_79231d4f82f888b54c3ee7d2edba109e30b0f0cd/classes.dex" />
+    </item>
+
+</items>
