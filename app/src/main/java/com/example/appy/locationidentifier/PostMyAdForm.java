@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appy.utility.HttpConnection;
+import com.example.appy.utility.HttpConnectionSingleton;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -37,19 +40,25 @@ public class PostMyAdForm extends AppCompatActivity {
 
     public void submitAddress(View arg0) {
         EditText subject_et = (EditText) findViewById(R.id.post_ad_subject);
+        subject_et.setText("my Subject");
         String subject = subject_et.getText().toString();
 
         EditText address_et = (EditText) findViewById(R.id.post_ad_address);
+        address_et.setText("my address");
         String address = address_et.getText().toString();
 
         EditText price_et = (EditText) findViewById(R.id.post_ad_price);
+        price_et.setText("450");
         String price = price_et.getText().toString();
 
         EditText vacancy_et = (EditText) findViewById(R.id.post_ad_spots);
+        vacancy_et.setText("2");
         String vacancy = vacancy_et.getText().toString();
 
         EditText startdate_et = (EditText) findViewById(R.id.post_ad_start_date);
+        startdate_et.setText("2017-1-3");
         EditText enddate_et = (EditText) findViewById(R.id.post_ad_end_date);
+        enddate_et.setText("2017-5-3");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date startdate = new Date(), enddate = new Date();
         try {
@@ -62,12 +71,12 @@ public class PostMyAdForm extends AppCompatActivity {
         }
 
         EditText desc_et = (EditText) findViewById(R.id.post_ad_desc);
+        desc_et.setText("my desc");
         String description = desc_et.getText().toString();
 
         EditText phone_et = (EditText) findViewById(R.id.post_ad_phone);
+        phone_et.setText("87681");
         String phone = phone_et.getText().toString();
-
-
 
         Log.i(TAG,"Subject: " + subject +
                 ", Address: " + address +
@@ -82,68 +91,8 @@ public class PostMyAdForm extends AppCompatActivity {
                 "&address=" + address + "&price=" + price +
                 "&vacancies=" + vacancy + "&start_date="+ startdate + "&end_date=" + enddate +
                 "&description=" + description + " &phone_number=" + phone;
-        new GetRequestDemo(this).execute(s);
-    }
 
-    private class GetRequestDemo extends AsyncTask<String, Void, Void> {
-        private final Context context;
-
-        public GetRequestDemo(Context c) {
-            this.context = c;
-        }
-
-        protected void onPreExecute() {
-            progress = new ProgressDialog(this.context);
-            progress.setMessage("Loading");
-            progress.show();
-        }
-
-        @Override
-        protected Void doInBackground(String... params) {
-            try {
-                // doesn't accept # in url-params
-                System.out.println("url:" + params[0]);
-//                String encodedUrl = URLEncoder.encode(params[0], "UTF-8");
-                URL url = new URL(params[0]);
-
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-
-                int responseCode = connection.getResponseCode();
-
-                System.out.println("\nSending 'GET' request to URL : " + url);
-                System.out.println("Response Code : " + responseCode);
-
-                final StringBuilder output = new StringBuilder("Response: ");
-                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String line = "";
-                StringBuilder responseOutput = new StringBuilder();
-                while ((line = br.readLine()) != null) {
-                    responseOutput.append(line);
-                }
-                br.close();
-
-                System.out.println(responseOutput.toString());
-                output.append("Response msg: " + responseOutput.toString());
-
-                PostMyAdForm.this.runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        Toast.makeText(getBaseContext(), output , Toast.LENGTH_SHORT ).show();
-                        progress.dismiss();
-                    }
-                });
-
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            return null;
-        }
-
+        HttpConnection httpConnection = HttpConnectionSingleton.getInstance(this);
+        httpConnection.execute(s);
     }
 }
