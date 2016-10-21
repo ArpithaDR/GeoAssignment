@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appy.utility.HttpConnection;
-import com.example.appy.utility.HttpConnectionSingleton;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -92,7 +91,7 @@ public class PostMyAdForm extends AppCompatActivity {
                 "&vacancies=" + vacancy + "&start_date="+ startdate + "&end_date=" + enddate +
                 "&description=" + description + " &phone_number=" + phone;
 
-        HttpConnection httpConnection = HttpConnectionSingleton.getInstance(this);
+        HttpConnection httpConnection = new HttpConnection(this);
         httpConnection.execute(s);
     }
 }
