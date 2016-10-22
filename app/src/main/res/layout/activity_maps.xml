@@ -1,5 +1,6 @@
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
@@ -67,37 +68,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ViewList"
-        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
+        android:onClick="listOfHouses"
+        android:layout_above="@+id/clickAd"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:layout_below="@+id/ViewList"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="1dp"
-        android:onClick="listOfHouses"/>
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="67dp"
+        android:id="@+id/fab"/>
 
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/clickAd"
-        android:layout_alignRight="@+id/searchView1"
-        android:layout_alignEnd="@+id/searchView1"
-        android:layout_marginRight="70dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="75dp"
-        android:id="@+id/getTest" />
-
-    <Button
-        android:text="Request"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ViewList"
-        android:layout_alignLeft="@+id/searchView1"
-        android:layout_alignStart="@+id/searchView1"
-        android:layout_marginLeft="43dp"
-        android:layout_marginStart="43dp"
-        android:layout_marginBottom="55dp"
-        android:id="@+id/requestBtn"
-        android:onClick="requestTest" />
 
 
 </RelativeLayout>
@@ -107,7 +98,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="#ffeeeeee"/>
-
 
 </android.support.v4.widget.DrawerLayout>
 
