@@ -1,35 +1,40 @@
 package com.example.appy.locationidentifier;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.appy.utility.HttpConnection;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -39,17 +44,15 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -68,6 +71,7 @@ public class MapsActivity extends AppCompatActivity implements
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private LocationRequest mLocationRequest;
     private ProgressDialog progress;
+    public Dialog dialog;
 
     //For hamburger
     private ListView mDrawerList;
@@ -82,14 +86,7 @@ public class MapsActivity extends AppCompatActivity implements
         String address = editText.getText().toString();
         Log.i(TAG,"Text Values: " + address);
 
-        //new GetRequestDemo(this).execute();
-
-        search(address,getApplicationContext());
-    }
-
-    // Called when the request button gets called
-    public void requestTest(View view) {
-        new GetRequestDemo(this).execute();
+        search(address, getApplicationContext());
     }
 
     protected void search(String locationAddress, final Context context) {
@@ -106,14 +103,26 @@ public class MapsActivity extends AppCompatActivity implements
                 sb.append(address.getLongitude()).append("\n");
                 result = sb.toString();
                 LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                MarkerOptions markerOptions = new MarkerOptions();
 
+                MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latLng);
                 markerOptions.title(locationAddress);
+                markerOptions.snippet("You are here");
+                markerOptions = markerOptions.draggable(true); // working - long press will drag it. But custom dragging?
+
+//                fetchHousesFromDB();
+                JSONObject obj = new JSONObject();
+                ArrayList<MarkerOptions> resultArray = extractHousesFromResult(obj);
+
+
                 mMap.clear();
                 mMap.addMarker(markerOptions);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+                for(MarkerOptions mo : resultArray) {
+                    mMap.addMarker(mo);
+                }
 
             }
         } catch (IOException e) {
@@ -134,6 +143,43 @@ public class MapsActivity extends AppCompatActivity implements
             }
         }
 
+    }
+
+    ArrayList<MarkerOptions> extractHousesFromResult(JSONObject obj) {
+        ArrayList<MarkerOptions> results = new ArrayList<>();
+
+        String jsonData = "jsondata";
+
+        try {
+            obj.put("lat", 34.029367);
+            obj.put("lng", -118.287419);
+            obj.put("address", "Sindhu's address");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Read json object
+        JSONObject jsonObject = (JSONObject) obj;
+
+        try {
+            double lat = (double) jsonObject.get("lat");
+            double lng = (double) jsonObject.get("lng");
+            String resultAddress = (String) jsonObject.get("address");
+
+            LatLng latlng = new LatLng(lat, lng);
+            MarkerOptions marker = new MarkerOptions();
+            marker.position(latlng);
+            marker.title(resultAddress);
+            marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+            results.add(marker);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    public void showOptions(View view) {
+        Log.i(TAG,"Options Clicked " );
     }
 
     public void postAd(View arg0) {
@@ -191,6 +237,45 @@ public class MapsActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // creating custom Floating Action button
+                CustomDialog();
+            }
+        });
+
+    }
+
+    public void CustomDialog() {
+        dialog = new Dialog(MapsActivity.this);
+        // it remove the dialog title
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // set the laytout in the dialog
+        dialog.setContentView(R.layout.dialogbox);
+        // set the background partial transparent
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams param = window.getAttributes();
+        // set the layout at right bottom
+        param.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+        // it dismiss the dialog when click outside the dialog frame
+        dialog.setCanceledOnTouchOutside(true);
+        // initialize the item of the dialog box, whose id is demo1
+        View demodialog =(View) dialog.findViewById(R.id.cross);
+        // it call when click on the item whose id is demo1.
+        demodialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // diss miss the dialog
+                dialog.dismiss();
+            }
+        });
+
+        // it show the dialog box
+        dialog.show();
 
     }
 
@@ -290,6 +375,7 @@ public class MapsActivity extends AppCompatActivity implements
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.getUiSettings().setZoomControlsEnabled(true);
     }
 
     @Override
@@ -349,7 +435,6 @@ public class MapsActivity extends AppCompatActivity implements
 
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -377,85 +462,9 @@ public class MapsActivity extends AppCompatActivity implements
         super.onStop();
     }
 
-
     @Override
     public void onLocationChanged(Location location) {
         handleNewLocation(location);
     }
 
-    private class GetRequestDemo extends AsyncTask<String, Void, Void> {
-        private final Context context;
-
-        public GetRequestDemo(Context c) {
-            this.context = c;
-        }
-
-        protected void onPreExecute() {
-            progress = new ProgressDialog(this.context);
-            progress.setMessage("Loading");
-            progress.show();
-        }
-
-        @Override
-        protected Void doInBackground(String... params) {
-            try {
-
-                final TextView outputView = (TextView) findViewById(R.id.getTest);
-                URL url = new URL("http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/login?username=isha&password=123");
-
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                //String urlParameters = "fizz=buzz";
-                connection.setRequestMethod("GET");
-                //connection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
-                //connection.setRequestProperty("ACCEPT-LANGUAGE", "en-US,en;0.5");
-
-                int responseCode = connection.getResponseCode();
-
-                System.out.println("\nSending 'POST' request to URL : " + url);
-//                System.out.println("Post parameters : " + urlParameters);
-                System.out.println("Response Code : " + responseCode);
-
-                final StringBuilder output = new StringBuilder("Request URL " + url);
-                //output.append(System.getProperty("line.separator") + "Request Parameters " + urlParameters);
-//                output.append(System.getProperty("line.separator") + "Response Code " + responseCode);
-//                output.append(System.getProperty("line.separator") + "Type " + "GET");
-                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String line = "";
-                StringBuilder responseOutput = new StringBuilder();
-                System.out.println("output===============" + br);
-                while ((line = br.readLine()) != null) {
-                    responseOutput.append(line);
-                }
-
-                String testtest = responseOutput.toString();
-                System.out.print(" testtest - " + testtest);
-                br.close();
-
-                output.append(System.getProperty("line.separator") + "Response " + System.getProperty("line.separator") + System.getProperty("line.separator") + responseOutput.toString());
-
-                MapsActivity.this.runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        outputView.setText(output);
-                        progress.dismiss();
-
-                    }
-                });
-
-
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-//        protected void onPostExecute() {
-//            progress.dismiss();
-//        }
-    }
 }
