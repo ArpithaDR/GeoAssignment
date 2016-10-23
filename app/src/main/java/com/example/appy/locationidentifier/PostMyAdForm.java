@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
 
 import java.io.BufferedReader;
@@ -91,7 +92,17 @@ public class PostMyAdForm extends AppCompatActivity {
                 "&vacancies=" + vacancy + "&start_date="+ startdate + "&end_date=" + enddate +
                 "&description=" + description + " &phone_number=" + phone;
 
-        HttpConnection httpConnection = new HttpConnection(this);
+        HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+                String s = (String) output;
+                System.out.println("In PostMyAdForm finish process with result:" + s);
+            }
+        });
         httpConnection.execute(s);
+    }
+
+    public void test(String s) {
+        Log.i(TAG, s);
     }
 }

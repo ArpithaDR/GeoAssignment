@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -47,6 +48,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -110,68 +113,83 @@ public class MapsActivity extends AppCompatActivity implements
                 markerOptions.snippet("You are here");
                 markerOptions = markerOptions.draggable(true); // working - long press will drag it. But custom dragging?
 
-//                fetchHousesFromDB();
-                JSONObject obj = new JSONObject();
-                ArrayList<MarkerOptions> resultArray = extractHousesFromResult(obj);
-
-
                 mMap.clear();
                 mMap.addMarker(markerOptions);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
-                for(MarkerOptions mo : resultArray) {
-                    mMap.addMarker(mo);
-                }
-
+                fetchHousesFromDB(latLng);
             }
         } catch (IOException e) {
             Log.e(TAG, "Unable to connect to Geocoder", e);
         } finally {
-
             if (result != null) {
 
                 result = "Address: " + locationAddress +
                         "\n\nLatitude and Longitude :\n" + result;
                 Log.i(TAG,"Address: " + result);
-
             } else {
-
                 result = "Address: " + locationAddress +
                         "\n Unable to get Latitude and Longitude for this address location.";
                 Log.i(TAG, "Address: " + result);
             }
         }
+    }
 
+    private void fetchHousesFromDB(LatLng latLng) {
+
+        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/searchHouseAvailable?latitude=" +
+                latLng.latitude + "&longitude=" + latLng.longitude +"&radius=1.0";
+        HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+                String result = (String) output;
+                JSONObject houses = null;
+                try {
+                    houses = new JSONObject(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("In MapsActivity finish process with result:" + houses);
+                ArrayList<MarkerOptions> resultArray = extractHousesFromResult(houses);
+                for(MarkerOptions mo : resultArray) {
+                    mMap.addMarker(mo);
+                }
+            }
+        });
+        httpConnection.execute(s);
     }
 
     ArrayList<MarkerOptions> extractHousesFromResult(JSONObject obj) {
         ArrayList<MarkerOptions> results = new ArrayList<>();
 
-        String jsonData = "jsondata";
-
-        try {
-            obj.put("lat", 34.029367);
-            obj.put("lng", -118.287419);
-            obj.put("address", "Sindhu's address");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            obj.put("lat", 34.029367);
+//            obj.put("lng", -118.287419);
+//            obj.put("address", "Sindhu's address");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         // Read json object
-        JSONObject jsonObject = (JSONObject) obj;
 
         try {
-            double lat = (double) jsonObject.get("lat");
-            double lng = (double) jsonObject.get("lng");
-            String resultAddress = (String) jsonObject.get("address");
+            JSONArray houseArray = (JSONArray) obj.get("houseList");
+//            JSONObject jsonObject = obj.get("houseList");
 
-            LatLng latlng = new LatLng(lat, lng);
-            MarkerOptions marker = new MarkerOptions();
-            marker.position(latlng);
-            marker.title(resultAddress);
-            marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-            results.add(marker);
+            for(int i=0; i< houseArray.length(); i++) {
+                JSONObject jsonObject = (JSONObject) houseArray.get(i);
+                double lat = (double) jsonObject.get("Latitude");
+                double lng = (double) jsonObject.get("Longitude");
+                String resultAddress = (String) jsonObject.get("StreetAddress");
+                LatLng latlng = new LatLng(lat, lng);
+                MarkerOptions marker = new MarkerOptions();
+                marker.position(latlng);
+                marker.title(resultAddress);
+                marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                results.add(marker);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -195,7 +213,6 @@ public class MapsActivity extends AppCompatActivity implements
 
         Intent intent = new Intent(context, ListOfHouses.class);
         startActivity(intent);
-
     }
 
     @Override
@@ -241,8 +258,6 @@ public class MapsActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // creating custom Floating Action button
                 CustomDialog();
             }
         });
@@ -269,14 +284,12 @@ public class MapsActivity extends AppCompatActivity implements
         demodialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // diss miss the dialog
+                // dissmiss the dialog
                 dialog.dismiss();
             }
         });
-
         // it show the dialog box
         dialog.show();
-
     }
 
     private void setupDrawer() {
