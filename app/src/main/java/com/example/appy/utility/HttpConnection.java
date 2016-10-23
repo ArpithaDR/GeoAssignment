@@ -18,14 +18,16 @@ import java.net.URL;
  * Created by arorai on 10/16/16.
  */
 
-public class HttpConnection extends AsyncTask<String, Void, Void> {
+public class HttpConnection extends AsyncTask<String, Void, String> {
 
 
     private final Context context;
     private ProgressDialog progress;
+    public AsyncResponse delegate = null;
 
-    public HttpConnection(Context c) {
+    public HttpConnection(Context c, AsyncResponse asyncResponse) {
         this.context = c;
+        this.delegate = asyncResponse;
     }
 
     protected void onPreExecute() {
@@ -35,7 +37,8 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(String... params) {
+    protected String doInBackground(String... params) {
+        String result = "";
         try {
             // doesn't accept # in url-params
             System.out.println("url:" + params[0]);
@@ -59,9 +62,10 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
             }
             br.close();
 
-            System.out.println(responseOutput.toString());
-            output.append("Response msg: " + responseOutput.toString());
+            System.out.println("Response msg:" + responseOutput.toString());
+//            output.append("Response msg: " + responseOutput.toString());
             progress.dismiss();
+            result = responseOutput.toString();
 
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
@@ -70,7 +74,12 @@ public class HttpConnection extends AsyncTask<String, Void, Void> {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return null;
+        return result;
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        delegate.processFinish(result);
     }
 
 
