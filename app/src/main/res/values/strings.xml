@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LocationIdentifier</string>
+    <string name="app_name">Subleased</string>
     <string name="title_activity_maps">Subleased</string>
     <string name="search_button">Search</string>
     <string name="post_ad_subject">Subject</string>
@@ -16,4 +16,10 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+
+    <string name="facebook_app_id">677806702385319</string>
+    // if your App ID is 1234567, you should use fb1234567
+    <string name="fb_login_protocol_scheme">fb677806702385319</string>
+    <string name="cancel_login">this is to cancel the login</string>
+    <string name="error_login">this is the error in the login</string>
 </resources>
