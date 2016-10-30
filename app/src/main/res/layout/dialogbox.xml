@@ -11,7 +11,7 @@
         android:layout_gravity="bottom">
 
         <RelativeLayout
-            android:id="@+id/demo1"
+            android:id="@+id/gym"
             android:layout_width="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="@dimen/margin_right"
@@ -19,38 +19,37 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/demotext1"
+                android:id="@+id/gymtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Demo1"
+                android:text="Gym"
                 android:background="@drawable/rounded_edge"
                 android:layout_centerVertical="true"
                 android:padding="12dp"
-
                 />
 
             <ImageView
                 android:layout_width="@dimen/filter_image"
                 android:layout_height="@dimen/filter_image"
                 android:gravity="bottom"
-                android:layout_toRightOf="@+id/demotext1"
+                android:layout_toRightOf="@+id/gymtext"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/calender_icon"/>
         </RelativeLayout>
 
 
         <RelativeLayout
-            android:id="@+id/demo2"
+            android:id="@+id/grocery"
             android:layout_width="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="@dimen/margin_right"
             android:layout_marginBottom="10dp"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/demotext2"
+                android:id="@+id/grocerytext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Demo2"
+                android:text="Grocery Store"
                 android:background="@drawable/rounded_edge"
                 android:padding="12dp"
                 android:layout_centerVertical="true"/>
@@ -59,23 +58,23 @@
                 android:layout_width="@dimen/filter_image"
                 android:layout_height="@dimen/filter_image"
                 android:gravity="bottom"
-                android:layout_toRightOf="@+id/demotext2"
+                android:layout_toRightOf="@+id/grocerytext"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/dashboard_icon"/>
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/demo3"
+            android:id="@+id/hospital"
             android:layout_width="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="@dimen/margin_right"
             android:layout_marginBottom="10dp"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/demotext3"
+                android:id="@+id/hospitaltext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Demo3"
+                android:text="Hospital"
                 android:background="@drawable/rounded_edge"
                 android:padding="12dp"
                 android:layout_centerVertical="true"/>
@@ -84,23 +83,23 @@
                 android:layout_width="@dimen/filter_image"
                 android:layout_height="@dimen/filter_image"
                 android:gravity="bottom"
-                android:layout_toRightOf="@+id/demotext3"
+                android:layout_toRightOf="@+id/hospitaltext"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/dashboard_icon"/>
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/demo4"
+            android:id="@+id/school"
             android:layout_width="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="@dimen/margin_right"
             android:layout_marginBottom="10dp"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/demotext4"
+                android:id="@+id/schooltext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Demo4"
+                android:text="School"
                 android:background="@drawable/rounded_edge"
                 android:padding="12dp"
                 android:layout_centerVertical="true"/>
@@ -109,35 +108,9 @@
                 android:layout_width="@dimen/filter_image"
                 android:layout_height="@dimen/filter_image"
                 android:gravity="bottom"
-                android:layout_toRightOf="@+id/demotext4"
+                android:layout_toRightOf="@+id/schooltext"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/calender_icon"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/demo5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginRight="@dimen/margin_right"
-            android:layout_marginBottom="10dp">
-
-            <TextView
-                android:id="@+id/demotext5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Demo5"
-                android:background="@drawable/rounded_edge"
-                android:padding="12dp"
-                android:layout_centerVertical="true"/>
-
-            <ImageView
-                android:layout_width="@dimen/filter_image"
-                android:layout_height="@dimen/filter_image"
-                android:gravity="bottom"
-                android:layout_toRightOf="@+id/demotext5"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/dashboard_icon"/>
         </RelativeLayout>
 
         <RelativeLayout

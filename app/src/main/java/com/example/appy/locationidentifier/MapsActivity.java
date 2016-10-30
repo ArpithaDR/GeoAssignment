@@ -32,6 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appy.utility.AsyncResponse;
@@ -53,7 +54,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -163,19 +163,10 @@ public class MapsActivity extends AppCompatActivity implements
     ArrayList<MarkerOptions> extractHousesFromResult(JSONObject obj) {
         ArrayList<MarkerOptions> results = new ArrayList<>();
 
-//        try {
-//            obj.put("lat", 34.029367);
-//            obj.put("lng", -118.287419);
-//            obj.put("address", "Sindhu's address");
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
         // Read json object
 
         try {
             JSONArray houseArray = (JSONArray) obj.get("houseList");
-//            JSONObject jsonObject = obj.get("houseList");
 
             for(int i=0; i< houseArray.length(); i++) {
                 JSONObject jsonObject = (JSONObject) houseArray.get(i);
@@ -194,10 +185,6 @@ public class MapsActivity extends AppCompatActivity implements
             e.printStackTrace();
         }
         return results;
-    }
-
-    public void showOptions(View view) {
-        Log.i(TAG,"Options Clicked " );
     }
 
     public void postAd(View arg0) {
@@ -267,7 +254,7 @@ public class MapsActivity extends AppCompatActivity implements
     public void CustomDialog() {
         dialog = new Dialog(MapsActivity.this);
         // it remove the dialog title
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         // set the laytout in the dialog
         dialog.setContentView(R.layout.dialogbox);
         // set the background partial transparent
@@ -278,10 +265,45 @@ public class MapsActivity extends AppCompatActivity implements
         param.gravity = Gravity.BOTTOM | Gravity.RIGHT;
         // it dismiss the dialog when click outside the dialog frame
         dialog.setCanceledOnTouchOutside(true);
-        // initialize the item of the dialog box, whose id is demo1
-        View demodialog =(View) dialog.findViewById(R.id.cross);
-        // it call when click on the item whose id is demo1.
-        demodialog.setOnClickListener(new View.OnClickListener() {
+
+        View gymButton = (View) dialog.findViewById(R.id.gym);
+        gymButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView gymtext = (TextView) dialog.findViewById(R.id.gymtext);
+                highlightOptions(gymtext.getText().toString());
+            }
+        });
+
+        View groceryButton = (View) dialog.findViewById(R.id.grocery);
+        groceryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView grocerytext = (TextView) dialog.findViewById(R.id.grocerytext);
+                highlightOptions(grocerytext.getText().toString());
+            }
+        });
+
+        View hospitalButton = (View) dialog.findViewById(R.id.hospital);
+        hospitalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView hospitaltext = (TextView) dialog.findViewById(R.id.hospitaltext);
+                highlightOptions(hospitaltext.getText().toString());
+            }
+        });
+
+        View schoolButton = (View) dialog.findViewById(R.id.school);
+        schoolButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView schooltext = (TextView) dialog.findViewById(R.id.schooltext);
+                highlightOptions(schooltext.getText().toString());
+            }
+        });
+
+        View crossButton = (View) dialog.findViewById(R.id.cross);
+        crossButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // dissmiss the dialog
@@ -290,6 +312,67 @@ public class MapsActivity extends AppCompatActivity implements
         });
         // it show the dialog box
         dialog.show();
+    }
+
+    private void highlightOptions(String s) {
+        s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/getPublicPlaces?option=" + s;
+        HttpConnection connect = new HttpConnection(this, new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+                String result = (String) output;
+                ArrayList<MarkerOptions> placesArray = extractPlaces(result);
+
+                if(placesArray.size() > 0) {
+                    dialog.dismiss();
+                    mMap.clear();
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(placesArray.get(0).getPosition()));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+                } else {
+                    Toast.makeText(MapsActivity.this, "No places to display. Try another", Toast.LENGTH_SHORT).show();
+                    System.out.println("Places Array empty");
+                }
+
+                for(MarkerOptions mo : placesArray) {
+                    mMap.addMarker(mo);
+                }
+            }
+        });
+        connect.execute(s);
+
+    }
+
+    private ArrayList<MarkerOptions> extractPlaces(String result) {
+        ArrayList<MarkerOptions> results = new ArrayList<>();;
+        JSONObject places = null;
+        try {
+            places = new JSONObject(result);
+            JSONArray placesArray = (JSONArray) places.get("public_places");
+            for(int i=0; i<placesArray.length(); i++) {
+                JSONObject place = (JSONObject) placesArray.get(i);
+                double lat = Double.parseDouble((String) place.get("latitude"));
+                double lng = Double.parseDouble((String) place.get("longitute"));
+                String resultAddress = (String) place.get("st_address");
+                String category_type = (String) place.get("category_type");
+                LatLng latlng = new LatLng(lat, lng);
+                MarkerOptions marker = new MarkerOptions();
+                marker.position(latlng);
+                marker.title(resultAddress);
+                float colorCode;
+                switch (category_type) {
+                    case "Hospital" : colorCode = BitmapDescriptorFactory.HUE_RED; break;
+                    case "School"   : colorCode = BitmapDescriptorFactory.HUE_BLUE; break;
+                    case "Gym"   : colorCode = BitmapDescriptorFactory.HUE_ORANGE; break;
+                    case "Grocery Store"   : colorCode = BitmapDescriptorFactory.HUE_GREEN; break;
+                    default : colorCode = BitmapDescriptorFactory.HUE_VIOLET;
+                }
+                marker.icon(BitmapDescriptorFactory.defaultMarker(colorCode));
+                results.add(marker);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return results;
     }
 
     private void setupDrawer() {
