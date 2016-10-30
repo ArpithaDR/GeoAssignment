@@ -36,6 +36,8 @@ import android.widget.Toast;
 
 import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -230,6 +232,17 @@ public class MapsActivity extends AppCompatActivity implements
             }
         });
 
+        // Facebook logout button
+        Button fbLogoutBtn = (Button)findViewById(R.id.fbLogout);
+        fbLogoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FacebookSdk.sdkInitialize(getApplicationContext());
+                LoginManager.getInstance().logOut();
+                finish(); // this is a temp fix need to check about clearing the fb sessions -- Shivalik
+            }
+        });
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -359,7 +372,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     //Add elements of hamburger
     private void addDrawerItems() {
-        String[] osArray = { "Favourite Posts", "View Your Ads", "Settings", "Help" };
+        String[] osArray = { "Favourite Posts", "View Your Ads", "Settings", "Help", "FB Logout" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
 

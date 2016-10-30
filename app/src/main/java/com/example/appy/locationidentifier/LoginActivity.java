@@ -5,6 +5,7 @@ import android.icu.text.DateFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ import static com.facebook.internal.CallbackManagerImpl.RequestCodeOffset.Login;
 public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = "LoginActivity";
-    private TextView info;
+    //private TextView info;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private ProfileTracker mProfileTracker;
@@ -45,9 +46,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());  // late check by uncommenting this line
         setContentView(R.layout.activity_login);
-        info = (TextView)findViewById(R.id.info);
+        //info = (TextView)findViewById(R.id.info);
         loginButton = (LoginButton)findViewById(R.id.login_button);
         loginButton.setReadPermissions("public_profile");
+
         callbackManager = CallbackManager.Factory.create();
 
 
@@ -55,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+                        loginButton.setVisibility(View.INVISIBLE);
+
 
                         if(Profile.getCurrentProfile() == null) {
                             mProfileTracker = new ProfileTracker() {
@@ -78,56 +82,20 @@ public class LoginActivity extends AppCompatActivity {
                             Log.v("facebook - profile", profile.getLastName());
                             Log.v("facebook - profile", profile.getName());
                         }
-
-
-
-//                        // App code
-////                        info.setText(
-////                                "User ID: "
-////                                        + loginResult.getAccessToken().getUserId()
-////                                        + "\n" +
-////                                        "Auth Token: "
-////                                        + loginResult.getAccessToken().getToken()
-////                        );
-//
-//
-//                        Profile profile = Profile.getCurrentProfile();
-//
-//                        if (profile != null) {
-//                            Log.i(TAG,
-//                                    "User ID: "
-//                                            + loginResult.getAccessToken().getUserId()
-//                                            + "\n" +
-//                                            "Auth Token: "
-//                                            + loginResult.getAccessToken().getToken()
-//                                            + "\n" +
-//                                            "Name: "
-//                                            + profile.getName()
-//                                            + "\n" +
-//                                            "First Name: "
-//                                            + profile.getFirstName()
-//                                            + "\n" +
-//                                            "Last Name: "
-//                                            + profile.getLastName()
-//
-//                            );
-//                        } else {
-//                            Log.i(TAG, " a null profile was returned");
-//                        }
                         goMapsScreen();
                     }
 
                     @Override
                     public void onCancel() {
                         // App code
-                        info.setText("Login attempt canceled.");
+                        //info.setText("Login attempt canceled.");
                         //Toast.makeText(getApplicationContext(), R.string.cancel_login, Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
                         // App code
-                        info.setText("Login attempt failed.");
+                        //info.setText("Login attempt failed.");
                         //Toast.makeText(getApplicationContext(), R.string.error_login, Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -145,6 +113,4 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-
-
 }
