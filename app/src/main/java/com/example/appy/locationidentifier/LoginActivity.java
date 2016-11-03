@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appy.utility.AsyncResponse;
+import com.example.appy.utility.HttpConnection;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -59,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(LoginResult loginResult) {
                         loginButton.setVisibility(View.INVISIBLE);
 
-
                         if(Profile.getCurrentProfile() == null) {
                             mProfileTracker = new ProfileTracker() {
                                 @Override
@@ -69,6 +70,9 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.v("facebook - profile", profile2.getId());
                                     Log.v("facebook - profile", profile2.getLastName());
                                     Log.v("facebook - profile", profile2.getName());
+                                    String fbData = "id=" + profile2.getId() + "&full_name=" + profile2.getName() + "&first_name=" + profile2.getFirstName() + "&last_name=" + profile2.getLastName();
+                                    String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/fbLogin?" + fbData;
+                                    goMapsScreen(s);
                                     mProfileTracker.stopTracking();
                                 }
                             };
@@ -81,8 +85,13 @@ public class LoginActivity extends AppCompatActivity {
                             Log.v("facebook - profile", profile.getId());
                             Log.v("facebook - profile", profile.getLastName());
                             Log.v("facebook - profile", profile.getName());
+                            String fbData = "id=" + profile.getId() + "&full_name=" + profile.getName() + "&first_name=" + profile.getFirstName() + "&last_name=" + profile.getLastName();
+                            String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/fbLogin?" + fbData;
+                            goMapsScreen(s);
                         }
-                        goMapsScreen();
+
+//                        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/fbLogin?" + fbData;
+//                        goMapsScreen(s);
                     }
 
                     @Override
@@ -101,7 +110,17 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void goMapsScreen() {
+    private void goMapsScreen(String s) {
+
+        HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+                String s = (String) output;
+                System.out.println("In LoginActivity Shivalik:" + s);
+            }
+        });
+        httpConnection.execute(s);
+
         System.out.println("This is a test for the facebook login -- Shivalik");
         Intent intent = new Intent(this, MapsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
