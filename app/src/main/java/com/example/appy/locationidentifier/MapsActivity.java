@@ -48,6 +48,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -75,6 +76,7 @@ public class MapsActivity extends AppCompatActivity implements
     private LocationRequest mLocationRequest;
     private ProgressDialog progress;
     public Dialog dialog;
+    //public EditText editText;
 
     //For hamburger
     private ListView mDrawerList;
@@ -107,17 +109,17 @@ public class MapsActivity extends AppCompatActivity implements
                 result = sb.toString();
                 LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
 
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLng);
-                markerOptions.title(locationAddress);
-                markerOptions.snippet("You are here");
-                markerOptions = markerOptions.draggable(true); // working - long press will drag it. But custom dragging?
-
                 mMap.clear();
+                MarkerOptions markerOptions = new MarkerOptions()
+                .position(latLng).draggable(true)
+                .title(locationAddress)
+                .snippet("You are here");
+                 // working - long press will drag it. But custom dragging?
+
                 mMap.addMarker(markerOptions);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-
+                mMap.setOnMarkerDragListener(markerDragListener());
                 fetchHousesFromDB(latLng);
             }
         } catch (IOException e) {
@@ -134,6 +136,45 @@ public class MapsActivity extends AppCompatActivity implements
                 Log.i(TAG, "Address: " + result);
             }
         }
+    }
+
+    private GoogleMap.OnMarkerDragListener markerDragListener() {
+
+        return new GoogleMap.OnMarkerDragListener() {
+
+            @Override
+            public void onMarkerDrag(Marker arg0) {
+                // TODO Auto-generated method stub
+                System.out.println("Marker Dragging");
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                // TODO Auto-generated method stub
+                LatLng markerLocation = marker.getPosition();
+                Geocoder geocoder;
+                List<Address> addresses;
+                geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(markerLocation));
+                try {
+                    addresses = geocoder.getFromLocation(markerLocation.latitude, markerLocation.longitude, 1);
+                    String address = addresses.get(0).getAddressLine(0);
+                    EditText searchbar = (EditText) findViewById(R.id.searchView1);
+                    searchbar.setText(address);
+
+                } catch (IOException e) {
+                    Toast.makeText(MapsActivity.this, "Please make sure you are connected to internet", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onMarkerDragStart(Marker arg0) {
+                // TODO Auto-generated method stub
+                System.out.println("Marker Started");
+
+            }
+        };
     }
 
     private void fetchHousesFromDB(LatLng latLng) {
@@ -195,7 +236,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     }
 
-    public void listOfHouses(View arg0) {
+    public void listOfHouses(View view) {
         final Context context = this;
 
         Intent intent = new Intent(context, ListOfHouses.class);
@@ -442,14 +483,34 @@ public class MapsActivity extends AppCompatActivity implements
 
     //Add elements of hamburger
     private void addDrawerItems() {
-        String[] osArray = { "Favourite Posts", "View Your Ads", "Settings", "Help" };
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        String[] hamburgerArray = { "Post Ad", "Favourite Posts", "View Your Ads", "Settings", "Help", "Logout" };
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, hamburgerArray);
         mDrawerList.setAdapter(mAdapter);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MapsActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+                String value = (String)parent.getItemAtPosition(position);
+                if(position==0) {
+                    Intent myIntent = new Intent(MapsActivity.this, PostMyAdForm.class);
+                    startActivity(myIntent);
+                } else if(position==1) {
+                    Intent myIntent = new Intent(MapsActivity.this, FavListOfHouses.class);
+                    startActivity(myIntent);
+                } else if(position==2) {
+                    Intent myIntent = new Intent(MapsActivity.this, ViewMyAds.class);
+                    startActivity(myIntent);
+                } else if(position==3) {
+                    Intent myIntent = new Intent(MapsActivity.this, Settings.class);
+                    startActivity(myIntent);
+                } else if(position==4) {
+                    Intent myIntent = new Intent(MapsActivity.this, Help.class);
+                    startActivity(myIntent);
+                } else if(position==5) {
+                    //To be attached with FB Logout
+                    Intent myIntent = new Intent(MapsActivity.this, PostMyAdForm.class);
+                    startActivity(myIntent);
+                }
             }
         });
     }
@@ -469,9 +530,10 @@ public class MapsActivity extends AppCompatActivity implements
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney").draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.setOnMarkerDragListener(markerDragListener());
     }
 
     @Override
@@ -502,13 +564,27 @@ public class MapsActivity extends AppCompatActivity implements
         double currentLatitude = location.getLatitude();
         double currentLongitude = location.getLongitude();
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
+        try {
+            addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1);
+            String address = addresses.get(0).getAddressLine(0);
+            EditText searchbar = (EditText) findViewById(R.id.searchView1);
+            searchbar.setText(address);
 
+        } catch (IOException e) {
+            Toast.makeText(MapsActivity.this, "Please make sure you are connected to internet", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
         MarkerOptions options = new MarkerOptions()
                 .position(latLng)
+                .draggable(true)
                 .title("You are here!");
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        mMap.setOnMarkerDragListener(markerDragListener());
     }
 
     @Override

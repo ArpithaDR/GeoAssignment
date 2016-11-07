@@ -36,6 +36,7 @@ public class PostMyAdForm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_my_ad_form);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void submitAddress(View arg0) {
