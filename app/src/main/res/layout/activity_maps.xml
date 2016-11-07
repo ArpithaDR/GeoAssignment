@@ -6,100 +6,110 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="#ffffffff">
-
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        />
+        tools:context=".MainActivity"
+        android:background="#ffffffff">
 
-    <EditText
-        android:id="@+id/searchView1"
-        android:layout_width="250dp"
-        android:layout_height="34dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="14dp"
-        android:hint="Search Location"
-        android:textColor="@android:color/black"
-        android:background="@android:color/white" >
-    </EditText>
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:text="@string/search_button"
-        android:onClick="sendLocation"
-        android:id="@+id/search_button"/>
+        <EditText
+            android:id="@+id/searchView1"
+            android:layout_width="250dp"
+            android:layout_height="34dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="14dp"
+            android:hint="Search Location"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white" >
+        </EditText>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/search_button"
-        android:layout_alignStart="@+id/search_button"
-        android:layout_alignLeft="@+id/search_button"
-        android:text="Post Ad"
-        android:onClick="postAd"
-        />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/search_button"
+            android:onClick="sendLocation"
+            android:id="@+id/search_button"/>
 
-    <Button
-        android:text="Click Ad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/clickAd"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="171dp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search_button"
+            android:layout_alignStart="@+id/search_button"
+            android:layout_alignLeft="@+id/search_button"
+            android:text="Post Ad"
+            android:onClick="postAd"
+            />
 
-    <Button
-        android:text="View List"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ViewList"
-        android:layout_marginBottom="12dp"
-        android:onClick="listOfHouses"
-        android:layout_above="@+id/clickAd"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <Button
+            android:text="Click Ad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/clickAd"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="171dp" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:fabSize="mini"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:layout_below="@+id/ViewList"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="67dp"
-        android:id="@+id/fab"/>
+        <Button
+            android:text="View List"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ViewList"
+            android:layout_marginBottom="12dp"
+            android:onClick="listOfHouses"
+            android:layout_above="@+id/clickAd"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-    <Button
-        android:text="FB Logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ViewList"
-        android:layout_alignLeft="@+id/searchView1"
-        android:layout_alignStart="@+id/searchView1"
-        android:layout_marginBottom="30dp"
-        android:id="@+id/fbLogout" />
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_input_add"
+            android:layout_below="@+id/ViewList"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="67dp"
+            android:id="@+id/fab"/>
+
+        <Button
+            android:text="FB Logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ViewList"
+            android:layout_alignLeft="@+id/searchView1"
+            android:layout_alignStart="@+id/searchView1"
+            android:layout_marginBottom="30dp"
+            android:id="@+id/fbLogout" />
+
+        <Button
+            android:text="Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/fab"
+            android:layout_alignLeft="@+id/fbLogout"
+            android:layout_alignStart="@+id/fbLogout"
+            android:layout_marginTop="27dp"
+            android:id="@+id/viewProfile" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
     <ListView
         android:id="@+id/navList"
         android:layout_width="200dp"

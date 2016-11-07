@@ -1,7 +1,9 @@
 package com.example.appy.locationidentifier;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.text.DateFormat;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
+import com.example.appy.utility.SessionManagement;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -36,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private ProfileTracker mProfileTracker;
+    SessionManagement session;
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
         callbackManager = CallbackManager.Factory.create();
 
+        session = new SessionManagement(getApplicationContext());
 
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
@@ -72,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.v("facebook - profile", profile2.getName());
                                     String fbData = "id=" + profile2.getId() + "&full_name=" + profile2.getName() + "&first_name=" + profile2.getFirstName() + "&last_name=" + profile2.getLastName();
                                     String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/fbLogin?" + fbData;
+                                    session.storeLoggedInUserId(profile2.getId());
                                     goMapsScreen(s);
                                     mProfileTracker.stopTracking();
                                 }
@@ -87,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.v("facebook - profile", profile.getName());
                             String fbData = "id=" + profile.getId() + "&full_name=" + profile.getName() + "&first_name=" + profile.getFirstName() + "&last_name=" + profile.getLastName();
                             String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/fbLogin?" + fbData;
+                            session.storeLoggedInUserId(profile.getId());
                             goMapsScreen(s);
                         }
 
