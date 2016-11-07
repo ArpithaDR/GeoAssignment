@@ -2,9 +2,13 @@
     <string name="app_name">Subleased</string>
     <string name="title_activity_maps">Subleased</string>
     <string name="search_button">Search</string>
-    <string name="post_ad_subject">Subject</string>
-    <string name="post_ad_address">Address</string>
-    <string name="post_ad_price">Price</string>
+    <string name="post_ad_title">Title</string>
+    <string name="post_ad_address">Street Address</string>
+    <string name="post_ad_aptNumber">Apartment Number</string>
+    <string name="post_ad_city">City</string>
+    <string name="post_ad_state">State</string>
+    <string name="post_ad_zip">Zip</string>
+    <string name="post_ad_price">Price (per spot)</string>
     <string name="post_ad_spots">Number of Spots</string>
     <string name="post_ad_start_date">Start Date</string>
     <string name="post_ad_end_date">End Date</string>
