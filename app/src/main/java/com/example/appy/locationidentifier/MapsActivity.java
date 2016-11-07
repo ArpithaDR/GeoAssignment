@@ -37,6 +37,9 @@ import android.widget.Toast;
 
 import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
+import com.example.appy.utility.SessionManagement;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -212,7 +215,72 @@ public class MapsActivity extends AppCompatActivity implements
         clickAdBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.v("hello", "hello");
+                String hello = getString(R.string.facebook_app_id);
+                Log.v("hello1", hello);
                 Intent i = new Intent(MapsActivity.this, ClickedAdActivity.class);
+                startActivity(i);
+            }
+        });
+
+        // Facebook logout button
+        Button fbLogoutBtn = (Button)findViewById(R.id.fbLogout);
+        fbLogoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FacebookSdk.sdkInitialize(getApplicationContext());
+                LoginManager.getInstance().logOut();
+                finish(); // this is a temp fix need to check about clearing the fb sessions -- Shivalik
+            }
+        });
+
+        // View my profile button
+        Button viewProfileBtn = (Button)findViewById(R.id.viewProfile);
+        viewProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SessionManagement session = new SessionManagement(getApplicationContext());
+                String id = session.getLoggedInUserId();
+                Log.v("Shivalik test - " , id);
+                String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/getUser?user_id=" + id;
+//               final String first_name = "";
+//               String last_name = "";
+//               String phone_number = "";
+//               String email = "";
+
+
+                HttpConnection httpConnection = new HttpConnection(MapsActivity.this, new AsyncResponse() {
+                    @Override
+                    public void processFinish(Object output) {
+                        String result = (String) output;
+//                       String first_name = "";
+//                       String last_name = "";
+//                       String phone_number = "";
+//                       String email = "";
+
+                        JSONObject user = null;
+                        try {
+                            user = new JSONObject(result);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.v("user: ", user.toString());
+//                       try {
+////                           first_name = user.getString("first_name");
+////                           last_name = user.getString("last_name");
+////                           phone_number = user.getString("phone_number");
+////                           email = user.getString("email");
+//                       } catch (JSONException e) {
+//                           e.printStackTrace();
+//                       }
+                    }
+                });
+                httpConnection.execute(s);
+
+                // this need to be dynamic need to look into this - shivalik
+                Intent i = new Intent(MapsActivity.this, UserProfileActivity.class);
+                i.putExtra("fname", "testShivalik");
+                i.putExtra("lname", "testNarad");
                 startActivity(i);
             }
         });
@@ -442,7 +510,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     //Add elements of hamburger
     private void addDrawerItems() {
-        String[] osArray = { "Favourite Posts", "View Your Ads", "Settings", "Help" };
+        String[] osArray = { "Favourite Posts", "View Your Ads", "Settings", "Help", "FB Logout" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
 
