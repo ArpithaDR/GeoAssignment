@@ -11,53 +11,64 @@
     tools:context="com.example.appy.locationidentifier.UserProfileActivity">
 
     <Button
-        android:text="Save_data"
+        android:text="Submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
-        android:id="@+id/button3" />
+        android:id="@+id/submitPhEmail" />
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/first_name"
-        android:layout_alignParentTop="true"
+        android:textStyle="normal|bold"
+        android:textSize="24sp"
+        android:layout_above="@+id/last_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="68dp" />
+        android:layout_marginBottom="17dp"
+        android:textAlignment="center" />
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/last_name"
-        android:layout_below="@+id/first_name"
-        android:layout_alignLeft="@+id/first_name"
-        android:layout_alignStart="@+id/first_name"
-        android:layout_marginTop="13dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Email"
-        android:ems="10"
-        android:id="@+id/editText5"
-        android:layout_above="@+id/button3"
-        android:layout_alignLeft="@+id/editText4"
-        android:layout_alignStart="@+id/editText4"
-        android:layout_marginBottom="43dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Phone Number"
-        android:ems="10"
-        android:id="@+id/editText4"
-        android:layout_alignBottom="@+id/editText5"
+        android:textSize="24sp"
+        android:textStyle="normal|bold"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="83dp" />
+        android:textAlignment="center" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/edit_phone"
+        android:layout_below="@+id/last_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:hint="Phone Number"
+        android:textAlignment="center"
+        android:textStyle="normal|bold"
+        android:textSize="24sp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/edit_email"
+        android:hint="Email"
+        android:textAlignment="center"
+        android:textStyle="normal|bold"
+        android:textSize="24sp"
+        android:layout_below="@+id/edit_phone"
+        android:layout_alignLeft="@+id/edit_phone"
+        android:layout_alignStart="@+id/edit_phone"
+        android:layout_marginTop="20dp" />
+
 </RelativeLayout>

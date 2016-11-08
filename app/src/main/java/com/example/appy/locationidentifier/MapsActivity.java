@@ -79,6 +79,11 @@ public class MapsActivity extends AppCompatActivity implements
     private ProgressDialog progress;
     public Dialog dialog;
 
+    public String first_name = "";
+    public String last_name = "";
+    private String phone_number = "";
+    private String email = "";
+
     //For hamburger
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
@@ -243,20 +248,11 @@ public class MapsActivity extends AppCompatActivity implements
                 String id = session.getLoggedInUserId();
                 Log.v("Shivalik test - " , id);
                 String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/getUser?user_id=" + id;
-//               final String first_name = "";
-//               String last_name = "";
-//               String phone_number = "";
-//               String email = "";
-
 
                 HttpConnection httpConnection = new HttpConnection(MapsActivity.this, new AsyncResponse() {
                     @Override
                     public void processFinish(Object output) {
                         String result = (String) output;
-//                       String first_name = "";
-//                       String last_name = "";
-//                       String phone_number = "";
-//                       String email = "";
 
                         JSONObject user = null;
                         try {
@@ -265,23 +261,25 @@ public class MapsActivity extends AppCompatActivity implements
                             e.printStackTrace();
                         }
                         Log.v("user: ", user.toString());
-//                       try {
-////                           first_name = user.getString("first_name");
-////                           last_name = user.getString("last_name");
-////                           phone_number = user.getString("phone_number");
-////                           email = user.getString("email");
-//                       } catch (JSONException e) {
-//                           e.printStackTrace();
-//                       }
+                       try {
+                           first_name = user.getString("first_name");
+                           last_name = user.getString("last_name");
+                           phone_number = user.getString("phone_number");
+                           email = user.getString("email");
+
+                           Intent i = new Intent(MapsActivity.this, UserProfileActivity.class);
+                           i.putExtra("fname", first_name);
+                           i.putExtra("lname", last_name);
+                           i.putExtra("ph_number", phone_number);
+                           i.putExtra("email", email);
+                           startActivity(i);
+
+                       } catch (JSONException e) {
+                           e.printStackTrace();
+                       }
                     }
                 });
                 httpConnection.execute(s);
-
-                // this need to be dynamic need to look into this - shivalik
-                Intent i = new Intent(MapsActivity.this, UserProfileActivity.class);
-                i.putExtra("fname", "testShivalik");
-                i.putExtra("lname", "testNarad");
-                startActivity(i);
             }
         });
 
