@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_post_my_ad_form"
@@ -11,114 +16,170 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.appy.locationidentifier.PostMyAdForm">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/post_ad_subject"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="23dp"
-        android:id="@+id/post_ad_subject"
-         />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPostalAddress"
-        android:hint="@string/post_ad_address"
-        android:ems="10"
-        android:layout_below="@+id/post_ad_subject"
-        android:layout_alignLeft="@+id/post_ad_subject"
-        android:layout_alignStart="@+id/post_ad_subject"
-        android:layout_marginTop="16dp"
-        android:id="@+id/post_ad_address" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:hint="@string/post_ad_price"
-        android:ems="10"
-        android:layout_below="@+id/post_ad_address"
-        android:layout_alignLeft="@+id/post_ad_address"
-        android:layout_alignStart="@+id/post_ad_address"
-        android:layout_marginTop="16dp"
-        android:id="@+id/post_ad_price" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="@string/post_ad_spots"
-        android:ems="10"
-        android:layout_below="@+id/post_ad_price"
-        android:layout_alignLeft="@+id/post_ad_price"
-        android:layout_alignStart="@+id/post_ad_price"
-        android:layout_marginTop="16dp"
-        android:id="@+id/post_ad_spots" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:hint="@string/post_ad_start_date"
-        android:ems="10"
-        android:layout_below="@+id/post_ad_spots"
-        android:layout_alignLeft="@+id/post_ad_spots"
-        android:layout_alignStart="@+id/post_ad_spots"
-        android:layout_marginTop="10dp"
-        android:id="@+id/post_ad_start_date" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:hint="@string/post_ad_end_date"
-        android:ems="10"
-        android:layout_below="@+id/post_ad_start_date"
-        android:layout_alignLeft="@+id/post_ad_start_date"
-        android:layout_alignStart="@+id/post_ad_start_date"
-        android:layout_marginTop="29dp"
-        android:id="@+id/post_ad_end_date" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:hint="@string/post_ad_desc"
-        android:ems="10"
-        android:layout_marginTop="14dp"
-        android:layout_below="@+id/post_ad_end_date"
-        android:layout_alignLeft="@+id/post_ad_end_date"
-        android:layout_alignStart="@+id/post_ad_end_date"
-        android:id="@+id/post_ad_desc"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:hint="@string/post_ad_phone"
-        android:ems="10"
-        android:layout_below="@+id/post_ad_desc"
-        android:layout_alignLeft="@+id/post_ad_desc"
-        android:layout_alignStart="@+id/post_ad_desc"
-        android:layout_marginTop="23dp"
-        android:id="@+id/post_ad_phone" />
-
-    <Button
-        android:text="@string/post_ad_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/post_ad_submit"
-        android:onClick="submitAddress"
-        android:layout_below="@+id/post_ad_phone"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp" />
 
 
-</RelativeLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="@string/post_ad_title"
+            android:ems="10"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="23dp"
+            android:id="@+id/post_ad_title"
+             />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:hint="@string/post_ad_address"
+            android:ems="10"
+            android:layout_below="@+id/post_ad_title"
+            android:layout_alignLeft="@+id/post_ad_title"
+            android:layout_alignStart="@+id/post_ad_title"
+            android:layout_marginTop="16dp"
+            android:id="@+id/post_ad_address" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:hint="@string/post_ad_aptNumber"
+            android:ems="10"
+            android:layout_below="@+id/post_ad_address"
+            android:layout_alignLeft="@+id/post_ad_address"
+            android:layout_alignStart="@+id/post_ad_address"
+            android:layout_marginTop="16dp"
+            android:id="@+id/post_ad_aptNumber" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:hint="@string/post_ad_city"
+            android:ems="10"
+            android:layout_marginTop="13dp"
+            android:id="@+id/post_ad_city"
+            android:layout_below="@+id/post_ad_aptNumber"
+            android:layout_alignLeft="@+id/post_ad_aptNumber"
+            android:layout_alignStart="@+id/post_ad_aptNumber" />
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:hint="@string/post_ad_state"
+            android:ems="10"
+            android:layout_marginTop="16dp"
+            android:id="@+id/post_ad_state"
+            android:layout_below="@+id/post_ad_city"
+            android:layout_alignLeft="@+id/post_ad_city"
+            android:layout_alignStart="@+id/post_ad_city" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:hint="@string/post_ad_zip"
+            android:ems="10"
+            android:layout_marginTop="13dp"
+            android:id="@+id/post_ad_zip"
+            android:layout_below="@+id/post_ad_state"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignLeft="@+id/post_ad_state"
+            android:layout_alignStart="@+id/post_ad_state" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="@string/post_ad_price"
+            android:ems="10"
+            android:layout_below="@+id/post_ad_zip"
+            android:layout_alignLeft="@+id/post_ad_zip"
+            android:layout_alignStart="@+id/post_ad_zip"
+            android:layout_marginTop="16dp"
+            android:id="@+id/post_ad_price" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="@string/post_ad_spots"
+            android:ems="10"
+            android:layout_below="@+id/post_ad_price"
+            android:layout_alignLeft="@+id/post_ad_price"
+            android:layout_alignStart="@+id/post_ad_price"
+            android:layout_marginTop="16dp"
+            android:id="@+id/post_ad_spots" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:hint="@string/post_ad_start_date"
+            android:ems="10"
+            android:layout_below="@+id/post_ad_spots"
+            android:layout_alignLeft="@+id/post_ad_spots"
+            android:layout_alignStart="@+id/post_ad_spots"
+            android:layout_marginTop="10dp"
+            android:id="@+id/post_ad_start_date" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:hint="@string/post_ad_end_date"
+            android:ems="10"
+            android:layout_below="@+id/post_ad_start_date"
+            android:layout_alignLeft="@+id/post_ad_start_date"
+            android:layout_alignStart="@+id/post_ad_start_date"
+            android:layout_marginTop="29dp"
+            android:id="@+id/post_ad_end_date" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:hint="@string/post_ad_desc"
+            android:ems="10"
+            android:layout_marginTop="14dp"
+            android:layout_below="@+id/post_ad_end_date"
+            android:layout_alignLeft="@+id/post_ad_end_date"
+            android:layout_alignStart="@+id/post_ad_end_date"
+            android:id="@+id/post_ad_desc"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:hint="@string/post_ad_phone"
+            android:ems="10"
+            android:layout_below="@+id/post_ad_desc"
+            android:layout_alignLeft="@+id/post_ad_desc"
+            android:layout_alignStart="@+id/post_ad_desc"
+            android:layout_marginTop="23dp"
+            android:id="@+id/post_ad_phone" />
+
+        <Button
+            android:text="@string/post_ad_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/post_ad_submit"
+            android:onClick="submitAddress"
+            android:layout_below="@+id/post_ad_phone"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="17dp" />
+
+    </RelativeLayout>
+</ScrollView>
+
+
+
