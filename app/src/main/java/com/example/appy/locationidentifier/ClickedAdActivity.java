@@ -17,5 +17,6 @@ public class ClickedAdActivity extends AppCompatActivity {
         String id = session.getLoggedInUserId();
         Log.v("Shivalik test - " , id);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.appy.locationidentifier;
 
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +9,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListOfHouses extends AppCompatActivity {
+public class FavListOfHouses extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private HouseListAdapter adapter;
@@ -20,7 +19,7 @@ public class ListOfHouses extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_of_houses);
+        setContentView(R.layout.activity_fav_list_of_houses);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -36,6 +35,7 @@ public class ListOfHouses extends AppCompatActivity {
     }
 
     //This is static and this information must be fetched from database later
+    //Also this list should be generated based on user logged in and get his fav
     private void prepareListOfHouses() {
         int[] covers = new int[]{
                 R.drawable.images1,
@@ -56,4 +56,5 @@ public class ListOfHouses extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -53,12 +53,39 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MapsActivity" />
-        <activity android:name=".PostMyAdForm" />
-        <activity android:name=".ClickedAdActivity" />
-        <activity android:name=".ListOfHouses" />
-        <activity android:name=".HouseCard" />
+
         <activity android:name=".UserProfileActivity"></activity>
+
+        <activity
+            android:name=".PostMyAdForm"
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".ListOfHouses" />
+        <activity
+            android:name=".ClickedAdActivity"
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".ListOfHouses" />
+        <activity
+            android:name=".ListOfHouses"
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".ListOfHouses" />
+        <activity
+            android:name=".HouseCard"
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".FavListOfHouses"
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".ListOfHouses" />
+        <activity
+            android:name=".ViewMyAds"
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".ListOfHouses" />
+        <activity android:name=".Settings"
+            android:parentActivityName=".ListOfHouses"/>
+        <activity android:name=".Help"
+            android:parentActivityName=".ListOfHouses"></activity>
+
     </application>
 
 </manifest>

@@ -16,23 +16,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/house_cover_height"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:scaleType="fitXY" />
-
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/thumbnail"
+                android:layout_below="@+id/thumbnail"
                 android:paddingLeft="@dimen/house_title_padding"
                 android:paddingRight="@dimen/house_title_padding"
                 android:paddingTop="@dimen/house_title_padding"
-
                 android:textSize="@dimen/house_title" />
 
             <TextView
@@ -44,6 +35,46 @@
                 android:paddingLeft="@dimen/house_title_padding"
                 android:paddingRight="@dimen/house_title_padding"
                 android:textSize="@dimen/house_price" />
+
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/house_cover_height"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:scaleType="fitXY"
+                android:layout_marginTop="43dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <android.widget.Button
+                android:id="@+id/viewbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="View"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="13dp"
+                android:layout_marginEnd="13dp">
+
+            </android.widget.Button>
+
+            <ImageButton
+                android:src="@drawable/addfavorite"
+                android:text="Favourites"
+                android:layout_width="wrap_content"
+                android:id="@+id/favicon"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_marginRight="22dp"
+                android:layout_marginEnd="22dp"
+                android:layout_alignTop="@+id/viewbtn"
+                android:layout_toLeftOf="@+id/viewbtn"
+                android:layout_toStartOf="@+id/viewbtn" />
+
 
         </RelativeLayout>
 
