@@ -43,34 +43,12 @@
             android:onClick="sendLocation"
             android:id="@+id/search_button"/>
 
-    <Button
-        android:text="Click Ad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/clickAd"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="171dp" />
-
-        <Button
-            android:text="View List"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ViewList"
-            android:layout_marginBottom="12dp"
-            android:onClick="listOfHouses"
-            android:layout_above="@+id/clickAd"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             app:fabSize="mini"
             app:srcCompat="@android:drawable/ic_input_add"
-            android:layout_below="@+id/ViewList"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="15dp"

@@ -256,19 +256,6 @@ public class MapsActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        // Click Ad Button
-        Button clickAdBtn = (Button)findViewById(R.id.clickAd);
-        clickAdBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.v("hello", "hello");
-                String hello = getString(R.string.facebook_app_id);
-                Log.v("hello1", hello);
-                Intent i = new Intent(MapsActivity.this, ClickedAdActivity.class);
-                startActivity(i);
-            }
-        });
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
