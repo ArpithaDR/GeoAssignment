@@ -78,27 +78,6 @@
             android:layout_marginTop="67dp"
             android:id="@+id/fab"/>
 
-        <Button
-            android:text="FB Logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/ViewList"
-            android:layout_alignLeft="@+id/searchView1"
-            android:layout_alignStart="@+id/searchView1"
-            android:layout_marginBottom="30dp"
-            android:id="@+id/fbLogout" />
-
-        <Button
-            android:text="Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/fab"
-            android:layout_alignLeft="@+id/fbLogout"
-            android:layout_alignStart="@+id/fbLogout"
-            android:layout_marginTop="27dp"
-            android:id="@+id/viewProfile" />
-
-
     </RelativeLayout>
     <ListView
         android:id="@+id/navList"

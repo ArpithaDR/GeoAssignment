@@ -269,61 +269,6 @@ public class MapsActivity extends AppCompatActivity implements
             }
         });
 
-        // Facebook logout button
-        Button fbLogoutBtn = (Button)findViewById(R.id.fbLogout);
-        fbLogoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FacebookSdk.sdkInitialize(getApplicationContext());
-                LoginManager.getInstance().logOut();
-                finish(); // this is a temp fix need to check about clearing the fb sessions -- Shivalik
-            }
-        });
-
-        // View my profile button
-        Button viewProfileBtn = (Button)findViewById(R.id.viewProfile);
-        viewProfileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SessionManagement session = new SessionManagement(getApplicationContext());
-                String id = session.getLoggedInUserId();
-                Log.v("Shivalik test - " , id);
-                String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/getUser?user_id=" + id;
-
-                HttpConnection httpConnection = new HttpConnection(MapsActivity.this, new AsyncResponse() {
-                    @Override
-                    public void processFinish(Object output) {
-                        String result = (String) output;
-
-                        JSONObject user = null;
-                        try {
-                            user = new JSONObject(result);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Log.v("user: ", user.toString());
-                       try {
-                           first_name = user.getString("first_name");
-                           last_name = user.getString("last_name");
-                           phone_number = user.getString("phone_number");
-                           email = user.getString("email");
-
-                           Intent i = new Intent(MapsActivity.this, UserProfileActivity.class);
-                           i.putExtra("fname", first_name);
-                           i.putExtra("lname", last_name);
-                           i.putExtra("ph_number", phone_number);
-                           i.putExtra("email", email);
-                           startActivity(i);
-
-                       } catch (JSONException e) {
-                           e.printStackTrace();
-                       }
-                    }
-                });
-                httpConnection.execute(s);
-            }
-        });
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -357,6 +302,8 @@ public class MapsActivity extends AppCompatActivity implements
         });
 
     }
+
+
 
     public void CustomDialog() {
         dialog = new Dialog(MapsActivity.this);
@@ -549,7 +496,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     //Add elements of hamburger
     private void addDrawerItems() {
-        String[] hamburgerArray = { "Post Ad", "Favourite Posts", "View Your Ads", "Settings", "Help", "Logout" };
+        String[] hamburgerArray = { "Post Ad", "Favourite Posts", "View Your Ads", "Profile", "Help", "Logout" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, hamburgerArray);
         mDrawerList.setAdapter(mAdapter);
 
@@ -567,18 +514,60 @@ public class MapsActivity extends AppCompatActivity implements
                     Intent myIntent = new Intent(MapsActivity.this, ViewMyAds.class);
                     startActivity(myIntent);
                 } else if(position==3) {
-                    Intent myIntent = new Intent(MapsActivity.this, Settings.class);
-                    startActivity(myIntent);
+                    viewProfile();
                 } else if(position==4) {
                     Intent myIntent = new Intent(MapsActivity.this, Help.class);
                     startActivity(myIntent);
                 } else if(position==5) {
-                    //To be attached with FB Logout
-                    Intent myIntent = new Intent(MapsActivity.this, PostMyAdForm.class);
-                    startActivity(myIntent);
+                    fbLogout();
                 }
             }
         });
+    }
+
+    public void fbLogout() {
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        LoginManager.getInstance().logOut();
+        finish();
+    }
+
+    public void viewProfile() {
+        SessionManagement session = new SessionManagement(getApplicationContext());
+        String id = session.getLoggedInUserId();
+        Log.v("Shivalik test - " , id);
+        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/getUser?user_id=" + id;
+
+        HttpConnection httpConnection = new HttpConnection(MapsActivity.this, new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+                String result = (String) output;
+
+                JSONObject user = null;
+                try {
+                    user = new JSONObject(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.v("user: ", user.toString());
+                try {
+                    first_name = user.getString("first_name");
+                    last_name = user.getString("last_name");
+                    phone_number = user.getString("phone_number");
+                    email = user.getString("email");
+
+                    Intent i = new Intent(MapsActivity.this, UserProfileActivity.class);
+                    i.putExtra("fname", first_name);
+                    i.putExtra("lname", last_name);
+                    i.putExtra("ph_number", phone_number);
+                    i.putExtra("email", email);
+                    startActivity(i);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        httpConnection.execute(s);
     }
 
     /**
