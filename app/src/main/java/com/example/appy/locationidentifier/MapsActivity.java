@@ -419,7 +419,7 @@ public class MapsActivity extends AppCompatActivity implements
                 marker.title(resultAddress);
                 float colorCode;
                 switch (category_type) {
-                    case "Hospital" : colorCode = BitmapDescriptorFactory.HUE_ROSE; break; //HUE_ROSE
+                    case "Hospital" : colorCode = BitmapDescriptorFactory.HUE_ROSE; break; //BitmapDescriptorFactory.HUE_ROSE
                     case "School"   : colorCode = BitmapDescriptorFactory.HUE_BLUE; break; //HUE_BLUE
                     case "Gym"   : colorCode = BitmapDescriptorFactory.HUE_ORANGE; break;
                     case "Grocery Store"   : colorCode = BitmapDescriptorFactory.HUE_AZURE; break;
