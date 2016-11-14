@@ -79,7 +79,7 @@ public class MapsActivity extends AppCompatActivity implements
     private LocationRequest mLocationRequest;
     private ProgressDialog progress;
     public Dialog dialog;
-    //public EditText editText;
+    Address searchAddress;
 
     public String first_name = "";
     public String last_name = "";
@@ -98,30 +98,29 @@ public class MapsActivity extends AppCompatActivity implements
         EditText editText = (EditText) findViewById(R.id.searchView1);
         String address = editText.getText().toString();
         Log.i(TAG,"Text Values: " + address);
-
         search(address, getApplicationContext());
     }
 
     protected void search(String locationAddress, final Context context) {
 
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-        Address address;
         String result = null;
         try {
             List addressList = geocoder.getFromLocationName(locationAddress, 1);
             if (addressList != null && addressList.size() > 0) {
-                address = (Address) addressList.get(0);
+                searchAddress = (Address) addressList.get(0);
                 StringBuilder sb = new StringBuilder();
-                sb.append(address.getLatitude()).append("\n");
-                sb.append(address.getLongitude()).append("\n");
+                sb.append(searchAddress.getLatitude()).append("\n");
+                sb.append(searchAddress.getLongitude()).append("\n");
                 result = sb.toString();
-                LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                LatLng latLng = new LatLng(searchAddress.getLatitude(), searchAddress.getLongitude());
 
                 mMap.clear();
                 MarkerOptions markerOptions = new MarkerOptions()
                 .position(latLng).draggable(true)
                 .title(locationAddress)
-                .snippet("You are here");
+                .snippet("You are here")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                  // working - long press will drag it. But custom dragging?
 
                 mMap.addMarker(markerOptions);
@@ -226,7 +225,7 @@ public class MapsActivity extends AppCompatActivity implements
                 MarkerOptions marker = new MarkerOptions();
                 marker.position(latlng);
                 marker.title(resultAddress);
-                marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 results.add(marker);
             }
 
@@ -280,6 +279,8 @@ public class MapsActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        getCurrentLocation();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,11 +304,11 @@ public class MapsActivity extends AppCompatActivity implements
         Window window = dialog.getWindow();
         WindowManager.LayoutParams param = window.getAttributes();
         // set the layout at right bottom
-        param.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+        param.gravity = Gravity.BOTTOM | Gravity.LEFT;
         // it dismiss the dialog when click outside the dialog frame
         dialog.setCanceledOnTouchOutside(true);
 
-        View gymButton = (View) dialog.findViewById(R.id.gym);
+        final View gymButton = (View) dialog.findViewById(R.id.gym);
         gymButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -356,6 +357,7 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     private void highlightOptions(String s) {
+        getCurrentLocation();
         s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/getPublicPlaces?option=" + s;
         HttpConnection connect = new HttpConnection(this, new AsyncResponse() {
             @Override
@@ -365,8 +367,9 @@ public class MapsActivity extends AppCompatActivity implements
 
                 if(placesArray.size() > 0) {
                     dialog.dismiss();
-                    mMap.clear();
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(placesArray.get(0).getPosition()));
+                    LatLng searchLatLng = new LatLng(searchAddress.getLatitude(), searchAddress.getLongitude());
+//                    mMap.clear();
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(searchLatLng));
                     mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                 } else {
                     Toast.makeText(MapsActivity.this, "No places to display. Try another", Toast.LENGTH_SHORT).show();
@@ -382,7 +385,23 @@ public class MapsActivity extends AppCompatActivity implements
 
     }
 
-    private ArrayList<MarkerOptions> extractPlaces(String result) {
+    private void getCurrentLocation() {
+        EditText editText = (EditText) findViewById(R.id.searchView1);
+        String address = editText.getText().toString();
+        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+
+        try {
+            List addressList = geocoder.getFromLocationName(address, 1);
+            if (addressList != null && addressList.size() > 0) {
+                searchAddress = (Address) addressList.get(0);
+                LatLng latLng = new LatLng(searchAddress.getLatitude(), searchAddress.getLongitude());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+        private ArrayList<MarkerOptions> extractPlaces(String result) {
         ArrayList<MarkerOptions> results = new ArrayList<>();;
         JSONObject places = null;
         try {
@@ -400,10 +419,10 @@ public class MapsActivity extends AppCompatActivity implements
                 marker.title(resultAddress);
                 float colorCode;
                 switch (category_type) {
-                    case "Hospital" : colorCode = BitmapDescriptorFactory.HUE_RED; break;
-                    case "School"   : colorCode = BitmapDescriptorFactory.HUE_BLUE; break;
+                    case "Hospital" : colorCode = BitmapDescriptorFactory.HUE_ROSE; break; //HUE_ROSE
+                    case "School"   : colorCode = BitmapDescriptorFactory.HUE_BLUE; break; //HUE_BLUE
                     case "Gym"   : colorCode = BitmapDescriptorFactory.HUE_ORANGE; break;
-                    case "Grocery Store"   : colorCode = BitmapDescriptorFactory.HUE_GREEN; break;
+                    case "Grocery Store"   : colorCode = BitmapDescriptorFactory.HUE_AZURE; break;
                     default : colorCode = BitmapDescriptorFactory.HUE_VIOLET;
                 }
                 marker.icon(BitmapDescriptorFactory.defaultMarker(colorCode));
