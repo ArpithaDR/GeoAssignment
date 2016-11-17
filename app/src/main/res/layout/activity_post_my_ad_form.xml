@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollView1"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -174,8 +175,38 @@
             android:id="@+id/post_ad_submit"
             android:onClick="submitAddress"
             android:layout_below="@+id/post_ad_phone"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="17dp" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="24dp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_camera"
+            android:id="@+id/camera_button"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/post_ad_phone"
+            android:layout_alignStart="@+id/post_ad_phone" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_gallery"
+            android:id="@+id/gallery_button"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/camera_button"
+            android:layout_toEndOf="@+id/camera_button" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/common_google_signin_btn_icon_dark"
+            android:layout_alignTop="@+id/post_ad_submit"
+            android:layout_toEndOf="@+id/gallery_button"
+            android:layout_marginStart="37dp"
+            android:id="@+id/galleryImgV" />
 
     </RelativeLayout>
 </ScrollView>
