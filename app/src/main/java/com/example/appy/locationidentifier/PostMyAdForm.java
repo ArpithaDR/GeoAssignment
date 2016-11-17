@@ -1,10 +1,8 @@
 package com.example.appy.locationidentifier;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
@@ -99,7 +97,7 @@ public class PostMyAdForm extends AppCompatActivity {
                     Uri mImageUri=data.getData();
                     Log.v("LOG_TAG uri - ", mImageUri.toString());
 
-                    ImageView imageView = (ImageView) findViewById(R.id.galleryImgV);
+                    ImageView imageView = (ImageView) findViewById(R.id.gV0);
 
 
                     Bitmap bmp = null;
@@ -145,9 +143,6 @@ public class PostMyAdForm extends AppCompatActivity {
                             Uri uri = item.getUri();
                             mArrayUri.add(uri);
 
-                            ImageView imageView = (ImageView) findViewById(R.id.galleryImgV);
-
-
                             Bitmap bmp = null;
                             try {
                                 bmp = getBitmapFromUri(uri);
@@ -155,7 +150,32 @@ public class PostMyAdForm extends AppCompatActivity {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
-                            imageView.setImageBitmap(bmp);
+
+
+                                if(i==0) {
+                                    ImageView imageView = (ImageView) findViewById(R.id.gV0);
+                                    imageView.setImageBitmap(bmp);
+                                }
+                                if(i==1) {
+                                    ImageView imageView = (ImageView) findViewById(R.id.gV1);
+                                    imageView.setImageBitmap(bmp);
+                                }
+                                if(i==2) {
+                                    ImageView imageView = (ImageView) findViewById(R.id.gV2);
+                                    imageView.setImageBitmap(bmp);
+                                }
+                                if(i==3) {
+                                    ImageView imageView = (ImageView) findViewById(R.id.gV3);
+                                    imageView.setImageBitmap(bmp);
+                                }
+                                if(i==4) {
+                                    ImageView imageView = (ImageView) findViewById(R.id.gV4);
+                                    imageView.setImageBitmap(bmp);
+                                }
+                                if(i==5) {
+                                    ImageView imageView = (ImageView) findViewById(R.id.gV5);
+                                    imageView.setImageBitmap(bmp);
+                                }
 
                             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                             bmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);

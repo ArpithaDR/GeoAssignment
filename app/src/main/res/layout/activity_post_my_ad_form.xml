@@ -168,25 +168,71 @@
             android:layout_marginTop="23dp"
             android:id="@+id/post_ad_phone" />
 
-        <Button
-            android:text="@string/post_ad_submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/post_ad_submit"
-            android:onClick="submitAddress"
+        <GridLayout
+            android:layout_width="300dp"
+            android:layout_height="200dp"
             android:layout_below="@+id/post_ad_phone"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="24dp" />
+            android:layout_alignParentStart="true">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_camera"
-            android:id="@+id/camera_button"
-            android:layout_alignParentBottom="true"
-            android:layout_alignLeft="@+id/post_ad_phone"
-            android:layout_alignStart="@+id/post_ad_phone" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/common_google_signin_btn_icon_dark"
+                android:id="@+id/gV0"
+                android:layout_below="@+id/post_ad_phone"
+                android:layout_alignStart="@+id/post_ad_phone" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/common_google_signin_btn_icon_dark_focused"
+                android:id="@+id/gV1"
+                android:layout_alignTop="@+id/gV0"
+                android:layout_toEndOf="@+id/gV0" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/common_google_signin_btn_icon_dark_focused"
+                android:id="@+id/gV2"
+                android:layout_alignTop="@+id/gV1"
+                android:layout_toEndOf="@+id/gV1"
+                android:layout_row="0"
+                android:layout_column="2" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/common_google_signin_btn_icon_dark_focused"
+                android:id="@+id/gV4"
+                android:layout_below="@+id/gV2"
+                android:layout_toEndOf="@+id/gV1"
+                android:layout_row="1"
+                android:layout_column="1" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/common_google_signin_btn_icon_dark_focused"
+                android:id="@+id/gV5"
+                android:layout_below="@+id/gV0"
+                android:layout_alignStart="@+id/gV0"
+                android:layout_row="1"
+                android:layout_column="2" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/common_google_signin_btn_icon_dark_focused"
+                android:id="@+id/gV3"
+                android:layout_below="@+id/post_ad_phone"
+                android:layout_alignParentStart="true"
+                android:layout_row="1"
+                android:layout_column="0" />
+
+
+        </GridLayout>
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -194,19 +240,29 @@
             app:srcCompat="@android:drawable/ic_menu_gallery"
             android:id="@+id/gallery_button"
             android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/camera_button"
-            android:layout_toEndOf="@+id/camera_button" />
+            android:layout_below="@+id/post_ad_phone"
+            android:layout_alignStart="@+id/post_ad_phone"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="185dp" />
 
-        <ImageView
+        <Button
+            android:text="@string/post_ad_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_dark"
-            android:layout_alignTop="@+id/post_ad_submit"
+            android:id="@+id/post_ad_submit"
+            android:onClick="submitAddress"
+            android:layout_alignParentBottom="true"
             android:layout_toEndOf="@+id/gallery_button"
-            android:layout_marginStart="37dp"
-            android:id="@+id/galleryImgV" />
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="50dp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_camera"
+            android:id="@+id/camera_button"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 </ScrollView>
