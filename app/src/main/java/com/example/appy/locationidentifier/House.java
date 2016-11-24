@@ -7,23 +7,33 @@ package com.example.appy.locationidentifier;
 public class House {
 
     private String name;
-    private int price;
+    private double price;
     private int thumbnail;
+    public int houseId;
 
     public House() {
     }
 
-    public House(String name, int value, int thumbnail) {
+    public int getHouseId() {
+        return houseId;
+    }
+
+    public void setHouseId(int houseId) {
+        this.houseId = houseId;
+    }
+
+    public House(String name, double value, int thumbnail, int id) {
         this.name = name;
         this.price = value;
         this.thumbnail = thumbnail;
+        this.houseId = id;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

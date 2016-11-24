@@ -146,6 +146,11 @@ public class MapsActivity extends AppCompatActivity implements
         }
     }
 
+    public void listViewOfHouses(View view) {
+        Intent intent = new Intent(this, ListOfHouses.class);
+        startActivity(intent);
+    }
+
     private GoogleMap.OnMarkerDragListener markerDragListener() {
 
         return new GoogleMap.OnMarkerDragListener() {

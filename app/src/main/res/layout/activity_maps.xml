@@ -12,15 +12,6 @@
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            />
-
         <EditText
             android:id="@+id/searchView1"
             android:layout_width="250dp"
@@ -55,6 +46,26 @@
             android:layout_marginEnd="15dp"
             android:layout_marginTop="67dp"
             android:id="@+id/fab"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="130dp"
+            android:layout_marginBottom="15dp"
+            android:text="List View"
+            android:onClick="listViewOfHouses"
+            android:id="@+id/list_view"
+            android:layout_alignParentBottom="true"
+            />
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
     <ListView

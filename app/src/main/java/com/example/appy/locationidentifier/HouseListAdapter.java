@@ -1,10 +1,7 @@
 package com.example.appy.locationidentifier;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -45,7 +41,7 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
             viewbtn = (Button) view.findViewById(R.id.viewbtn);
             isFavorite = returnIfFavourite(view);
 
-            ((ImageButton) view.findViewById(R.id.favicon)).setImageResource(isFavorite ? R.drawable.favorite : R.drawable.addfavorite);
+            ((ImageButton) view.findViewById(R.id.favicon)).setImageResource(isFavorite ? R.drawable.favorite : R.drawable.notfavorite);
             favbtn = (ImageButton) view.findViewById(R.id.favicon);
 
         }
@@ -80,12 +76,11 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
         Glide.with(mContext).load(house.getThumbnail()).into(holder.thumbnail);
         holder.viewbtn.setOnClickListener(onClickListener(position));
         holder.favbtn.setOnClickListener(onClickListenerFav(position));
-
     }
 
     private void setDataToView(TextView description, TextView price, final int position) {
         description.setText(houseList.get(position).getName());
-        price.setText(houseList.get(position).getPrice());
+        price.setText((int)houseList.get(position).getPrice());
     }
 
     private View.OnClickListener onClickListenerFav(final int position) {
@@ -99,17 +94,18 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
 
                 //Check if that position item was in fav table for that user, If present remove
                 // and change the icon and if not add to the fav table and change icon
-                changeFavList(v);
+                int houseId = houseList.get(position).getHouseId();
+                changeFavList(v, houseId);
                 System.out.println("Click captured");
                 //  houseList.get(position).isFavorite =! houseList.get(position).isFavorite;
-                notifyDataSetChanged();
+               // notifyItemRemoved(position);
             }
         };
     }
 
-    private void changeFavList(View view) {
+    private void changeFavList(View view, int houseId) {
 
-        ((ImageButton) view.findViewById(R.id.favicon)).setImageResource(R.drawable.addfavorite);
+        ((ImageButton) view.findViewById(R.id.favicon)).setImageResource(R.drawable.notfavorite);
         return;
     }
 

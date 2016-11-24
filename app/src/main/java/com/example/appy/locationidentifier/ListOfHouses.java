@@ -15,6 +15,7 @@ public class ListOfHouses extends AppCompatActivity {
     private RecyclerView recyclerView;
     private HouseListAdapter adapter;
     private List<House> houseList;
+    private List<House> favList;
     RecyclerView.LayoutManager mLayoutManager;
 
     @Override
@@ -25,6 +26,7 @@ public class ListOfHouses extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         houseList = new ArrayList<>();
+        favList = new ArrayList<>();
         adapter = new HouseListAdapter(this, houseList);
 
         mLayoutManager = new LinearLayoutManager(this);
@@ -46,7 +48,7 @@ public class ListOfHouses extends AppCompatActivity {
         };
 
         for (int index = 0; index < 5; index++) {
-            House a = new House("House Summary" + index, 400, covers[index]);
+            House a = new House("House Summary" + index, 400, covers[index], index);
             houseList.add(a);
         }
         adapter.notifyDataSetChanged();

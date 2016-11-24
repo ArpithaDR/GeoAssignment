@@ -13,10 +13,10 @@ public class ClickedAdActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clicked_ad);
 
-        SessionManagement session = new SessionManagement(getApplicationContext());
+        /*SessionManagement session = new SessionManagement(getApplicationContext());
         String id = session.getLoggedInUserId();
         Log.v("Shivalik test - " , id);
-
+        */
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

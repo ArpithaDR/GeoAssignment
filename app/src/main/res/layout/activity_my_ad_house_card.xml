@@ -62,18 +62,19 @@
 
             </android.widget.Button>
 
-            <ImageButton
-                android:src="@drawable/notfavorite"
-                android:text="Favourites"
+            <android.widget.Button
+                android:id="@+id/deletebtn"
                 android:layout_width="wrap_content"
-                android:id="@+id/favicon"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:layout_marginRight="22dp"
-                android:layout_marginEnd="22dp"
-                android:layout_alignTop="@+id/viewbtn"
+                android:layout_alignBaseline="@+id/viewbtn"
+                android:layout_alignBottom="@+id/viewbtn"
                 android:layout_toLeftOf="@+id/viewbtn"
-                android:layout_toStartOf="@+id/viewbtn" />
+                android:layout_toStartOf="@+id/viewbtn"
+                android:text="Delete"
+                android:minHeight="0dp"
+                android:minWidth="0dp">
+
+            </android.widget.Button>
 
 
         </RelativeLayout>
