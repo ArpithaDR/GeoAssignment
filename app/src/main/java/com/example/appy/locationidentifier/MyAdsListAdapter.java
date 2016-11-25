@@ -108,8 +108,10 @@ public class MyAdsListAdapter extends RecyclerView.Adapter<MyAdsListAdapter.View
                 intent.putExtra("Email", house.getEmail());
                 intent.putExtra("EndDate", house.getEndDate());
                 intent.putExtra("Phone", house.getPhone());
-                intent.putExtra("Price", house.getPrice());
-                intent.putExtra("Spots", house.getSpots());
+                String price = Double.toString(house.getPrice());
+                intent.putExtra("Price", price);
+                String spots = Integer.toString(house.getSpots());
+                intent.putExtra("Spots", spots);
                 intent.putExtra("StartDate", house.getStartDate());
                 intent.putExtra("Subject", house.getSubject());
                 mContext.startActivity(intent);

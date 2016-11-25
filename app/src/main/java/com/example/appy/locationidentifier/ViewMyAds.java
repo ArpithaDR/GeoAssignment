@@ -17,7 +17,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ViewMyAds extends AppCompatActivity {
@@ -74,16 +77,48 @@ public class ViewMyAds extends AppCompatActivity {
     void extractHousesFromResult(JSONObject obj) {
         ArrayList<MarkerOptions> results = new ArrayList<>();
         // Read json object
-
+        /* Example Object:
+              "AptNo": 5,
+              "Available": true,
+              "City": "Los Angeles",
+              "Description": "Nearest to Campus",
+              "EndDate": "Thu, 01 Jun 2017 00:00:00 GMT",
+              "PhoneNumber": "4086007283  ",
+              "Price": 2700.0,
+              "Spots": 2,
+              "StartDate": "Sat, 01 Apr 2017 00:00:00 GMT",
+              "State": "California",
+              "StreetAddress": "2827 Orchard Ave                                                                                    ",
+              "Title": "This is Sindhus house",
+              "Zip": 90007,
+              "id": 3,
+              "user_id": 1349781218406667
+         */
         try {
             JSONArray houseArray = (JSONArray) obj.get("houseList");
-
+            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
+            SimpleDateFormat sdf=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
             for(int i=0; i< houseArray.length(); i++) {
                 JSONObject jsonObject = (JSONObject) houseArray.get(i);
                 String desc = (String) jsonObject.get("Description");
                 Double price = (Double) jsonObject.get("Price");
                 int houseId = (int) jsonObject.get("id");
-                House house = new House(desc, price, R.drawable.images1,houseId);
+                String subject = (String) jsonObject.get("Title");
+                String endDate = (String) jsonObject.get("EndDate");
+                String startDate = (String) jsonObject.get("StartDate");
+                try {
+                    Date dateEnd = sdf.parse(endDate);
+                    endDate = formatter.format(dateEnd);
+                    Date dateStart = sdf.parse(startDate);
+                    startDate = formatter.format(dateStart);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                String address = (String) jsonObject.get("StreetAddress");
+                String phone = (String) jsonObject.get("PhoneNumber");
+                int spots = (int) jsonObject.get("Spots");
+                String email = "test@123";
+                House house = new House(desc, subject, email,address, startDate, endDate, phone, spots, price, houseId, R.drawable.images1);
                 myAdsList.add(house);
             }
 

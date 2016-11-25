@@ -69,7 +69,7 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         House house = houseList.get(position);
-        holder.title.setText(house.getName());
+        holder.title.setText(house.getDesc());
         holder.price.setText(house.getPrice() + "USD");
 
         // loading house image using Glide library
@@ -79,7 +79,7 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
     }
 
     private void setDataToView(TextView description, TextView price, final int position) {
-        description.setText(houseList.get(position).getName());
+        description.setText(houseList.get(position).getDesc());
         price.setText((int)houseList.get(position).getPrice());
     }
 
@@ -113,8 +113,17 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                House house = houseList.get(position);
                 Intent intent = new Intent(mContext, ClickedAdActivity.class);
+                intent.putExtra("Address", house.getAddress());
+                intent.putExtra("Desc", house.getDesc());
+                intent.putExtra("Email", house.getEmail());
+                intent.putExtra("EndDate", house.getEndDate());
+                intent.putExtra("Phone", house.getPhone());
+                intent.putExtra("Price", house.getPrice());
+                intent.putExtra("Spots", house.getSpots());
+                intent.putExtra("StartDate", house.getStartDate());
+                intent.putExtra("Subject", house.getSubject());
                 mContext.startActivity(intent);
             }
         };

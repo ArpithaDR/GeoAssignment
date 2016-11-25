@@ -123,7 +123,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
     public void onBindViewHolder(final FavListAdapter.ViewHolder holder, final int position) {
 
         House house = favList.get(position);
-        holder.title.setText(house.getName());
+        holder.title.setText(house.getDesc());
         holder.price.setText(house.getPrice() + "USD");
        // setIfFavorite(position);
         holder.favbtn.setImageResource(R.drawable.favorite);
