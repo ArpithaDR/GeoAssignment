@@ -59,7 +59,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -80,6 +84,7 @@ public class MapsActivity extends AppCompatActivity implements
     private ProgressDialog progress;
     public Dialog dialog;
     Address searchAddress;
+    public ArrayList<House> resultsList = new ArrayList<House>();
 
     public String first_name = "";
     public String last_name = "";
@@ -147,6 +152,11 @@ public class MapsActivity extends AppCompatActivity implements
 
     public void listViewOfHouses(View view) {
         Intent intent = new Intent(this, ListOfHouses.class);
+        System.out.println("ResultList: " + resultsList);
+        if (searchAddress != null) {
+            intent.putExtra("Latitude", Double.toString(searchAddress.getLatitude()));
+            intent.putExtra("Longitude", Double.toString(searchAddress.getLongitude()));
+        }
         startActivity(intent);
     }
 
@@ -196,31 +206,40 @@ public class MapsActivity extends AppCompatActivity implements
         HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {
             @Override
             public void processFinish(Object output) {
-                String result = (String) output;
-                JSONObject houses = null;
-                try {
-                    houses = new JSONObject(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("In MapsActivity finish process with result:" + houses);
-                ArrayList<MarkerOptions> resultArray = extractHousesFromResult(houses);
-                for(MarkerOptions mo : resultArray) {
-                    mMap.addMarker(mo);
+                if (output != null) {
+                    String result = (String) output;
+                    JSONObject houses = null;
+                    try {
+                        if (!result.isEmpty())
+                            houses = new JSONObject(result);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+
+                    }
+                    if (houses != null) {
+                        ArrayList<MarkerOptions> resultArray = extractHousesFromResult(houses);
+                        for (MarkerOptions mo : resultArray) {
+                            mMap.addMarker(mo);
+                        }
+                    }
                 }
             }
         });
         httpConnection.execute(s);
     }
 
+
+
     ArrayList<MarkerOptions> extractHousesFromResult(JSONObject obj) {
         ArrayList<MarkerOptions> results = new ArrayList<>();
+        resultsList = new ArrayList<House>();
 
         // Read json object
 
         try {
             JSONArray houseArray = (JSONArray) obj.get("houseList");
-
+            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
+            SimpleDateFormat sdf=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
             for(int i=0; i< houseArray.length(); i++) {
                 JSONObject jsonObject = (JSONObject) houseArray.get(i);
                 double lat = (double) jsonObject.get("Latitude");
@@ -232,27 +251,13 @@ public class MapsActivity extends AppCompatActivity implements
                 marker.title(resultAddress);
                 marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 results.add(marker);
+                    /**/
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return results;
-    }
-
-    public void postAd(View arg0) {
-        final Context context = this;
-
-        Intent intent = new Intent(context, PostMyAdForm.class);
-        startActivity(intent);
-
-    }
-
-    public void listOfHouses(View view) {
-        final Context context = this;
-
-        Intent intent = new Intent(context, ListOfHouses.class);
-        startActivity(intent);
     }
 
     @Override

@@ -55,7 +55,6 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
 
         this.mContext = mContext;
         this.houseList = houseList;
-        //this.activity = activity;
     }
 
     @Override
@@ -78,10 +77,7 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
         holder.favbtn.setOnClickListener(onClickListenerFav(position));
     }
 
-    private void setDataToView(TextView description, TextView price, final int position) {
-        description.setText(houseList.get(position).getDesc());
-        price.setText((int)houseList.get(position).getPrice());
-    }
+
 
     private View.OnClickListener onClickListenerFav(final int position) {
         return new View.OnClickListener() {
@@ -120,8 +116,10 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
                 intent.putExtra("Email", house.getEmail());
                 intent.putExtra("EndDate", house.getEndDate());
                 intent.putExtra("Phone", house.getPhone());
-                intent.putExtra("Price", house.getPrice());
-                intent.putExtra("Spots", house.getSpots());
+                String price = Double.toString(house.getPrice());
+                intent.putExtra("Price", price);
+                String spots = Integer.toString(house.getSpots());
+                intent.putExtra("Spots", spots);
                 intent.putExtra("StartDate", house.getStartDate());
                 intent.putExtra("Subject", house.getSubject());
                 mContext.startActivity(intent);
@@ -133,4 +131,6 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
     public int getItemCount() {
         return houseList.size();
     }
+
+
 }
