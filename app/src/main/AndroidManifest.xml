@@ -66,6 +66,7 @@
         <activity
             android:name=".ListOfHouses"
             android:label="@string/title_activity_maps"
+            android:launchMode="singleTask"
             android:parentActivityName=".ListOfHouses" />
         <activity
             android:name=".HouseCard"
