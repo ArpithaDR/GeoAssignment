@@ -50,65 +50,10 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
         }
     }
 
-    /* public void setIfFavorite(int position) {
-
-        int houseId = favList.get(position).getHouseId();
-        String housenum = Integer.toString(houseId);
-        String userId = "10208655238312268";
-        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/checkIfFavHouse?"
-                + "userId=" + userId + "&houseId=" + housenum;
-        System.out.println("check fav" + s);
-        HttpConnection httpConnection = new HttpConnection(mContext, new AsyncResponse() {
-            @Override
-            public void processFinish(Object output) {
-                String result = (String) output;
-                JSONObject favHouses = null;
-                try {
-                    favHouses = new JSONObject(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                setValue(favHouses);
-                System.out.println("The value of string is setifFav: " + isFav);
-                if(isFav != null) {
-                    if (isFav.contains("true")) {
-                        System.out.println("isFav contains");
-
-                    }
-                } else {
-                    System.out.println("isFav not contains");
-                }
-                //setValue(retvalue.toString());
-                //isFav = retvalue.toString();
-            }
-        });
-        httpConnection.execute(s);
-
-        //return false;
-    }
-
-    public void setValue(JSONObject value) {
-        isFav= null;
-        try {
-            JSONArray houseArray = (JSONArray) value.get("favList");
-
-            for (int i = 0; i < houseArray.length(); i++) {
-                JSONObject jsonObject = (JSONObject) houseArray.get(i);
-                String housevalue = (String) jsonObject.get("value");
-                isFav = housevalue;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-       // isFav = housevalue;
-        System.out.println("The value of string is in setValue: " + isFav);
-    } */
-
     public FavListAdapter(Context mContext, List<House> favList) {
 
         this.mContext = mContext;
         this.favList = favList;
-        //this.activity = activity;
     }
 
     @Override
@@ -125,25 +70,12 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
         House house = favList.get(position);
         holder.title.setText(house.getDesc());
         holder.price.setText(house.getPrice() + "USD");
-       // setIfFavorite(position);
         holder.favbtn.setImageResource(R.drawable.favorite);
         holder.favbtn.setTag("Fav");
-       /* isFav = new String("true");
-
-        if (isFav.contains("true")) {
-            holder.favbtn.setImageResource(R.drawable.favorite);
-            holder.favbtn.setTag("Fav");
-            System.out.println("Entered Fav");
-        } else {
-            holder.favbtn.setImageResource(R.drawable.notfavorite);
-            holder.favbtn.setTag("notFav");
-            System.out.println("Entered notFav");
-        }*/
         // loading house image using Glide library
         Glide.with(mContext).load(house.getThumbnail()).into(holder.thumbnail);
         holder.viewbtn.setOnClickListener(onClickListener(position));
         holder.favbtn.setOnClickListener(onClickListenerFav(position));
-//        notifyDataSetChanged();
 
     }
 
@@ -151,59 +83,13 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //This code has to be changed to compare the item at getposition is in the fav
-                //list of that user. This data needs to be fetched form database
-                //The below code will require database connection and checking.The one
-                //currently present is solely for testing purpose
-
-                //Check if that position item was in fav table for that user, If present remove
-                // and change the icon and if not add to the fav table and change icon
 
                 int houseId = favList.get(position).getHouseId();
                 removeFromFavList(houseId, position);
-                //notifyDataSetChanged();
-                /*boolean isFav = checkFavButton(v);
-                if (isFav) {
-                    System.out.println("isFav changed" + isFav);
-                    ((ImageButton) v.findViewById(R.id.favicon)).setImageResource(R.drawable.notfavorite);
-                    removeFromFavList(houseId);
-                } else {
-                    ((ImageButton) v.findViewById(R.id.favicon)).setImageResource(R.drawable.favorite);
-                    addToFavList(houseId);
-                }
-               // System.out.println("Click captured");
-                //  houseList.get(position).isFavorite =! houseList.get(position).isFavorite; */
 
             }
         };
     }
-
-    /*public boolean checkFavButton(View v) {
-        ImageView fav_Btn = (ImageView)v.findViewById(R.id.favicon);
-        if(fav_Btn.getTag() != null && fav_Btn.getTag().toString().equals("Fav")) {
-            System.out.println("Fav");
-            return true;
-        } else {
-            System.out.println("Not Fav");
-            return false;
-        }
-
-
-    }
-
-    public void addToFavList(int houseId) {
-
-        String userId = "10208655238312268";
-        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/addFavHouse?"
-                + "userId=" + userId + "&houseId=" + houseId;
-        System.out.println("add fav" + s);
-        HttpConnection httpConnection = new HttpConnection(mContext, new AsyncResponse() {
-            @Override
-            public void processFinish(Object output) {
-            }
-        });
-        httpConnection.execute(s);
-    }*/
 
     public void removeFromFavList(int houseId, final int position) {
         System.out.println("reached remove" + isFav);
@@ -226,8 +112,19 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                House house = favList.get(position);
                 Intent intent = new Intent(mContext, ClickedAdActivity.class);
+                intent.putExtra("Address", house.getAddress());
+                intent.putExtra("Desc", house.getDesc());
+                intent.putExtra("Email", house.getEmail());
+                intent.putExtra("EndDate", house.getEndDate());
+                intent.putExtra("Phone", house.getPhone());
+                String price = Double.toString(house.getPrice());
+                intent.putExtra("Price", price);
+                String spots = Integer.toString(house.getSpots());
+                intent.putExtra("Spots", spots);
+                intent.putExtra("StartDate", house.getStartDate());
+                intent.putExtra("Subject", house.getSubject());
                 mContext.startActivity(intent);
             }
         };
