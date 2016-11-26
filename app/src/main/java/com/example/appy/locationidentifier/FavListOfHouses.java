@@ -15,7 +15,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class FavListOfHouses extends AppCompatActivity {
@@ -93,33 +96,53 @@ public class FavListOfHouses extends AppCompatActivity {
             @Override
             public void processFinish(Object output) {
                 String result = (String) output;
-                JSONObject favHouseDetails = null;
-                try {
-                    favHouseDetails = new JSONObject(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (result!=null) {
+                    JSONObject favHouseDetails = null;
+                    try {
+                        favHouseDetails = new JSONObject(result);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    extractHouseDetails(favHouseDetails);
                 }
-                extractHouseDetails(favHouseDetails);
             }
         });
         httpConnection.execute(s);
     }
 
     public void extractHouseDetails(JSONObject obj) {
+        if (obj !=null) {
             try {
                 JSONArray houseArray = (JSONArray) obj.get("favHouseList");
-
+                SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
                 for (int i = 0; i < houseArray.length(); i++) {
                     JSONObject jsonObject = (JSONObject) houseArray.get(i);
                     String desc = (String) jsonObject.get("Description");
                     Double price = (Double) jsonObject.get("Price");
-                    int houseId = (int) jsonObject.get("houseId");
-                    House house = new House(desc, price, R.drawable.images1,houseId);
+                    int houseId = (int) jsonObject.get("id");
+                    String subject = (String) jsonObject.get("Title");
+                    String endDate = (String) jsonObject.get("EndDate");
+                    String startDate = (String) jsonObject.get("StartDate");
+                    try {
+                        Date dateEnd = sdf.parse(endDate);
+                        endDate = formatter.format(dateEnd);
+                        Date dateStart = sdf.parse(startDate);
+                        startDate = formatter.format(dateStart);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    String address = (String) jsonObject.get("StreetAddress");
+                    String phone = (String) jsonObject.get("PhoneNumber");
+                    int spots = (int) jsonObject.get("Spots");
+                    String email = "test@123";
+                    House house = new House(desc, subject, email, address, startDate, endDate, phone, spots, price, houseId, R.drawable.images1, true);
                     favList.add(house);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
         adapter.notifyDataSetChanged();
     }
 

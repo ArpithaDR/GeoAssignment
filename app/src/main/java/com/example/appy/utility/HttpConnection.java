@@ -31,9 +31,9 @@ public class HttpConnection extends AsyncTask<String, Void, String> {
     }
 
     protected void onPreExecute() {
-        progress = new ProgressDialog(this.context);
-        progress.setMessage("Loading.....!");
-        progress.show();
+        //progress = new ProgressDialog(this.context);
+        //progress.setMessage("Loading.....!");
+        //progress.show();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class HttpConnection extends AsyncTask<String, Void, String> {
 
             System.out.println("Response msg:" + responseOutput.toString());
 //            output.append("Response msg: " + responseOutput.toString());
-            progress.dismiss();
+            //progress.dismiss();
             result = responseOutput.toString();
 
         } catch (MalformedURLException e) {

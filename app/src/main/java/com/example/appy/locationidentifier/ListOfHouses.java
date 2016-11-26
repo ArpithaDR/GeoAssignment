@@ -22,13 +22,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class ListOfHouses extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private HouseListAdapter adapter;
     private List<House> houseList;
-    private List<House> favList;
+    private List<House> favList = new ArrayList<House>();
+    private ArrayList<Integer> favHouseId = new ArrayList<Integer>();
     RecyclerView.LayoutManager mLayoutManager;
     private LatLng latLng;
     Bundle bundle;
@@ -51,14 +53,48 @@ public class ListOfHouses extends AppCompatActivity {
         bundle = getIntent().getExtras();
         Double latValue = Double.parseDouble(bundle.getString("Latitude"));
         Double longValue = Double.parseDouble(bundle.getString("Longitude"));
-        prepareListOfHouses(latValue, longValue);
+       fetchFavourites(latValue, longValue);
     }
+
+
+    private void fetchFavourites(final Double latValue, final Double longValue) {
+        /* SessionManagement session = new SessionManagement(getApplicationContext());
+            String id = session.getLoggedInUserId();
+        */
+
+        String userId = "10208655238312268";
+        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/fetchFavorite?"
+                + "userId=" + userId;
+        HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+                String result = (String) output;
+                JSONObject favHouses = null;
+                try {
+                    favHouses = new JSONObject(result);
+                    JSONArray houseArray = (JSONArray) favHouses.get("favList");
+
+                    for (int i = 0; i < houseArray.length(); i++) {
+                        JSONObject jsonObject = (JSONObject) houseArray.get(i);
+                        int houseId = (int) jsonObject.get("houseId");
+                        favHouseId.add(houseId);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                //fetchMinimalDetails(favHouses);
+                prepareListOfHouses(latValue, longValue);
+            }
+        });
+        httpConnection.execute(s);
+    }
+
 
     //This is static and this information must be fetched from database later
     private void prepareListOfHouses(Double latVal, Double longVal) {
-
         latLng = new LatLng(latVal, longVal);
         fetchHousesFromDB(latLng);
+        //fetchFavourites();
     }
 
     private void fetchHousesFromDB(LatLng latLng) {
@@ -68,6 +104,7 @@ public class ListOfHouses extends AppCompatActivity {
         HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {
             @Override
             public void processFinish(Object output) {
+
                 String result = (String) output;
                 JSONObject houses = null;
                 try {
@@ -75,6 +112,8 @@ public class ListOfHouses extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                //fetchFavourites(houses);
+                System.out.println("Fav ID's: " + favHouseId);
                 extractHousesFromResult(houses);
             }
         });
@@ -85,6 +124,7 @@ public class ListOfHouses extends AppCompatActivity {
 
     void extractHousesFromResult(JSONObject obj) {
         try {
+
             JSONArray houseArray = (JSONArray) obj.get("houseList");
             SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
             SimpleDateFormat sdf=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
@@ -108,7 +148,13 @@ public class ListOfHouses extends AppCompatActivity {
                 String phone = (String) jsonObject.get("PhoneNumber");
                 int spots = (int) jsonObject.get("Spots");
                 String email = "test@123";
-                House house = new House(desc, subject, email,address, startDate, endDate, phone, spots, price, houseId, R.drawable.images1);
+                boolean isFav;
+                if (((favHouseId !=null && favHouseId.contains(houseId))))
+                    isFav = true;
+                else
+                    isFav = false;
+                System.out.println("Printing results: " + houseId + " is Fav: " + isFav);
+                House house = new House(desc, subject, email,address, startDate, endDate, phone, spots, price, houseId, R.drawable.images1, isFav);
                 houseList.add(house);
             }
 

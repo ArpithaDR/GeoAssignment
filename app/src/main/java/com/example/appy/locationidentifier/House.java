@@ -18,6 +18,16 @@ public class House {
     private int thumbnail;
     public int houseId;
 
+    public boolean isfav() {
+        return isfav;
+    }
+
+    public void setIsfav(boolean isfav) {
+        this.isfav = isfav;
+    }
+
+    public boolean isfav;
+
     public String getAddress() {
         return address;
     }
@@ -92,7 +102,7 @@ public class House {
         this.houseId = id;
     }
 
-    public House(String desc, String subject, String email, String address, String startDate, String endDate, String phone, int spots, double price, int houseId, int thumbnail) {
+    public House(String desc, String subject, String email, String address, String startDate, String endDate, String phone, int spots, double price, int houseId, int thumbnail, boolean isFav) {
         this.desc = desc;
         this.subject = subject;
         this.email = email;
@@ -104,6 +114,7 @@ public class House {
         this.price = price;
         this.houseId = houseId;
         this.thumbnail = thumbnail;
+        this.isfav = isFav;
     }
 
     public double getPrice() {

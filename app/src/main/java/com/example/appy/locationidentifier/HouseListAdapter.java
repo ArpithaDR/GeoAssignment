@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.appy.utility.AsyncResponse;
+import com.example.appy.utility.HttpConnection;
 
 import java.util.List;
 
@@ -70,11 +72,60 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
         House house = houseList.get(position);
         holder.title.setText(house.getDesc());
         holder.price.setText(house.getPrice() + "USD");
+        if(house.isfav) {
+            holder.favbtn.setImageResource(R.drawable.favorite);
+            holder.favbtn.setTag("Fav");
+        } else {
+            holder.favbtn.setImageResource(R.drawable.notfavorite);
+            holder.favbtn.setTag("notFav");
+        }
 
         // loading house image using Glide library
         Glide.with(mContext).load(house.getThumbnail()).into(holder.thumbnail);
         holder.viewbtn.setOnClickListener(onClickListener(position));
         holder.favbtn.setOnClickListener(onClickListenerFav(position));
+    }
+
+    public boolean checkFavButton(View v) {
+        ImageView fav_Btn = (ImageView)v.findViewById(R.id.favicon);
+        if(fav_Btn.getTag() != null && fav_Btn.getTag().toString().equals("Fav")) {
+            System.out.println("Fav");
+            return true;
+        } else {
+            System.out.println("Not Fav");
+            return false;
+        }
+
+
+    }
+
+    public void addToFavList(int houseId) {
+
+        String userId = "10208655238312268";
+        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/addFavHouse?"
+                + "userId=" + userId + "&houseId=" + houseId;
+        System.out.println("add fav" + s);
+        HttpConnection httpConnection = new HttpConnection(mContext, new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+            }
+        });
+        httpConnection.execute(s);
+    }
+
+    public void removeFromFavList(int houseId) {
+        String userId = "10208655238312268";
+        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/removeFavHouse?"
+                + "userId=" + userId + "&houseId=" + houseId;
+        System.out.println("remove fav" + s);
+        HttpConnection httpConnection = new HttpConnection(mContext, new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+
+            }
+        });
+        httpConnection.execute(s);
+
     }
 
 
@@ -91,18 +142,23 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
                 //Check if that position item was in fav table for that user, If present remove
                 // and change the icon and if not add to the fav table and change icon
                 int houseId = houseList.get(position).getHouseId();
-                changeFavList(v, houseId);
+                //changeFavList(v, houseId);
                 System.out.println("Click captured");
+                boolean isFav = checkFavButton(v);
+                if (isFav) {
+                    System.out.println("isFav changed" + isFav);
+                    ((ImageButton) v.findViewById(R.id.favicon)).setImageResource(R.drawable.notfavorite);
+                    ((ImageButton) v.findViewById(R.id.favicon)).setTag("notFav");
+                    removeFromFavList(houseId);
+                } else {
+                    ((ImageButton) v.findViewById(R.id.favicon)).setImageResource(R.drawable.favorite);
+                    ((ImageButton) v.findViewById(R.id.favicon)).setTag("Fav");
+                    addToFavList(houseId);
+                }
                 //  houseList.get(position).isFavorite =! houseList.get(position).isFavorite;
                // notifyItemRemoved(position);
             }
         };
-    }
-
-    private void changeFavList(View view, int houseId) {
-
-        ((ImageButton) view.findViewById(R.id.favicon)).setImageResource(R.drawable.notfavorite);
-        return;
     }
 
     private View.OnClickListener onClickListener(final int position) {
