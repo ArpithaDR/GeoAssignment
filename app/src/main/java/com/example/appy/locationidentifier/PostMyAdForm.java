@@ -53,16 +53,16 @@ public class PostMyAdForm extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        cameraBtn = (ImageButton)findViewById(R.id.camera_button);
+//        cameraBtn = (ImageButton)findViewById(R.id.camera_button);
         galleryBtn = (ImageButton)findViewById(R.id.gallery_button);
 
-        cameraBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent in = new Intent(PostMyAdForm.this, PostMyAdForm.class);
-//                startActivityForResult();
-            }
-        });
+//        cameraBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Intent in = new Intent(PostMyAdForm.this, PostMyAdForm.class);
+////                startActivityForResult();
+//            }
+//        });
 
         galleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
