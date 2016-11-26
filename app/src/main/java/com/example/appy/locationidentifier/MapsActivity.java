@@ -67,6 +67,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static com.example.appy.locationidentifier.R.id.fab;
+
 
 //This is the main screen page
 
@@ -84,7 +86,6 @@ public class MapsActivity extends AppCompatActivity implements
     private ProgressDialog progress;
     public Dialog dialog;
     Address searchAddress;
-    public ArrayList<House> resultsList = new ArrayList<House>();
 
     public String first_name = "";
     public String last_name = "";
@@ -104,6 +105,14 @@ public class MapsActivity extends AppCompatActivity implements
         String address = editText.getText().toString();
         Log.i(TAG,"Text Values: " + address);
         search(address, getApplicationContext());
+    }
+
+    public void clearValues(View view) {
+        EditText searchbar = (EditText) findViewById(R.id.searchView1);
+        searchbar.setText("");
+        mMap.clear();
+        findViewById(R.id.list_view).setEnabled(false);
+        fetchLocation();
     }
 
     protected void search(String locationAddress, final Context context) {
@@ -133,6 +142,7 @@ public class MapsActivity extends AppCompatActivity implements
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                 mMap.setOnMarkerDragListener(markerDragListener());
                 fetchHousesFromDB(latLng);
+
             }
         } catch (IOException e) {
             Log.e(TAG, "Unable to connect to Geocoder", e);
@@ -146,13 +156,17 @@ public class MapsActivity extends AppCompatActivity implements
                 result = "Address: " + locationAddress +
                         "\n Unable to get Latitude and Longitude for this address location.";
                 Log.i(TAG, "Address: " + result);
+                Toast.makeText(MapsActivity.this, "Found no nearby subleases", Toast.LENGTH_LONG).show();
+                mMap.clear();
+                fetchLocation();
+                findViewById(R.id.list_view).setEnabled(false);
             }
         }
     }
 
     public void listViewOfHouses(View view) {
         Intent intent = new Intent(this, ListOfHouses.class);
-        System.out.println("ResultList: " + resultsList);
+        //System.out.println("ResultList: " + resultsList);
         if (searchAddress != null) {
             intent.putExtra("Latitude", Double.toString(searchAddress.getLatitude()));
             intent.putExtra("Longitude", Double.toString(searchAddress.getLongitude()));
@@ -180,9 +194,12 @@ public class MapsActivity extends AppCompatActivity implements
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(markerLocation));
                 try {
                     addresses = geocoder.getFromLocation(markerLocation.latitude, markerLocation.longitude, 1);
-                    String address = addresses.get(0).getAddressLine(0);
+                    StringBuffer address = new StringBuffer();
+                    address.append(addresses.get(0).getAddressLine(0));
+                    address.append(" ");
+                    address.append(addresses.get(0).getAddressLine(1));
                     EditText searchbar = (EditText) findViewById(R.id.searchView1);
-                    searchbar.setText(address);
+                    searchbar.setText(address.toString());
 
                 } catch (IOException e) {
                     Toast.makeText(MapsActivity.this, "Please make sure you are connected to internet", Toast.LENGTH_LONG).show();
@@ -222,6 +239,9 @@ public class MapsActivity extends AppCompatActivity implements
                             mMap.addMarker(mo);
                         }
                     }
+                    else {
+                        mMap.clear();
+                    }
                 }
             }
         });
@@ -232,7 +252,7 @@ public class MapsActivity extends AppCompatActivity implements
 
     ArrayList<MarkerOptions> extractHousesFromResult(JSONObject obj) {
         ArrayList<MarkerOptions> results = new ArrayList<>();
-        resultsList = new ArrayList<House>();
+        //resultsList = new ArrayList<House>();
 
         // Read json object
 
@@ -282,6 +302,7 @@ public class MapsActivity extends AppCompatActivity implements
         mDrawerList = (ListView)findViewById(R.id.navList);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
+        findViewById(R.id.list_view).setEnabled(false);
 
         addDrawerItems();
         setupDrawer();
@@ -290,7 +311,6 @@ public class MapsActivity extends AppCompatActivity implements
         getSupportActionBar().setHomeButtonEnabled(true);
 
         getCurrentLocation();
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -607,9 +627,7 @@ public class MapsActivity extends AppCompatActivity implements
         mMap.setOnMarkerDragListener(markerDragListener());
     }
 
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        Log.i(TAG, "Location services connected.");
+    public void fetchLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
@@ -629,6 +647,12 @@ public class MapsActivity extends AppCompatActivity implements
         }
     }
 
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        Log.i(TAG, "Location services connected.");
+        fetchLocation();
+    }
+
     private void handleNewLocation(Location location) {
 
         Log.d(TAG, location.toString());
@@ -640,9 +664,12 @@ public class MapsActivity extends AppCompatActivity implements
         geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
         try {
             addresses = geocoder.getFromLocation(currentLatitude, currentLongitude, 1);
-            String address = addresses.get(0).getAddressLine(0);
+            StringBuffer address = new StringBuffer();
+            address.append(addresses.get(0).getAddressLine(0));
+            address.append(", ");
+            address.append(addresses.get(0).getAddressLine(1));
             EditText searchbar = (EditText) findViewById(R.id.searchView1);
-            searchbar.setText(address);
+            searchbar.setText(address.toString());
 
         } catch (IOException e) {
             Toast.makeText(MapsActivity.this, "Please make sure you are connected to internet", Toast.LENGTH_LONG).show();

@@ -51,9 +51,11 @@ public class ListOfHouses extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
         bundle = getIntent().getExtras();
-        Double latValue = Double.parseDouble(bundle.getString("Latitude"));
-        Double longValue = Double.parseDouble(bundle.getString("Longitude"));
-       fetchFavourites(latValue, longValue);
+        if (bundle != null) {
+            Double latValue = Double.parseDouble(bundle.getString("Latitude"));
+            Double longValue = Double.parseDouble(bundle.getString("Longitude"));
+            fetchFavourites(latValue, longValue);
+        }
     }
 
 

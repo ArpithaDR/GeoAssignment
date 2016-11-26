@@ -12,19 +12,6 @@
         tools:context=".MainActivity"
         android:background="#ffffffff">
 
-        <EditText
-            android:id="@+id/searchView1"
-            android:layout_width="250dp"
-            android:layout_height="34dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="18dp"
-            android:layout_marginTop="14dp"
-            android:hint="Search Location"
-            android:textColor="@android:color/black"
-            android:background="@android:color/white" >
-        </EditText>
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,6 +52,28 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/searchView1"
+            android:layout_width="250dp"
+            android:layout_height="34dp"
+            android:hint="Search Location"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"
+            android:layout_alignBottom="@+id/search_button"
+            android:layout_alignLeft="@+id/fab"
+            android:layout_alignStart="@+id/fab">
+        </EditText>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clear_button"
+            android:onClick="clearValues"
+            android:id="@+id/clear_button"
+            android:layout_below="@+id/search_button"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
     <ListView
