@@ -5,7 +5,8 @@ android {
     buildToolsVersion "24.0.2"
     defaultConfig {
         applicationId "com.example.appy.locationidentifier"
-        minSdkVersion 15
+        // min sdk version of 18 or higher is required for selecting the multiple images -- Shivalik
+        minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
