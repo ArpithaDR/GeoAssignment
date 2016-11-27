@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -50,6 +51,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -141,7 +143,18 @@ public class MapsActivity extends AppCompatActivity implements
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                 mMap.setOnMarkerDragListener(markerDragListener());
+               /* CircleOptions circleOptions = new CircleOptions()
+                        .center(latLng)
+                        .radius(1609.344)
+                        .strokeWidth(2)
+                        .strokeColor(Color.BLUE)
+                        .fillColor(Color.parseColor("#500084d3"));
+                // Supported formats are: #RRGGBB #AARRGGBB
+                //   #AA is the alpha, or amount of transparency
+
+                mMap.addCircle(circleOptions);*/
                 fetchHousesFromDB(latLng);
+                findViewById(R.id.list_view).setEnabled(true);
 
             }
         } catch (IOException e) {
@@ -159,7 +172,6 @@ public class MapsActivity extends AppCompatActivity implements
                 Toast.makeText(MapsActivity.this, "Found no nearby subleases", Toast.LENGTH_LONG).show();
                 mMap.clear();
                 fetchLocation();
-                findViewById(R.id.list_view).setEnabled(false);
             }
         }
     }
@@ -192,6 +204,16 @@ public class MapsActivity extends AppCompatActivity implements
                 List<Address> addresses;
                 geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(markerLocation));
+                /*CircleOptions circleOptions = new CircleOptions()
+                        .center(markerLocation)
+                        .radius(1609.344)
+                        .strokeWidth(2)
+                        .strokeColor(Color.BLUE)
+                        .fillColor(Color.parseColor("#500084d3"));
+                // Supported formats are: #RRGGBB #AARRGGBB
+                //   #AA is the alpha, or amount of transparency
+
+                mMap.addCircle(circleOptions);*/
                 try {
                     addresses = geocoder.getFromLocation(markerLocation.latitude, markerLocation.longitude, 1);
                     StringBuffer address = new StringBuffer();
@@ -683,6 +705,16 @@ public class MapsActivity extends AppCompatActivity implements
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         mMap.setOnMarkerDragListener(markerDragListener());
+        /*CircleOptions circleOptions = new CircleOptions()
+                .center(latLng)
+                .radius(1609.344)
+                .strokeWidth(2)
+                .strokeColor(Color.BLUE)
+                .fillColor(Color.parseColor("#500084d3"));
+        // Supported formats are: #RRGGBB #AARRGGBB
+        //   #AA is the alpha, or amount of transparency
+
+        mMap.addCircle(circleOptions);*/
     }
 
     @Override

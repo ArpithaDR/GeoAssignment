@@ -113,7 +113,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 House house = favList.get(position);
-                Intent intent = new Intent(mContext, ClickedAdActivity.class);
+                Intent intent = new Intent(mContext, AdDetails.class);
                 intent.putExtra("Address", house.getAddress());
                 intent.putExtra("Desc", house.getDesc());
                 intent.putExtra("Email", house.getEmail());

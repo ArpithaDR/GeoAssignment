@@ -102,7 +102,7 @@ public class MyAdsListAdapter extends RecyclerView.Adapter<MyAdsListAdapter.View
             @Override
             public void onClick(View v) {
                 House house = myAdsList.get(position);
-                Intent intent = new Intent(mContext, ClickedAdActivity.class);
+                Intent intent = new Intent(mContext, AdDetails.class);
                 intent.putExtra("Address", house.getAddress());
                 intent.putExtra("Desc", house.getDesc());
                 intent.putExtra("Email", house.getEmail());
