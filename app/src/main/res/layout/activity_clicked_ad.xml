@@ -61,16 +61,6 @@
         android:id="@+id/clicked_ad_desc" />
 
     <TextView
-        android:text="Phone Number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/clicked_ad_desc"
-        android:layout_alignRight="@+id/clicked_ad_desc"
-        android:layout_alignEnd="@+id/clicked_ad_desc"
-        android:layout_marginTop="16dp"
-        android:id="@+id/clicked_ad_phone" />
-
-    <TextView
         android:text="Number of Spots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -101,12 +91,22 @@
         android:layout_alignStart="@+id/clicked_ad_subject" />
 
     <TextView
+        android:text="Phone Number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:id="@+id/clicked_ad_phone"
+        android:layout_below="@+id/clicked_ad_desc"
+        android:layout_alignLeft="@+id/clicked_ad_user_email"
+        android:layout_alignStart="@+id/clicked_ad_user_email" />
+
+    <TextView
         android:text="Email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/clicked_ad_start_date"
-        android:layout_alignEnd="@+id/clicked_ad_start_date"
-        android:layout_marginBottom="11dp"
-        android:id="@+id/clicked_ad_user_email" />
+        android:id="@+id/clicked_ad_user_email"
+        android:layout_below="@+id/clicked_ad_phone"
+        android:layout_alignLeft="@+id/clicked_ad_desc"
+        android:layout_alignStart="@+id/clicked_ad_desc"
+        android:layout_marginTop="12dp" />
 </RelativeLayout>

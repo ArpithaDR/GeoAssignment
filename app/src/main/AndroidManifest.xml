@@ -52,7 +52,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".MapsActivity"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,11 +60,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MapsActivity" />
-
-        <activity android:name=".UserProfileActivity"></activity>
-
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".UserProfileActivity" />
         <activity
             android:name=".PostMyAdForm"
             android:label="@string/title_activity_maps"
@@ -76,6 +73,7 @@
         <activity
             android:name=".ListOfHouses"
             android:label="@string/title_activity_maps"
+            android:launchMode="singleTask"
             android:parentActivityName=".ListOfHouses" />
         <activity
             android:name=".HouseCard"
@@ -88,11 +86,13 @@
             android:name=".ViewMyAds"
             android:label="@string/title_activity_maps"
             android:parentActivityName=".ListOfHouses" />
-        <activity android:name=".Settings"
-            android:parentActivityName=".ListOfHouses"/>
-        <activity android:name=".Help"
-            android:parentActivityName=".ListOfHouses"></activity>
-
+        <activity
+            android:name=".Settings"
+            android:parentActivityName=".ListOfHouses" />
+        <activity
+            android:name=".Help"
+            android:parentActivityName=".ListOfHouses" />
+        <activity android:name=".MyAdHouseCard"></activity>
     </application>
 
 </manifest>

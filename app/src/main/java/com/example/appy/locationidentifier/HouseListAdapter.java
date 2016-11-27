@@ -1,10 +1,7 @@
 package com.example.appy.locationidentifier;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +10,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.appy.utility.AsyncResponse;
+import com.example.appy.utility.HttpConnection;
 
 import java.util.List;
 
@@ -45,7 +43,7 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
             viewbtn = (Button) view.findViewById(R.id.viewbtn);
             isFavorite = returnIfFavourite(view);
 
-            ((ImageButton) view.findViewById(R.id.favicon)).setImageResource(isFavorite ? R.drawable.favorite : R.drawable.addfavorite);
+            ((ImageButton) view.findViewById(R.id.favicon)).setImageResource(isFavorite ? R.drawable.favorite : R.drawable.notfavorite);
             favbtn = (ImageButton) view.findViewById(R.id.favicon);
 
         }
@@ -59,7 +57,6 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
 
         this.mContext = mContext;
         this.houseList = houseList;
-        //this.activity = activity;
     }
 
     @Override
@@ -73,20 +70,65 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         House house = houseList.get(position);
-        holder.title.setText(house.getName());
+        holder.title.setText(house.getDesc());
         holder.price.setText(house.getPrice() + "USD");
+        if(house.isfav) {
+            holder.favbtn.setImageResource(R.drawable.favorite);
+            holder.favbtn.setTag("Fav");
+        } else {
+            holder.favbtn.setImageResource(R.drawable.notfavorite);
+            holder.favbtn.setTag("notFav");
+        }
 
         // loading house image using Glide library
         Glide.with(mContext).load(house.getThumbnail()).into(holder.thumbnail);
         holder.viewbtn.setOnClickListener(onClickListener(position));
         holder.favbtn.setOnClickListener(onClickListenerFav(position));
+    }
+
+    public boolean checkFavButton(View v) {
+        ImageView fav_Btn = (ImageView)v.findViewById(R.id.favicon);
+        if(fav_Btn.getTag() != null && fav_Btn.getTag().toString().equals("Fav")) {
+            System.out.println("Fav");
+            return true;
+        } else {
+            System.out.println("Not Fav");
+            return false;
+        }
+
 
     }
 
-    private void setDataToView(TextView description, TextView price, final int position) {
-        description.setText(houseList.get(position).getName());
-        price.setText(houseList.get(position).getPrice());
+    public void addToFavList(int houseId) {
+
+        String userId = "10208655238312268";
+        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/addFavHouse?"
+                + "userId=" + userId + "&houseId=" + houseId;
+        System.out.println("add fav" + s);
+        HttpConnection httpConnection = new HttpConnection(mContext, new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+            }
+        });
+        httpConnection.execute(s);
     }
+
+    public void removeFromFavList(int houseId) {
+        String userId = "10208655238312268";
+        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/removeFavHouse?"
+                + "userId=" + userId + "&houseId=" + houseId;
+        System.out.println("remove fav" + s);
+        HttpConnection httpConnection = new HttpConnection(mContext, new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+
+            }
+        });
+        httpConnection.execute(s);
+
+    }
+
+
 
     private View.OnClickListener onClickListenerFav(final int position) {
         return new View.OnClickListener() {
@@ -99,26 +141,43 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
 
                 //Check if that position item was in fav table for that user, If present remove
                 // and change the icon and if not add to the fav table and change icon
-                changeFavList(v);
+                int houseId = houseList.get(position).getHouseId();
+                //changeFavList(v, houseId);
                 System.out.println("Click captured");
+                boolean isFav = checkFavButton(v);
+                if (isFav) {
+                    System.out.println("isFav changed" + isFav);
+                    ((ImageButton) v.findViewById(R.id.favicon)).setImageResource(R.drawable.notfavorite);
+                    ((ImageButton) v.findViewById(R.id.favicon)).setTag("notFav");
+                    removeFromFavList(houseId);
+                } else {
+                    ((ImageButton) v.findViewById(R.id.favicon)).setImageResource(R.drawable.favorite);
+                    ((ImageButton) v.findViewById(R.id.favicon)).setTag("Fav");
+                    addToFavList(houseId);
+                }
                 //  houseList.get(position).isFavorite =! houseList.get(position).isFavorite;
-                notifyDataSetChanged();
+               // notifyItemRemoved(position);
             }
         };
-    }
-
-    private void changeFavList(View view) {
-
-        ((ImageButton) view.findViewById(R.id.favicon)).setImageResource(R.drawable.addfavorite);
-        return;
     }
 
     private View.OnClickListener onClickListener(final int position) {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                House house = houseList.get(position);
                 Intent intent = new Intent(mContext, ClickedAdActivity.class);
+                intent.putExtra("Address", house.getAddress());
+                intent.putExtra("Desc", house.getDesc());
+                intent.putExtra("Email", house.getEmail());
+                intent.putExtra("EndDate", house.getEndDate());
+                intent.putExtra("Phone", house.getPhone());
+                String price = Double.toString(house.getPrice());
+                intent.putExtra("Price", price);
+                String spots = Integer.toString(house.getSpots());
+                intent.putExtra("Spots", spots);
+                intent.putExtra("StartDate", house.getStartDate());
+                intent.putExtra("Subject", house.getSubject());
                 mContext.startActivity(intent);
             }
         };
@@ -128,4 +187,6 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
     public int getItemCount() {
         return houseList.size();
     }
+
+
 }
