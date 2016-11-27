@@ -69,6 +69,7 @@
         <activity
             android:name=".ClickedAdActivity"
             android:label="@string/title_activity_maps"
+            android:launchMode="singleTask"
             android:parentActivityName=".ListOfHouses" />
         <activity
             android:name=".ListOfHouses"
@@ -92,7 +93,19 @@
         <activity
             android:name=".Help"
             android:parentActivityName=".ListOfHouses" />
-        <activity android:name=".MyAdHouseCard"></activity>
+        <activity
+            android:name=".MyAdHouseCard"
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".ListOfHouses" />
+        <activity
+            android:name=".ListOfPublicPlaces"
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".ClickedAdActivity" />
+        <activity android:name=".PublicPlacesCard"
+            />
+        <activity android:name=".AdDetails"
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".ListOfHouses"></activity>
     </application>
 
 </manifest>

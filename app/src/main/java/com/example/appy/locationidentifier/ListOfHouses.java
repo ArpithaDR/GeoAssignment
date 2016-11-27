@@ -99,7 +99,7 @@ public class ListOfHouses extends AppCompatActivity {
         //fetchFavourites();
     }
 
-    private void fetchHousesFromDB(LatLng latLng) {
+    private void fetchHousesFromDB(final LatLng latLng) {
 
         String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/searchHouseAvailable?latitude=" +
                 latLng.latitude + "&longitude=" + latLng.longitude +"&radius=1.0";
@@ -116,7 +116,7 @@ public class ListOfHouses extends AppCompatActivity {
                 }
                 //fetchFavourites(houses);
                 System.out.println("Fav ID's: " + favHouseId);
-                extractHousesFromResult(houses);
+                extractHousesFromResult(houses,latLng);
             }
         });
         httpConnection.execute(s);
@@ -124,7 +124,7 @@ public class ListOfHouses extends AppCompatActivity {
 
 
 
-    void extractHousesFromResult(JSONObject obj) {
+    void extractHousesFromResult(JSONObject obj, LatLng latLng) {
         try {
 
             JSONArray houseArray = (JSONArray) obj.get("houseList");
@@ -150,13 +150,17 @@ public class ListOfHouses extends AppCompatActivity {
                 String phone = (String) jsonObject.get("PhoneNumber");
                 int spots = (int) jsonObject.get("Spots");
                 String email = "test@123";
+                Double latitude = (Double) jsonObject.get("Latitude");
+                Double longitude = (Double) jsonObject.get("Longitude");
+                Double distance = (Double) jsonObject.get("Distance");
+                Double sLatitude = latLng.latitude;
+                Double sLongitude = latLng.longitude;
                 boolean isFav;
                 if (((favHouseId !=null && favHouseId.contains(houseId))))
                     isFav = true;
                 else
                     isFav = false;
-                System.out.println("Printing results: " + houseId + " is Fav: " + isFav);
-                House house = new House(desc, subject, email,address, startDate, endDate, phone, spots, price, houseId, R.drawable.images1, isFav);
+                House house = new House(desc, subject, email,address, startDate, endDate, phone, spots, price, houseId, R.drawable.images1, isFav,latitude,longitude,distance,sLatitude,sLongitude);
                 houseList.add(house);
             }
 
