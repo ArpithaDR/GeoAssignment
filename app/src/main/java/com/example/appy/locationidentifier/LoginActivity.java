@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.v("facebook - profile", profile2.getId());
                                     Log.v("facebook - profile", profile2.getLastName());
                                     Log.v("facebook - profile", profile2.getName());
-                                    String fbData = "id=" + profile2.getId() + "&full_name=" + profile2.getName() + "&first_name=" + profile2.getFirstName() + "&last_name=" + profile2.getLastName();
+                                    String fbData = "id=" + profile2.getId() + "&first_name=" + profile2.getFirstName() + "&last_name=" + profile2.getLastName();
                                     String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/fbLogin?" + fbData;
                                     session.storeLoggedInUserId(profile2.getId());
                                     goMapsScreen(s);
@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.v("facebook - profile", profile.getId());
                             Log.v("facebook - profile", profile.getLastName());
                             Log.v("facebook - profile", profile.getName());
-                            String fbData = "id=" + profile.getId() + "&full_name=" + profile.getName() + "&first_name=" + profile.getFirstName() + "&last_name=" + profile.getLastName();
+                            String fbData = "id=" + profile.getId() + "&first_name=" + profile.getFirstName() + "&last_name=" + profile.getLastName();
                             String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/fbLogin?" + fbData;
                             session.storeLoggedInUserId(profile.getId());
                             goMapsScreen(s);
