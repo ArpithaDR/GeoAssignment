@@ -675,7 +675,7 @@ public class MapsActivity extends AppCompatActivity implements
                     startActivity(myIntent);
                 } else if(position==3) {
                     viewProfile();
-                }  else if(position==5) {
+                }  else if(position==4) {
                     fbLogout();
                 }
             }
