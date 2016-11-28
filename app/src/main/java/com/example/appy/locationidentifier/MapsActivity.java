@@ -409,7 +409,6 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     public void onCheckboxClicked(View view){
-        Toast.makeText(MapsActivity.this, "Checkbox clicked", Toast.LENGTH_SHORT).show();
         boolean checked = ((CheckBox) view).isChecked();
 
         switch(view.getId()) {
