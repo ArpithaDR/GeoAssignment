@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -23,9 +24,15 @@ import android.widget.Toast;
 import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
 
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +45,8 @@ public class PostMyAdForm extends AppCompatActivity {
     public static final String TAG = PostMyAdForm
             .class.getSimpleName();
     private ProgressDialog progress;
+
+    private static String houseId;
 
     ImageButton cameraBtn, galleryBtn;
     private int PICK_IMAGE_REQUEST = 1;
@@ -111,12 +120,31 @@ public class PostMyAdForm extends AppCompatActivity {
 
 
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bmp.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    bmp.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
                     byte[] byteArray = byteArrayOutputStream .toByteArray();
 
                     String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                     encoded = encoded.replace("\n","");
+
+                    System.out.println("shivalik shivalik" + encoded);
+
+//                    String root = Environment.getExternalStorageDirectory().toString();
+//                    File myDir = new File(root + "/saved_images");
+//                    myDir.mkdirs();
+//                    String fname = "shivalik.txt";
+//                    File file = new File (myDir, fname);
+//                    if (file.exists ()) file.delete ();
+//                    try {
+//
+//
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+
                     Log.v("64 encod single- - - ", encoded);
+
+
+
                     imagesEncodedList.add(encoded);
 
 
@@ -261,15 +289,15 @@ public class PostMyAdForm extends AppCompatActivity {
 
     public void submitAddress(View arg0) {
         EditText title_et = (EditText) findViewById(R.id.post_ad_title);
-        title_et.setText("my Title");
+        //title_et.setText("my Title");
         String title = title_et.getText().toString();
 
         EditText address_et = (EditText) findViewById(R.id.post_ad_address);
-        address_et.setText("2140 Oak Street");
+        //address_et.setText("2140 Oak Street");
         String address = address_et.getText().toString();
 
         EditText aptNum_et = (EditText) findViewById(R.id.post_ad_aptNumber);
-//        aptNum_et.setText("2");
+        aptNum_et.setText("2");
         String aptNum = aptNum_et.getText().toString(); // integer check, null check handled in python
 
         EditText city_et = (EditText) findViewById(R.id.post_ad_city);
@@ -312,7 +340,7 @@ public class PostMyAdForm extends AppCompatActivity {
         String description = desc_et.getText().toString();
 
         EditText phone_et = (EditText) findViewById(R.id.post_ad_phone);
-        phone_et.setText("87681");
+        phone_et.setText("4086007283");
         String phone = phone_et.getText().toString();
 
         Address geoCodedAddress;
@@ -357,6 +385,9 @@ public class PostMyAdForm extends AppCompatActivity {
                 public void processFinish(Object output) {
                     String s = (String) output;
                     System.out.println("In PostMyAdForm finish process with result:" + s);
+                    houseId = s;
+                    System.out.println("houseId --------->>>>>>>>>" + houseId);
+                    saveImage(s);
                 }
             });
             httpConnection.execute(s);
@@ -364,6 +395,9 @@ public class PostMyAdForm extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Incorrect address, please correct and hit Submit again." , Toast.LENGTH_SHORT ).show();
         }
 
+    }
+
+    public void saveImage(String id) {
         //String sfencode = "iVBORw0KGgoAAAANSUhEUgAABkAAAAOECAIAAAB2L2r1AAAAA3NCSVQICAjb4U_gAAAgAElEQVR4nOzdW48ky3YY5rUis3tm73OhRAuSrYsFUyJlyYJhG_Cv86thwK_-JX7wm9_0akAwYBgSKVOGRAoyRYqXc9t7uisj_JDVPT0znTVdPVldkVXfByK5T093VeTKiMzIlRGR-Tv_yz8LAAAAAOhVOXcBAAAAAOAQCSwAAAAAuiaBBQAAAEDXJLAAAAAA6JoEFgAAAABdk8ACAAAAoGsSWAAAAAB0TQILAAAAgK5JYAEAAADQNQksAAAAALomgQUAAABA1ySwAAAAAOiaBBYAAAAAXZPAAgAAAKBrElgAAAAAdG1s07mLAAAAAADLjMACAAAAoGsSWAAAAAB0TQILAAAAgK5JYAEAAADQNQksAAAAALomgQUAAABA1ySwAAAAAOiaBBYAAAAAXZPAAgAAAKBrElgAAAAAdE0CCwAAAICuSWABAAAA0DUJLAAAAAC6JoEFAAAAQNcksAAAAADo2hhRz10GAAAAAFhkBBYAAAAAXZPAAgAAAKBrElgAAAAAdE0CCwAAAICuSWABAAAA0DUJLAAAAAC6JoEFAAAAQNfGzDx3GQAAAABg0dhaO3cZAAAAAGCRBBYAAAAAXZPAAgAAAKBrElgAAAAAdM1bCAEAAADomrcQAgAAANA1I7AAAAAA6NoohwUAAABAz2SvAAAAAOiaBBYAAAAAXZPAAgAAAKBrElgAAAAAdE0CCwAAAICuSWABAAAA0DUJLAAAAAC6NkbUc5cBAAAAABYZgQUAAABA1ySwAAAAAOiaBBYAAAAAXZPAAgAAAKBrElgAAAAAdE0CCwAAAICuSWABAAAA0LWxFDksAAAAAPo1TtN07jIAAAAAwKKx1nruMgAAAADAIvMHAQAAAOjaOGSeuwwAAAAAsGhMCSwAAAAAOja21s5dBgAAAABYJIEFAAAAQNdMIQQAAACga95CCAAAAEDXJLAAAAAA6JoEFgAAAABdG-u5SwAAAAAABxiBBQAAAEDXJLAAAAAA6JoEFgAAAABdk8ACAAAAoGsSWAAAAAB0bWytnbsMAAAAALBoLMUgLAAAAAD6Ne52u3OXAQAAAAAWmUIIAAAAQNfG97e35y4DAAAAACwyAgsAAACAro11N527DAAAAACwaMzMc5cBAAAAABZJYAEAAADQNQksAAAAALomgQUAAABA18q5CwAAAAAAh4xR27nLAAAAAACLjMACAAAAoGtjswQWAAAAAB0zAgsAAACArklgAQAAANC1sTWLuAMAAADQLyOwAAAAAOiaEVgAAAAAdG00CAsAAACAnsleAQAAANA1CSwAAAAAuiaBBQAAAEDXJLAAAAAA6JoEFgAAAABdk8ACAAAAoGsSWAAAAAB0bYwmhwUAAABAv0pERFZbW1tbW1tbW1tbW1tbW1tbW9s-t2NkjaiRYWtra2tra2tra2tra2tra2tr2-E2_7_L8HAAAAAPRqzMxzlwEAAAAAFlnBHQAAAICuGYEFAAAAQNcksAAAAADo2tjkrwAAAADomDWwAAAAAOja4hTC1tobF-W8xIGXUE946tgp2NdWT7QXXkI9mYnDYeIzEwdeQj2Z6afxEurJtoy11mf_4drWxhIHXkI94aml-rDk2uqJ9sJLqCczcThMfGbiwEuoJzP9NF5CPdkWi7jviQMvoZ7wlPpwmPjwEurJTBwOE5-ZOPAS6slMHHgJ9WRbTCHcEwdeQj3hKUOOD9NeeAn1ZCYOh4nPTBx4CfVkpp_GS6gn2zIuHQAHZiYOvIR6wkuoJzNx4CXUk5k4HCY-M3HgJdSTw8SHl1BPzmucpunZf7i2oXTmivMS6glPmTN_mPbCS6gnM3E4THxm4sBLqCcz_TReQj3ZFou47y1lUq8tDhymnvDUsU9grq2eaC-8hHoyE4fDxGcmDryEejLTT-Ml1JNtsQbWnjjwEuoJT5kzf5j2wkuoJzNxOEx8ZuLAS6gnM_00XkI92Zbx3AV4azKmh2nAs2PjcG0dBfWEb6G9HCYOh3_UuOzRBx4iWurJ86rM-dVvoX6wFNbOa8uJrAkembicJj4HCY-M3GYicNh4jMTh8PEZyYOM3E4THxm4nCY-MzEYSYOh4nP7FxxuLoEljmuh4nPbK2MsvjMxGF2qXFYIj4zcZg5rx6mnhxmTZ-ZejITh5nz6mHqyWHOqzP1ZLaVOCyugXWpB-ZY4nCY-BwmPjNxmInDYeIzE4fDxGcmDjNxOEx8ZuJwmPjMxGEmDoeJz-xccShn-VYAAAAAeCEJLAAAAAC6trgGlrcPzMThMPE5THxm4jATh8PEZyYOh4nPTBxm4nCY-MzE4TDxmYnDTBwOE59Zd28hvNQDs5XXQ56L-MzWmtMrPjNxmF1qHJaIz0wcZs6rh6knh3nd-0w9mYnDzHn1MPXkMOfVmXoy20ocLOL-FeJwmPgcJj4zcZiJw2HiMxOHw8RnJg4zcThMfGbicJj4zMRhJg6Hic_MIu4AAAAA8IwxL3MEHAAAAAAXwggsAAAAALo2XuoiZAAAAABcBiOwAAAAAOiaBBYAAAAAXZPAAgAAAKBrY2aeuwwAAAAAsGistZ67DAAAAACwaJym6dxlAAAAAIBF1sACAAAAoGvWwAIAAACgaxJYAAAAAHRtbK2duwwAAAAAsEgCCwAAAICujaVYxx0AAACAfsleAQAAANA1CSwAAAAAuiaBBQAAAEDXJLAAAAAA6JoEFgAAAABdk8ACAAAAoGsSWAAAAAB0bZTDAgAAAKBnY2aeuwwAAAAAsGhsUz13GQAAAABg0VirBBYAAAAA_Rpba-cuAwAAAAAsGkuxiDsAAAAA_ZK9AgAAAKBrphACAAAA0LUxM89dBgAAAABYZAohAAAAAF0bixmEAAAAAHTMCCwAAAAAuiaBBQAAAEDXLOIOAAAAQNeMwAIAAACga2NErRmlha2tra2tra2tra2tra2tra2tbYfb_Dv_4_WIjLC1tbW1tbW1tbW1tbW1tbW1ta2x-3f-Z_-t3OPAgMAAACAReOQlsECAAAAoF_eQggAAABA18Y0AgsAAACAjsleAQAAANC1sbV27jIAAAAAwCIjsAAAAADo2lhrPXcZAAAAAGCRBBYAAAAAXRuHyHOXAQAAAAAWjZkSWAAAAAD0a6zTuYsAAAAAAMuMwAIAAACgaxJYAAAAAHTNWwgBAAAA6NqYpZ27DAAAAACwyBRCAAAAALpWzl0AAAAAADjECCwAAAAAuja2Zg0sAAAAAPolgQUAAABA1ySwAAAAAOiaRdwBAAAA6NpYihwWAAAAAP2SvQIAAACgaxJYAAAAAHRNAgsAAACArklgAQAAANC1sbV27jIAAAAAwCIjsAAAAADomgQWAAAAAF2TwAIAAACgaxJYAAAAAHRNAgsAAACArklgAQAAANA1CSwAAAAAuiaBBQAAAEDXxmxyWAAAAAD0S_YKAAAAgK6NrbVzlwEAAAAAFhmBBQAAAEDXJLAAAAAA6JoEFgAAAABdk8ACAAAAoGsSWAAAAAB0TQILAAAAgK5JYAEAAADQtbG1du4yAAAAAMAiI7AAAAAA6JoEFgAAAABdk8ACAAAAoGsSWAAAAAB0TQILAAAAgK5JYAEAAADQNQksAAAAALomgQUAAABA1ySwAAAAAOiaBBYAAAAAXRsz89xlAAAAAIBFRmABAAAA0DUJLAAAAAC6JoEFAAAAQNesgQUAAABA18bdbnfuMgAAAADAIlMIAQAAAOiaBBYAAAAAXZPAAgAAAKBrElgAAAAAdE0CCwAAAICuSWABAAAA0DUJLAAAAAC6NkbUc5cBAAAAABYZgQUAAABA1ySwAAAAAOiaBBYAAAAAXZPAAgAAAKBrElgAAAAAdE0CCwAAAICuSWABAAAA0LWxtXbuMgAAAADAIiOwAAAAAOiaBBYAAAAAXZPAAgAAAKBrY2aeuwwAAAAA";
         String sfencode = imagesEncodedList.get(0);
 
@@ -371,7 +405,10 @@ public class PostMyAdForm extends AppCompatActivity {
         sfencode = sfencode.replace("/","_");
         sfencode = sfencode.replace("=",",");
 
-        String imageTest = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/addImage?img_name=sfencodeShivalik&img_data=" + sfencode;
+
+        System.out.println("houseId ---------" + id);
+        //String imageTest = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/addImage?img_name=sfencodeHouse&img_data=" + sfencode;
+        String imageTest = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/addImage?img_name=ad"  + id + "&img_data=" + sfencode + "&house_id=" + id;
         //Log.v("enc : ", sfencode);
         Log.v("imageTest : ", imageTest);
 
@@ -382,7 +419,6 @@ public class PostMyAdForm extends AppCompatActivity {
             }
         });
         httpConnectionImage.execute(imageTest);
-
     }
 
     public void test(String s) {

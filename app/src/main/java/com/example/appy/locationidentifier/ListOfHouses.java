@@ -166,7 +166,9 @@ public class ListOfHouses extends AppCompatActivity {
                     isFav = true;
                 else
                     isFav = false;
-                House house = new House(desc, subject, email,address, startDate, endDate, phone, spots, price, houseId, R.drawable.images1, isFav,latitude,longitude,distance,sLatitude,sLongitude);
+                System.out.println("Printing results: " + houseId + " is Fav: " + isFav);
+//                House house = new House(desc, subject, email,address, startDate, endDate, phone, spots, price, houseId, isFav);
+                House house = new House(desc, subject, email,address, startDate, endDate, phone, spots, price, houseId, isFav,latitude,longitude,distance,sLatitude,sLongitude);
                 houseList.add(house);
             }
 

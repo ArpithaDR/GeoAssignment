@@ -1,20 +1,31 @@
 package com.example.appy.locationidentifier;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.net.Uri;
 import android.renderscript.Double2;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
+import android.widget.ImageView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.appy.utility.AsyncResponse;
+import com.example.appy.utility.HttpConnection;
 import com.example.appy.utility.SessionManagement;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ClickedAdActivity extends AppCompatActivity {
 
+    public String strBase64 = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +49,52 @@ public class ClickedAdActivity extends AppCompatActivity {
         Button directionsBtn = (Button) findViewById(R.id.google_maps);
         directionsBtn.setOnClickListener(onClickListener());
         Bundle bundle = getIntent().getExtras();
+
+        price.setText(bundle.getString("Price"));
+        address.setText(bundle.getString("Address"));
+        startDate.setText(bundle.getString("StartDate"));
+        endDate.setText(bundle.getString("EndDate"));
+        desc.setText(bundle.getString("Desc"));
+        phone.setText(bundle.getString("Phone"));
+        spots.setText(bundle.getString("Spots"));
+        subject.setText(bundle.getString("Subject"));
+        email.setText(bundle.getString("Email"));
+
+        System.out.println("HouseId - " + bundle.getInt("HouseId"));
+
+        String house_id = String.valueOf(bundle.getInt("HouseId"));
+
+        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/getImage?house_id=" + house_id;
+
+        HttpConnection httpConnection = new HttpConnection(ClickedAdActivity.this, new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+                String result = (String) output;
+
+                JSONObject encodedImage = null;
+                try {
+                    encodedImage = new JSONObject(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.v("image: ", encodedImage.toString());
+                try {
+                    encodedImage = encodedImage.getJSONObject("image");
+                    strBase64 = encodedImage.getString("image_data").replace("\n","");
+                    System.out.println(strBase64);
+
+                    byte[] decodedString = Base64.decode(strBase64, 0);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    ImageView testEncoded = (ImageView) findViewById(R.id.imageView2);
+                    Bitmap scaled = Bitmap.createScaledBitmap(decodedByte, 720, 720, true);
+                    testEncoded.setImageBitmap(scaled);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        httpConnection.execute(s);
 
         price.setText("Price: " + bundle.getString("Price"));
         address.setText("Address: " + bundle.getString("Address"));

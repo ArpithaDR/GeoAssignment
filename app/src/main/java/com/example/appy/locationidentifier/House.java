@@ -1,5 +1,8 @@
 package com.example.appy.locationidentifier;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
 /**
  * Created by appy on 9/28/16.
  */
@@ -15,7 +18,6 @@ public class House {
     private String phone;
     private int spots;
     private double price;
-    private int thumbnail;
     public int houseId;
     public double latitude;
     public double longitude;
@@ -132,7 +134,7 @@ public class House {
         this.spots = spots;
     }
 
-    public House(String desc, String subject, String email, String address, String startDate, String endDate, String phone, int spots, Double price, int houseId, int thumbnail, boolean isFav, Double latitude, Double longitude, Double distance,Double sLatitude,Double sLongitude) {
+    public House(String desc, String subject, String email, String address, String startDate, String endDate, String phone, int spots, Double price, int houseId, boolean isFav, Double latitude, Double longitude, Double distance,Double sLatitude,Double sLongitude) {
         this.desc = desc;
         this.subject = subject;
         this.email = email;
@@ -143,16 +145,15 @@ public class House {
         this.spots = spots;
         this.price = price;
         this.houseId = houseId;
-        this.thumbnail = thumbnail;
         this.isfav = isFav;
         this.latitude = latitude;
         this.longitude = longitude;
         this.distance = distance;
         this.sLatitude = sLatitude;
         this.sLongitude = sLongitude;
-
     }
-    public House(String desc, String subject, String email, String address, String startDate, String endDate, String phone, int spots, Double price, int houseId, int thumbnail, boolean isFav) {
+
+    public House(String desc, String subject, String email, String address, String startDate, String endDate, String phone, int spots, double price, int houseId, boolean isFav) {
         this.desc = desc;
         this.subject = subject;
         this.email = email;
@@ -163,7 +164,6 @@ public class House {
         this.spots = spots;
         this.price = price;
         this.houseId = houseId;
-        this.thumbnail = thumbnail;
         this.isfav = isFav;
     }
 
@@ -175,10 +175,9 @@ public class House {
         this.houseId = houseId;
     }
 
-    public House(String name, double value, int thumbnail, int id) {
+    public House(String name, double value, int id) {
         this.desc = name;
         this.price = value;
-        this.thumbnail = thumbnail;
         this.houseId = id;
     }
 
@@ -198,13 +197,11 @@ public class House {
         this.desc = desc;
     }
 
-
-
-    public int getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(int thumbnail) {
-        this.thumbnail = thumbnail;
-    }
+//    public byte[] getThumbnail() {
+//        return thumbnail;
+//    }
+//
+//    public void setThumbnail(byte[] thumbnail) {
+//        this.thumbnail = thumbnail;
+//    }
 }

@@ -3,6 +3,8 @@ package com.example.appy.locationidentifier;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,12 @@ import com.bumptech.glide.Glide;
 import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
 import com.example.appy.utility.SessionManagement;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.example.appy.utility.AsyncResponse;
+import com.example.appy.utility.HttpConnection;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -85,7 +93,42 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
         }
 
         // loading house image using Glide library
-        Glide.with(mContext).load(house.getThumbnail()).into(holder.thumbnail);
+        //Glide.with(mContext).load(house.getThumbnail()).into(holder.thumbnail);
+
+
+        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/getImage?house_id=" + String.valueOf(house.getHouseId());
+
+        HttpConnection httpConnection = new HttpConnection(mContext, new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+                String result = (String) output;
+
+                JSONObject encodedImage = null;
+                try {
+                    encodedImage = new JSONObject(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.v("image: ", encodedImage.toString());
+                try {
+                    encodedImage = encodedImage.getJSONObject("image");
+                    String strBase64 = encodedImage.getString("image_data").replace("\n","");
+
+                    byte[] decodedString = Base64.decode(strBase64, 0);
+
+                    Glide.with(mContext).load(decodedString).asBitmap().placeholder(R.drawable.subleased).into(holder.thumbnail);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        httpConnection.execute(s);
+
+
+
+        //Glide.with(mContext).load(house.getThumbnail()).asBitmap().placeholder(R.drawable.subleased).into(holder.thumbnail);
+        //holder.thumbnail.setImageDrawable(house.getThumbnail());
         holder.viewbtn.setOnClickListener(onClickListener(position));
         holder.favbtn.setOnClickListener(onClickListenerFav(position));
     }
@@ -181,6 +224,8 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
                 intent.putExtra("Spots", spots);
                 intent.putExtra("StartDate", house.getStartDate());
                 intent.putExtra("Subject", house.getSubject());
+                intent.putExtra("HouseId", house.getHouseId());
+                System.out.println("Houuuuuuuuussssseee --- "+ house.getHouseId());
                 StringBuffer sb = new StringBuffer();
                 Double distVal = house.getDistance();
                 DecimalFormat formattedVal = new DecimalFormat("###.##");
