@@ -128,8 +128,6 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
 
     }
 
-
-
     private View.OnClickListener onClickListenerFav(final int position) {
         return new View.OnClickListener() {
             @Override
