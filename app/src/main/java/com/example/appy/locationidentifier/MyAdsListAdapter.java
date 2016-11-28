@@ -3,6 +3,8 @@ package com.example.appy.locationidentifier;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -63,7 +68,37 @@ public class MyAdsListAdapter extends RecyclerView.Adapter<MyAdsListAdapter.View
         holder.price.setText(house.getPrice() + "USD");
 
         // loading house image using Glide library
-        Glide.with(mContext).load(house.getThumbnail()).into(holder.thumbnail);
+        //Glide.with(mContext).load(house.getThumbnail()).into(holder.thumbnail);
+
+        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/getImage?house_id=" + String.valueOf(house.getHouseId());
+
+        HttpConnection httpConnection = new HttpConnection(mContext, new AsyncResponse() {
+            @Override
+            public void processFinish(Object output) {
+                String result = (String) output;
+
+                JSONObject encodedImage = null;
+                try {
+                    encodedImage = new JSONObject(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.v("image: ", encodedImage.toString());
+                try {
+                    encodedImage = encodedImage.getJSONObject("image");
+                    String strBase64 = encodedImage.getString("image_data").replace("\n","");
+
+                    byte[] decodedString = Base64.decode(strBase64, 0);
+
+                    Glide.with(mContext).load(decodedString).asBitmap().placeholder(R.drawable.subleased).into(holder.thumbnail);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        httpConnection.execute(s);
+
         holder.viewbtn.setOnClickListener(onClickListener(position));
         holder.deletebtn.setOnClickListener(onClickListenerDelete(position));
     }
@@ -114,6 +149,7 @@ public class MyAdsListAdapter extends RecyclerView.Adapter<MyAdsListAdapter.View
                 intent.putExtra("Spots", spots);
                 intent.putExtra("StartDate", house.getStartDate());
                 intent.putExtra("Subject", house.getSubject());
+                intent.putExtra("HouseId", house.getHouseId());
                 mContext.startActivity(intent);
             }
         };

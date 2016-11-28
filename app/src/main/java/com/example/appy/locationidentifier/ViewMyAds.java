@@ -118,7 +118,7 @@ public class ViewMyAds extends AppCompatActivity {
                 String phone = (String) jsonObject.get("PhoneNumber");
                 int spots = (int) jsonObject.get("Spots");
                 String email = "test@123";
-                House house = new House(desc, subject, email,address, startDate, endDate, phone, spots, price, houseId, R.drawable.images1,true);
+                House house = new House(desc, subject, email,address, startDate, endDate, phone, spots, price, houseId,true);
                 myAdsList.add(house);
             }
 
