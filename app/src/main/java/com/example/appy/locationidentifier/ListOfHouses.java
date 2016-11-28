@@ -102,8 +102,13 @@ public class ListOfHouses extends AppCompatActivity {
 
     private void fetchHousesFromDB(final LatLng latLng, final int radius) {
 
-        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/searchHouseAvailable?latitude=" +
-                latLng.latitude + "&longitude=" + latLng.longitude +"&radius="+radius;
+        boolean gympref = bundle.getBoolean("gympref");
+        boolean hospitalpref = bundle.getBoolean("hospitalpref");
+        boolean schoolpref = bundle.getBoolean("schoolpref");
+        boolean grocerypref = bundle.getBoolean("grocerypref");
+        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/houseSearchWithPref?latitude=" +
+                latLng.latitude + "&longitude=" + latLng.longitude +"&radius="+ radius + "&gym=" + gympref +
+                "&hospital=" + hospitalpref + "&school=" + schoolpref + "&grocery=" + grocerypref;
         HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {
             @Override
             public void processFinish(Object output) {

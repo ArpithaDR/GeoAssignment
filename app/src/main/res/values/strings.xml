@@ -16,10 +16,14 @@
     <string name="post_ad_phone">Phone Number</string>
     <string name="post_ad_submit">Submit</string>
     <string name="post_ad_user_email">Email Id</string>
+    <string name="gymcheck">Gym</string>
+    <string name="hospitalcheck">Hospital</string>
+    <string name="schoolcheck">School</string>
+    <string name="grocerycheck">Grocery</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_preferences">Set Preferences</string>
 
     <string name="facebook_app_id">677806702385319</string>
     <string name="cancel_login">this is to cancel the login</string>

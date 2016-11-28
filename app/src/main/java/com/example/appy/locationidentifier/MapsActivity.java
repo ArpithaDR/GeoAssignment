@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -30,7 +29,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -52,7 +51,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -62,16 +60,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import static com.example.appy.locationidentifier.R.id.fab;
-import static com.example.appy.locationidentifier.R.id.textView1;
 
 
 //This is the main screen page
@@ -89,6 +81,7 @@ public class MapsActivity extends AppCompatActivity implements
     private LocationRequest mLocationRequest;
     private ProgressDialog progress;
     public Dialog dialog;
+    public Dialog prefDialog;
     Address searchAddress;
     //int radius;
     private SeekBar seekBar;
@@ -98,6 +91,11 @@ public class MapsActivity extends AppCompatActivity implements
     public String last_name = "";
     private String phone_number = "";
     private String email = "";
+
+    private boolean gympref = false;
+    private boolean hospitalpref = false;
+    private boolean schoolpref = false;
+    private boolean grocerypref = false;
 
     //For hamburger
     private ListView mDrawerList;
@@ -188,6 +186,10 @@ public class MapsActivity extends AppCompatActivity implements
             intent.putExtra("Latitude", Double.toString(searchAddress.getLatitude()));
             intent.putExtra("Longitude", Double.toString(searchAddress.getLongitude()));
             intent.putExtra("Radius", Integer.toString(seekBar.getProgress()));
+            intent.putExtra("gympref", gympref);
+            intent.putExtra("hospitalpref", hospitalpref);
+            intent.putExtra("schoolpref", schoolpref);
+            intent.putExtra("grocerypref", grocerypref);
         }
         startActivity(intent);
     }
@@ -245,10 +247,16 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     private void fetchHousesFromDB(LatLng latLng) {
-        //String value = textView.getText().toString();
+
+        System.out.println("gympref:" + gympref);
+        System.out.println("hospitalpref:" + hospitalpref);
+        System.out.println("schoolpref:" + schoolpref);
+        System.out.println("grocerypref:" + grocerypref);
+
         int rad = seekBar.getProgress();
-        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/searchHouseAvailable?latitude=" +
-                latLng.latitude + "&longitude=" + latLng.longitude +"&radius="+ rad;
+        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/houseSearchWithPref?latitude=" +
+                latLng.latitude + "&longitude=" + latLng.longitude +"&radius="+ rad + "&gym=" + gympref +
+                "&hospital=" + hospitalpref + "&school=" + schoolpref + "&grocery=" + grocerypref;
         HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {
             @Override
             public void processFinish(Object output) {
@@ -371,7 +379,70 @@ public class MapsActivity extends AppCompatActivity implements
 
     }
 
+    public void PreferenceDialog() {
+        prefDialog = new Dialog(MapsActivity.this);
+        prefDialog.setContentView(R.layout.activity_preference);
+        prefDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        Window window = prefDialog.getWindow();
+        WindowManager.LayoutParams param = window.getAttributes();
+        param.gravity = Gravity.TOP | Gravity.RIGHT;
+        prefDialog.setCanceledOnTouchOutside(true);
 
+        final CheckBox gymcheck = (CheckBox) prefDialog.findViewById(R.id.gymcheck);
+        final CheckBox hospitalcheck = (CheckBox) prefDialog.findViewById(R.id.hospitalcheck);
+        final CheckBox schoolcheck = (CheckBox) prefDialog.findViewById(R.id.schoolcheck);
+        final CheckBox grocerycheck = (CheckBox) prefDialog.findViewById(R.id.grocerycheck);
+
+        if(gympref){
+            gymcheck.setChecked(true);
+        }
+        if(hospitalpref) {
+            hospitalcheck.setChecked(true);
+        }
+        if(schoolpref) {
+            schoolcheck.setChecked(true);
+        }
+        if(grocerypref) {
+            grocerycheck.setChecked(true);
+        }
+        prefDialog.show();
+    }
+
+    public void onCheckboxClicked(View view){
+        Toast.makeText(MapsActivity.this, "Checkbox clicked", Toast.LENGTH_SHORT).show();
+        boolean checked = ((CheckBox) view).isChecked();
+
+        switch(view.getId()) {
+            case R.id.gymcheck:
+                if (checked)
+                    gympref = true;
+                else
+                    gympref = false;
+                break;
+
+            case R.id.hospitalcheck:
+                if (checked)
+                    hospitalpref = true;
+                else
+                    hospitalpref = false;
+                break;
+
+            case R.id.schoolcheck:
+                if (checked)
+                    schoolpref = true;
+                else
+                    schoolpref = false;
+                break;
+
+            case R.id.grocerycheck:
+                if (checked)
+                    grocerypref = true;
+                else
+                    grocerypref = false;
+                break;
+
+        }
+    }
 
     public void CustomDialog() {
         dialog = new Dialog(MapsActivity.this);
@@ -556,7 +627,7 @@ public class MapsActivity extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.hamburger_menu, menu);
+        getMenuInflater().inflate(R.menu.preferences_menu, menu);
         return true;
     }
 
@@ -569,7 +640,9 @@ public class MapsActivity extends AppCompatActivity implements
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_preferences) {
-            CustomDialog();
+            PreferenceDialog();
+//            CustomDialog();
+            return true;
         }
 
         // Activate the navigation drawer toggle
@@ -579,6 +652,8 @@ public class MapsActivity extends AppCompatActivity implements
 
         return true;
     }
+
+
 
     //Add elements of hamburger
     private void addDrawerItems() {
@@ -725,7 +800,8 @@ public class MapsActivity extends AppCompatActivity implements
         MarkerOptions options = new MarkerOptions()
                 .position(latLng)
                 .draggable(true)
-                .title("You are here!");
+                .title("You are here!")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
