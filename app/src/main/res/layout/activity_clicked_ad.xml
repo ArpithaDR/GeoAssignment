@@ -130,20 +130,20 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/public_places"
-            android:onClick="listViewOfPublicPlaces"
-            android:id="@+id/public_places_button"
-            android:layout_below="@+id/clicked_ad_user_email"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/button_favorite"
+            android:text="Get Direction"
             android:id="@+id/google_maps"
             android:layout_alignTop="@+id/public_places_button"
             android:layout_toLeftOf="@+id/public_places_button"
             android:layout_toStartOf="@+id/public_places_button" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/public_places"
+            android:onClick="listViewOfPublicPlaces"
+            android:id="@+id/public_places_button"
+            android:layout_below="@+id/clicked_ad_distance"
+            android:layout_toEndOf="@+id/clicked_ad_spots"
+            android:layout_marginStart="34dp" />
     </RelativeLayout>
     </ScrollView>

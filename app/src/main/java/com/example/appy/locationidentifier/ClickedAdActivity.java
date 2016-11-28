@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -34,7 +35,7 @@ public class ClickedAdActivity extends AppCompatActivity {
         TextView subject = (TextView) findViewById(R.id.clicked_ad_subject);
         TextView email = (TextView) findViewById(R.id.clicked_ad_user_email);
         TextView distance = (TextView) findViewById(R.id.clicked_ad_distance);
-        ImageButton directionsBtn = (ImageButton) findViewById(R.id.google_maps);
+        Button directionsBtn = (Button) findViewById(R.id.google_maps);
         directionsBtn.setOnClickListener(onClickListener());
         Bundle bundle = getIntent().getExtras();
 

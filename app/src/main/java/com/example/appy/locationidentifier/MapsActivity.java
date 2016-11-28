@@ -33,6 +33,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +71,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.example.appy.locationidentifier.R.id.fab;
+import static com.example.appy.locationidentifier.R.id.textView1;
 
 
 //This is the main screen page
@@ -88,6 +90,9 @@ public class MapsActivity extends AppCompatActivity implements
     private ProgressDialog progress;
     public Dialog dialog;
     Address searchAddress;
+    //int radius;
+    private SeekBar seekBar;
+    private TextView textView;
 
     public String first_name = "";
     public String last_name = "";
@@ -239,9 +244,10 @@ public class MapsActivity extends AppCompatActivity implements
     }
 
     private void fetchHousesFromDB(LatLng latLng) {
-
+        //String value = textView.getText().toString();
+        int rad = seekBar.getProgress();
         String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/searchHouseAvailable?latitude=" +
-                latLng.latitude + "&longitude=" + latLng.longitude +"&radius=1.0";
+                latLng.latitude + "&longitude=" + latLng.longitude +"&radius="+ rad;
         HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {
             @Override
             public void processFinish(Object output) {
@@ -306,6 +312,27 @@ public class MapsActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        seekBar = (SeekBar) findViewById(R.id.seekBar1);
+        textView = (TextView) findViewById(R.id.textView1);
+        seekBar.setProgress(1);
+        textView.setText("Range: " + seekBar.getProgress() + "/" + seekBar.getMax());
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progress = 0;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
+                progress = progresValue;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                textView.setText("Range: " + progress + "/" + seekBar.getMax());
+            }
+        });
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
