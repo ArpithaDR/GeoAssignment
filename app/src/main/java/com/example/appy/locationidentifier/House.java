@@ -19,6 +19,54 @@ public class House {
     private int spots;
     private double price;
     public int houseId;
+    public double latitude;
+    public double longitude;
+    public double distance;
+
+    public double getsLatitude() {
+        return sLatitude;
+    }
+
+    public void setsLatitude(double sLatitude) {
+        this.sLatitude = sLatitude;
+    }
+
+
+    public double sLatitude;
+
+    public double getsLongitude() {
+        return sLongitude;
+    }
+
+    public void setsLongitude(double sLongitude) {
+        this.sLongitude = sLongitude;
+    }
+
+    public double sLongitude;
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
 
     public boolean isfav() {
         return isfav;
@@ -86,21 +134,23 @@ public class House {
         this.spots = spots;
     }
 
-    public House() {
-    }
-
-    public int getHouseId() {
-        return houseId;
-    }
-
-    public void setHouseId(int houseId) {
+    public House(String desc, String subject, String email, String address, String startDate, String endDate, String phone, int spots, Double price, int houseId, boolean isFav, Double latitude, Double longitude, Double distance,Double sLatitude,Double sLongitude) {
+        this.desc = desc;
+        this.subject = subject;
+        this.email = email;
+        this.address = address;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.phone = phone;
+        this.spots = spots;
+        this.price = price;
         this.houseId = houseId;
-    }
-
-    public House(String name, double value, int id) {
-        this.desc = name;
-        this.price = value;
-        this.houseId = id;
+        this.isfav = isFav;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.distance = distance;
+        this.sLatitude = sLatitude;
+        this.sLongitude = sLongitude;
     }
 
     public House(String desc, String subject, String email, String address, String startDate, String endDate, String phone, int spots, double price, int houseId, boolean isFav) {
@@ -115,6 +165,20 @@ public class House {
         this.price = price;
         this.houseId = houseId;
         this.isfav = isFav;
+    }
+
+    public int getHouseId() {
+        return houseId;
+    }
+
+    public void setHouseId(int houseId) {
+        this.houseId = houseId;
+    }
+
+    public House(String name, double value, int id) {
+        this.desc = name;
+        this.price = value;
+        this.houseId = id;
     }
 
     public double getPrice() {

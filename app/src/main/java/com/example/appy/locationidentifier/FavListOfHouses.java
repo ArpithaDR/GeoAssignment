@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class FavListOfHouses extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -51,11 +53,10 @@ public class FavListOfHouses extends AppCompatActivity {
     //This is static and this information must be fetched from database later
     //Also this list should be generated based on user logged in and get his fav
     private void prepareListOfHouses() {
-        /* SessionManagement session = new SessionManagement(getApplicationContext());
-            String id = session.getLoggedInUserId();
-        */
 
-        String userId = "10208655238312268";
+
+        SessionManagement session = new SessionManagement(getApplicationContext());
+        String userId = session.getLoggedInUserId();
         String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/fetchFavorite?"
                 + "userId=" + userId;
         HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {

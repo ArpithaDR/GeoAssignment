@@ -8,10 +8,14 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <!-- Start: Required for uploading images -->
-    <uses-feature android:name="android.hardware.camera2" android:required="true"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- End: Required for uploaidng images -->
+
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -52,7 +56,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".LoginActivity"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,8 +64,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".UserProfileActivity" />
+        <activity android:name=".MapsActivity" />
+        <activity android:name=".UserProfileActivity"
+            android:parentActivityName=".ListOfHouses"/>
         <activity
             android:name=".PostMyAdForm"
             android:label="@string/title_activity_maps"
@@ -69,6 +74,7 @@
         <activity
             android:name=".ClickedAdActivity"
             android:label="@string/title_activity_maps"
+            android:launchMode="singleTask"
             android:parentActivityName=".ListOfHouses" />
         <activity
             android:name=".ListOfHouses"
@@ -92,7 +98,19 @@
         <activity
             android:name=".Help"
             android:parentActivityName=".ListOfHouses" />
-        <activity android:name=".MyAdHouseCard"></activity>
+        <activity
+            android:name=".MyAdHouseCard"
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".ListOfHouses" />
+        <activity
+            android:name=".ListOfPublicPlaces"
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".ClickedAdActivity" />
+        <activity android:name=".PublicPlacesCard" />
+        <activity
+            android:name=".AdDetails"
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".ListOfHouses" />
     </application>
 
 </manifest>

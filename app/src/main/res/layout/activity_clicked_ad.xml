@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+>
+    <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_clicked_ad"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.appy.locationidentifier.ClickedAdActivity">
-
+    tools:context="com.example.appy.locationidentifier.ClickedAdActivity"
+        android:background="@drawable/background">
 
     <ImageView
         android:layout_width="500dp"
@@ -30,15 +37,6 @@
         android:layout_alignStart="@+id/clicked_ad_address"
         android:layout_marginTop="11dp"
         android:id="@+id/clicked_ad_price" />
-
-    <TextView
-        android:text="Start Date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/clicked_ad_spots"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="11dp"
-        android:id="@+id/clicked_ad_start_date" />
 
     <TextView
         android:text="End Date"
@@ -109,4 +107,58 @@
         android:layout_alignLeft="@+id/clicked_ad_desc"
         android:layout_alignStart="@+id/clicked_ad_desc"
         android:layout_marginTop="12dp" />
-</RelativeLayout>
+
+    <TextView
+        android:text="Distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/clicked_ad_distance"
+        android:layout_below="@+id/clicked_ad_user_email"
+        android:layout_alignLeft="@+id/clicked_ad_user_email"
+        android:layout_alignStart="@+id/clicked_ad_user_email"
+        android:layout_marginTop="12dp"/>
+
+    <TextView
+        android:text="Start Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:id="@+id/clicked_ad_start_date"
+        android:layout_below="@+id/clicked_ad_spots"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get Direction"
+            android:id="@+id/google_maps"
+            android:layout_alignTop="@+id/public_places_button"
+            android:layout_toLeftOf="@+id/public_places_button"
+            android:layout_toStartOf="@+id/public_places_button"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/public_places"
+            android:onClick="listViewOfPublicPlaces"
+            android:id="@+id/public_places_button"
+            android:layout_below="@+id/clicked_ad_distance"
+            android:layout_toEndOf="@+id/clicked_ad_spots"
+            android:layout_marginStart="34dp"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5" />
+    </RelativeLayout>
+    </ScrollView>

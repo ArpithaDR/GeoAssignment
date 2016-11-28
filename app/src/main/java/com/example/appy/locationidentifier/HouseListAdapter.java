@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
+import com.example.appy.utility.SessionManagement;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +24,10 @@ import org.json.JSONObject;
 import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
 
+import java.text.DecimalFormat;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by appy on 9/28/16.
@@ -144,10 +148,10 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
 
     public void addToFavList(int houseId) {
 
-        String userId = "10208655238312268";
+        SessionManagement session = new SessionManagement(getApplicationContext());
+        String userId = session.getLoggedInUserId();
         String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/addFavHouse?"
                 + "userId=" + userId + "&houseId=" + houseId;
-        System.out.println("add fav" + s);
         HttpConnection httpConnection = new HttpConnection(mContext, new AsyncResponse() {
             @Override
             public void processFinish(Object output) {
@@ -157,7 +161,8 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
     }
 
     public void removeFromFavList(int houseId) {
-        String userId = "10208655238312268";
+        SessionManagement session = new SessionManagement(getApplicationContext());
+        String userId = session.getLoggedInUserId();
         String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/removeFavHouse?"
                 + "userId=" + userId + "&houseId=" + houseId;
         System.out.println("remove fav" + s);
@@ -170,8 +175,6 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
         httpConnection.execute(s);
 
     }
-
-
 
     private View.OnClickListener onClickListenerFav(final int position) {
         return new View.OnClickListener() {
@@ -223,6 +226,23 @@ public class HouseListAdapter extends RecyclerView.Adapter<HouseListAdapter.View
                 intent.putExtra("Subject", house.getSubject());
                 intent.putExtra("HouseId", house.getHouseId());
                 System.out.println("Houuuuuuuuussssseee --- "+ house.getHouseId());
+                StringBuffer sb = new StringBuffer();
+                Double distVal = house.getDistance();
+                DecimalFormat formattedVal = new DecimalFormat("###.##");
+                Double value = Double.valueOf(formattedVal.format(distVal));
+                String distance = Double.toString(value);
+                sb.append(distance);
+                sb.append(" ");
+                sb.append("mile");
+                intent.putExtra("Distance", sb.toString());
+                String latitude = Double.toString(house.getLatitude());
+                intent.putExtra("Latitude", latitude);
+                String longitude = Double.toString(house.getLongitude());
+                intent.putExtra("Longitude", longitude);
+                String slatitude = Double.toString(house.getsLatitude());
+                intent.putExtra("sLat", slatitude);
+                String slongitude = Double.toString(house.getsLongitude());
+                intent.putExtra("sLong", slongitude);
                 mContext.startActivity(intent);
             }
         };

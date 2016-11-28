@@ -16,12 +16,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
+import com.example.appy.utility.SessionManagement;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by appy on 11/9/16.
@@ -124,8 +127,8 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
     }
 
     public void removeFromFavList(int houseId, final int position) {
-        System.out.println("reached remove" + isFav);
-        String userId = "10208655238312268";
+        SessionManagement session = new SessionManagement(getApplicationContext());
+        String userId = session.getLoggedInUserId();
         String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/removeFavHouse?"
                 + "userId=" + userId + "&houseId=" + houseId;
         System.out.println("remove fav" + s);
@@ -145,7 +148,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 House house = favList.get(position);
-                Intent intent = new Intent(mContext, ClickedAdActivity.class);
+                Intent intent = new Intent(mContext, AdDetails.class);
                 intent.putExtra("Address", house.getAddress());
                 intent.putExtra("Desc", house.getDesc());
                 intent.putExtra("Email", house.getEmail());
