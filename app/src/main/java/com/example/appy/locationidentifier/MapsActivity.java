@@ -187,6 +187,7 @@ public class MapsActivity extends AppCompatActivity implements
         if (searchAddress != null) {
             intent.putExtra("Latitude", Double.toString(searchAddress.getLatitude()));
             intent.putExtra("Longitude", Double.toString(searchAddress.getLongitude()));
+            intent.putExtra("Radius", Integer.toString(seekBar.getProgress()));
         }
         startActivity(intent);
     }
