@@ -297,27 +297,27 @@ public class PostMyAdForm extends AppCompatActivity {
         String address = address_et.getText().toString();
 
         EditText aptNum_et = (EditText) findViewById(R.id.post_ad_aptNumber);
-        aptNum_et.setText("2");
+        //aptNum_et.setText("2");
         String aptNum = aptNum_et.getText().toString(); // integer check, null check handled in python
 
         EditText city_et = (EditText) findViewById(R.id.post_ad_city);
-        city_et.setText("Los Angeles");
+        //city_et.setText("Los Angeles");
         String city = city_et.getText().toString();
 
         EditText state_et = (EditText) findViewById(R.id.post_ad_state);
-        state_et.setText("California");
+        //state_et.setText("California");
         String state = state_et.getText().toString();
 
         EditText zipCd_et = (EditText) findViewById(R.id.post_ad_zip);
-        zipCd_et.setText("90007");
+        ////zipCd_et.setText("90007");
         String zipcd = zipCd_et.getText().toString(); // int check
 
         EditText price_et = (EditText) findViewById(R.id.post_ad_price);
-        price_et.setText("450");
+        //price_et.setText("450");
         String price = price_et.getText().toString();
 
         EditText vacancy_et = (EditText) findViewById(R.id.post_ad_spots);
-        vacancy_et.setText("2");
+        //vacancy_et.setText("2");
         String vacancy = vacancy_et.getText().toString();
 
         EditText startdate_et = (EditText) findViewById(R.id.post_ad_start_date);
@@ -336,11 +336,11 @@ public class PostMyAdForm extends AppCompatActivity {
         }
 
         EditText desc_et = (EditText) findViewById(R.id.post_ad_desc);
-        desc_et.setText("my desc");
+        //desc_et.setText("my desc");
         String description = desc_et.getText().toString();
 
         EditText phone_et = (EditText) findViewById(R.id.post_ad_phone);
-        phone_et.setText("4086007283");
+        //phone_et.setText("4086007283");
         String phone = phone_et.getText().toString();
 
         Address geoCodedAddress;
