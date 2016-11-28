@@ -16,7 +16,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.appy.locationidentifier.ClickedAdActivity">
+    tools:context="com.example.appy.locationidentifier.ClickedAdActivity"
+        android:background="@drawable/background">
 
     <ImageView
         android:layout_width="500dp"
@@ -134,7 +135,14 @@
             android:id="@+id/google_maps"
             android:layout_alignTop="@+id/public_places_button"
             android:layout_toLeftOf="@+id/public_places_button"
-            android:layout_toStartOf="@+id/public_places_button" />
+            android:layout_toStartOf="@+id/public_places_button"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5" />
 
         <Button
             android:layout_width="wrap_content"
@@ -144,6 +152,13 @@
             android:id="@+id/public_places_button"
             android:layout_below="@+id/clicked_ad_distance"
             android:layout_toEndOf="@+id/clicked_ad_spots"
-            android:layout_marginStart="34dp" />
+            android:layout_marginStart="34dp"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5" />
     </RelativeLayout>
     </ScrollView>

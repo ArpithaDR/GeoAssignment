@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
+import com.example.appy.utility.SessionManagement;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ListOfHouses extends AppCompatActivity {
 
@@ -61,11 +64,8 @@ public class ListOfHouses extends AppCompatActivity {
 
 
     private void fetchFavourites(final Double latValue, final Double longValue, final int radius) {
-        /* SessionManagement session = new SessionManagement(getApplicationContext());
-            String id = session.getLoggedInUserId();
-        */
-
-        String userId = "10208655238312268";
+        SessionManagement session = new SessionManagement(getApplicationContext());
+        String userId = session.getLoggedInUserId();
         String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/fetchFavorite?"
                 + "userId=" + userId;
         HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {

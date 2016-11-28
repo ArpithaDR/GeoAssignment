@@ -53,8 +53,7 @@ public class ViewMyAds extends AppCompatActivity {
     //Also this list should be generated based on user logged in and get only ads posted by user
     private void prepareListOfHouses() {
         SessionManagement session = new SessionManagement(getApplicationContext());
-        String id = session.getLoggedInUserId();
-        String userId = "1349781218406667";
+        String userId = session.getLoggedInUserId();
         String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/fetchuserhouses?userId=" +
                 userId;
         HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {

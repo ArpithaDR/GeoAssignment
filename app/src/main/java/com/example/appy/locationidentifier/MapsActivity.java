@@ -523,7 +523,7 @@ public class MapsActivity extends AppCompatActivity implements
             public void onDrawerOpened(View drawerView) {
 
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("UserName");
+                getSupportActionBar().setTitle("Subleased");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -568,8 +568,8 @@ public class MapsActivity extends AppCompatActivity implements
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_preferences) {
+            CustomDialog();
         }
 
         // Activate the navigation drawer toggle
@@ -577,12 +577,12 @@ public class MapsActivity extends AppCompatActivity implements
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     //Add elements of hamburger
     private void addDrawerItems() {
-        String[] hamburgerArray = { "Post Ad", "Favourite Posts", "View Your Ads", "Profile", "Help", "Logout" };
+        String[] hamburgerArray = { "Post Ad", "Favourites", "View Your Ads", "Profile", "Logout" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, hamburgerArray);
         mDrawerList.setAdapter(mAdapter);
 
@@ -601,10 +601,7 @@ public class MapsActivity extends AppCompatActivity implements
                     startActivity(myIntent);
                 } else if(position==3) {
                     viewProfile();
-                } else if(position==4) {
-                    Intent myIntent = new Intent(MapsActivity.this, Help.class);
-                    startActivity(myIntent);
-                } else if(position==5) {
+                }  else if(position==5) {
                     fbLogout();
                 }
             }

@@ -19,7 +19,14 @@
             android:layout_alignParentEnd="true"
             android:text="@string/search_button"
             android:onClick="sendLocation"
-            android:id="@+id/search_button"/>
+            android:id="@+id/search_button"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5" />
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
@@ -42,6 +49,13 @@
             android:onClick="listViewOfHouses"
             android:id="@+id/list_view"
             android:layout_alignParentBottom="true"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
             />
 
         <fragment
@@ -59,10 +73,11 @@
             android:layout_height="55dp"
             android:hint="Search Location"
             android:textColor="@android:color/black"
-            android:background="@android:color/white"
+            android:background="@drawable/searchbutton"
             android:layout_alignBottom="@+id/search_button"
             android:layout_alignLeft="@+id/fab"
-            android:layout_alignStart="@+id/fab">
+            android:layout_alignStart="@+id/fab"
+            >
         </EditText>
 
         <Button
@@ -73,7 +88,14 @@
             android:id="@+id/clear_button"
             android:layout_below="@+id/search_button"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5" />
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
@@ -81,7 +103,9 @@
             android:layout_alignParentLeft="true"
             android:layout_above="@+id/seekBar1"
             android:layout_marginStart="29dp"
-             />
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            />
 
         <SeekBar
             android:id="@+id/seekBar1"
