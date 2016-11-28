@@ -803,7 +803,8 @@ public class MapsActivity extends AppCompatActivity implements
         MarkerOptions options = new MarkerOptions()
                 .position(latLng)
                 .draggable(true)
-                .title("You are here!");
+                .title("You are here!")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
