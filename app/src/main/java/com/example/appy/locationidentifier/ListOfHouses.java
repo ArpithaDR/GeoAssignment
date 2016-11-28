@@ -54,12 +54,13 @@ public class ListOfHouses extends AppCompatActivity {
         if (bundle != null) {
             Double latValue = Double.parseDouble(bundle.getString("Latitude"));
             Double longValue = Double.parseDouble(bundle.getString("Longitude"));
-            fetchFavourites(latValue, longValue);
+            int radius  = Integer.parseInt(bundle.getString("Radius"));
+            fetchFavourites(latValue, longValue, radius);
         }
     }
 
 
-    private void fetchFavourites(final Double latValue, final Double longValue) {
+    private void fetchFavourites(final Double latValue, final Double longValue, final int radius) {
         /* SessionManagement session = new SessionManagement(getApplicationContext());
             String id = session.getLoggedInUserId();
         */
@@ -85,7 +86,7 @@ public class ListOfHouses extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 //fetchMinimalDetails(favHouses);
-                prepareListOfHouses(latValue, longValue);
+                prepareListOfHouses(latValue, longValue, radius);
             }
         });
         httpConnection.execute(s);
@@ -93,16 +94,16 @@ public class ListOfHouses extends AppCompatActivity {
 
 
     //This is static and this information must be fetched from database later
-    private void prepareListOfHouses(Double latVal, Double longVal) {
+    private void prepareListOfHouses(Double latVal, Double longVal, int radius) {
         latLng = new LatLng(latVal, longVal);
-        fetchHousesFromDB(latLng);
+        fetchHousesFromDB(latLng, radius);
         //fetchFavourites();
     }
 
-    private void fetchHousesFromDB(final LatLng latLng) {
+    private void fetchHousesFromDB(final LatLng latLng, final int radius) {
 
         String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/searchHouseAvailable?latitude=" +
-                latLng.latitude + "&longitude=" + latLng.longitude +"&radius=1.0";
+                latLng.latitude + "&longitude=" + latLng.longitude +"&radius="+radius;
         HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {
             @Override
             public void processFinish(Object output) {
