@@ -29,9 +29,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,15 +60,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import static com.example.appy.locationidentifier.R.id.fab;
 
 
 //This is the main screen page
@@ -85,12 +81,21 @@ public class MapsActivity extends AppCompatActivity implements
     private LocationRequest mLocationRequest;
     private ProgressDialog progress;
     public Dialog dialog;
+    public Dialog prefDialog;
     Address searchAddress;
+    //int radius;
+    private SeekBar seekBar;
+    private TextView textView;
 
     public String first_name = "";
     public String last_name = "";
     private String phone_number = "";
     private String email = "";
+
+    private boolean gympref = false;
+    private boolean hospitalpref = false;
+    private boolean schoolpref = false;
+    private boolean grocerypref = false;
 
     //For hamburger
     private ListView mDrawerList;
@@ -141,7 +146,18 @@ public class MapsActivity extends AppCompatActivity implements
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                 mMap.setOnMarkerDragListener(markerDragListener());
+               /* CircleOptions circleOptions = new CircleOptions()
+                        .center(latLng)
+                        .radius(1609.344)
+                        .strokeWidth(2)
+                        .strokeColor(Color.BLUE)
+                        .fillColor(Color.parseColor("#500084d3"));
+                // Supported formats are: #RRGGBB #AARRGGBB
+                //   #AA is the alpha, or amount of transparency
+
+                mMap.addCircle(circleOptions);*/
                 fetchHousesFromDB(latLng);
+                findViewById(R.id.list_view).setEnabled(true);
 
             }
         } catch (IOException e) {
@@ -159,7 +175,6 @@ public class MapsActivity extends AppCompatActivity implements
                 Toast.makeText(MapsActivity.this, "Found no nearby subleases", Toast.LENGTH_LONG).show();
                 mMap.clear();
                 fetchLocation();
-                findViewById(R.id.list_view).setEnabled(false);
             }
         }
     }
@@ -170,6 +185,11 @@ public class MapsActivity extends AppCompatActivity implements
         if (searchAddress != null) {
             intent.putExtra("Latitude", Double.toString(searchAddress.getLatitude()));
             intent.putExtra("Longitude", Double.toString(searchAddress.getLongitude()));
+            intent.putExtra("Radius", Integer.toString(seekBar.getProgress()));
+            intent.putExtra("gympref", gympref);
+            intent.putExtra("hospitalpref", hospitalpref);
+            intent.putExtra("schoolpref", schoolpref);
+            intent.putExtra("grocerypref", grocerypref);
         }
         startActivity(intent);
     }
@@ -192,6 +212,16 @@ public class MapsActivity extends AppCompatActivity implements
                 List<Address> addresses;
                 geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(markerLocation));
+                /*CircleOptions circleOptions = new CircleOptions()
+                        .center(markerLocation)
+                        .radius(1609.344)
+                        .strokeWidth(2)
+                        .strokeColor(Color.BLUE)
+                        .fillColor(Color.parseColor("#500084d3"));
+                // Supported formats are: #RRGGBB #AARRGGBB
+                //   #AA is the alpha, or amount of transparency
+
+                mMap.addCircle(circleOptions);*/
                 try {
                     addresses = geocoder.getFromLocation(markerLocation.latitude, markerLocation.longitude, 1);
                     StringBuffer address = new StringBuffer();
@@ -218,8 +248,15 @@ public class MapsActivity extends AppCompatActivity implements
 
     private void fetchHousesFromDB(LatLng latLng) {
 
-        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/searchHouseAvailable?latitude=" +
-                latLng.latitude + "&longitude=" + latLng.longitude +"&radius=1.0";
+        System.out.println("gympref:" + gympref);
+        System.out.println("hospitalpref:" + hospitalpref);
+        System.out.println("schoolpref:" + schoolpref);
+        System.out.println("grocerypref:" + grocerypref);
+
+        int rad = seekBar.getProgress();
+        String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/houseSearchWithPref?latitude=" +
+                latLng.latitude + "&longitude=" + latLng.longitude +"&radius="+ rad + "&gym=" + gympref +
+                "&hospital=" + hospitalpref + "&school=" + schoolpref + "&grocery=" + grocerypref;
         HttpConnection httpConnection = new HttpConnection(this, new AsyncResponse() {
             @Override
             public void processFinish(Object output) {
@@ -284,6 +321,27 @@ public class MapsActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        seekBar = (SeekBar) findViewById(R.id.seekBar1);
+        textView = (TextView) findViewById(R.id.textView1);
+        seekBar.setProgress(1);
+        textView.setText("Range: " + seekBar.getProgress() + "/" + seekBar.getMax());
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progress = 0;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
+                progress = progresValue;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                textView.setText("Range: " + progress + "/" + seekBar.getMax());
+            }
+        });
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -321,7 +379,69 @@ public class MapsActivity extends AppCompatActivity implements
 
     }
 
+    public void PreferenceDialog() {
+        prefDialog = new Dialog(MapsActivity.this);
+        prefDialog.setContentView(R.layout.activity_preference);
+        prefDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        Window window = prefDialog.getWindow();
+        WindowManager.LayoutParams param = window.getAttributes();
+        param.gravity = Gravity.TOP | Gravity.RIGHT;
+        prefDialog.setCanceledOnTouchOutside(true);
 
+        final CheckBox gymcheck = (CheckBox) prefDialog.findViewById(R.id.gymcheck);
+        final CheckBox hospitalcheck = (CheckBox) prefDialog.findViewById(R.id.hospitalcheck);
+        final CheckBox schoolcheck = (CheckBox) prefDialog.findViewById(R.id.schoolcheck);
+        final CheckBox grocerycheck = (CheckBox) prefDialog.findViewById(R.id.grocerycheck);
+
+        if(gympref){
+            gymcheck.setChecked(true);
+        }
+        if(hospitalpref) {
+            hospitalcheck.setChecked(true);
+        }
+        if(schoolpref) {
+            schoolcheck.setChecked(true);
+        }
+        if(grocerypref) {
+            grocerycheck.setChecked(true);
+        }
+        prefDialog.show();
+    }
+
+    public void onCheckboxClicked(View view){
+        boolean checked = ((CheckBox) view).isChecked();
+
+        switch(view.getId()) {
+            case R.id.gymcheck:
+                if (checked)
+                    gympref = true;
+                else
+                    gympref = false;
+                break;
+
+            case R.id.hospitalcheck:
+                if (checked)
+                    hospitalpref = true;
+                else
+                    hospitalpref = false;
+                break;
+
+            case R.id.schoolcheck:
+                if (checked)
+                    schoolpref = true;
+                else
+                    schoolpref = false;
+                break;
+
+            case R.id.grocerycheck:
+                if (checked)
+                    grocerypref = true;
+                else
+                    grocerypref = false;
+                break;
+
+        }
+    }
 
     public void CustomDialog() {
         dialog = new Dialog(MapsActivity.this);
@@ -473,7 +593,7 @@ public class MapsActivity extends AppCompatActivity implements
             public void onDrawerOpened(View drawerView) {
 
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("UserName");
+                getSupportActionBar().setTitle("Subleased");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -506,7 +626,7 @@ public class MapsActivity extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.hamburger_menu, menu);
+        getMenuInflater().inflate(R.menu.preferences_menu, menu);
         return true;
     }
 
@@ -518,7 +638,9 @@ public class MapsActivity extends AppCompatActivity implements
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_preferences) {
+            PreferenceDialog();
+//            CustomDialog();
             return true;
         }
 
@@ -527,12 +649,14 @@ public class MapsActivity extends AppCompatActivity implements
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
+
+
 
     //Add elements of hamburger
     private void addDrawerItems() {
-        String[] hamburgerArray = { "Post Ad", "Favourite Posts", "View Your Ads", "Profile", "Help", "Logout" };
+        String[] hamburgerArray = { "Post Ad", "Favourites", "View Your Ads", "Profile", "Logout" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, hamburgerArray);
         mDrawerList.setAdapter(mAdapter);
 
@@ -551,10 +675,7 @@ public class MapsActivity extends AppCompatActivity implements
                     startActivity(myIntent);
                 } else if(position==3) {
                     viewProfile();
-                } else if(position==4) {
-                    Intent myIntent = new Intent(MapsActivity.this, Help.class);
-                    startActivity(myIntent);
-                } else if(position==5) {
+                }  else if(position==5) {
                     fbLogout();
                 }
             }
@@ -678,11 +799,22 @@ public class MapsActivity extends AppCompatActivity implements
         MarkerOptions options = new MarkerOptions()
                 .position(latLng)
                 .draggable(true)
-                .title("You are here!");
+                .title("You are here!")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
         mMap.addMarker(options);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         mMap.setOnMarkerDragListener(markerDragListener());
+        /*CircleOptions circleOptions = new CircleOptions()
+                .center(latLng)
+                .radius(1609.344)
+                .strokeWidth(2)
+                .strokeColor(Color.BLUE)
+                .fillColor(Color.parseColor("#500084d3"));
+        // Supported formats are: #RRGGBB #AARRGGBB
+        //   #AA is the alpha, or amount of transparency
+
+        mMap.addCircle(circleOptions);*/
     }
 
     @Override

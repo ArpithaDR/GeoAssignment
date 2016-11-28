@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewMyAds"
-    tools:showIn="@layout/activity_view_my_ads">
+    tools:context=".ListOfHouses"
+    tools:showIn="@layout/activity_list_of_public_places"
+    >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -14,5 +15,6 @@
         android:clipToPadding="false"
         android:scrollbars="vertical"
         android:background="@drawable/background"/>
+
 
 </RelativeLayout>

@@ -15,11 +15,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
+import com.example.appy.utility.SessionManagement;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by appy on 11/10/16.
@@ -116,10 +119,8 @@ public class MyAdsListAdapter extends RecyclerView.Adapter<MyAdsListAdapter.View
     }
 
     public void removeFromList(int houseId, final int position) {
-        /*SessionManagement session = new SessionManagement(getApplicationContext());
-        String id = session.getLoggedInUserId();
-        */
-        String userId = "1349781218406667";
+        SessionManagement session = new SessionManagement(getApplicationContext());
+        String userId = session.getLoggedInUserId();
         String s = "http://ec2-52-53-202-11.us-west-1.compute.amazonaws.com:8080/deleteHouse?"
                 + "userId=" + userId + "&houseId=" + houseId;
         HttpConnection httpConnection = new HttpConnection(mContext, new AsyncResponse() {
@@ -137,7 +138,7 @@ public class MyAdsListAdapter extends RecyclerView.Adapter<MyAdsListAdapter.View
             @Override
             public void onClick(View v) {
                 House house = myAdsList.get(position);
-                Intent intent = new Intent(mContext, ClickedAdActivity.class);
+                Intent intent = new Intent(mContext, AdDetails.class);
                 intent.putExtra("Address", house.getAddress());
                 intent.putExtra("Desc", house.getDesc());
                 intent.putExtra("Email", house.getEmail());
