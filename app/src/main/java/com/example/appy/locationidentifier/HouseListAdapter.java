@@ -18,16 +18,13 @@ import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
 import com.example.appy.utility.SessionManagement;
 
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.appy.utility.AsyncResponse;
 import com.example.appy.utility.HttpConnection;
 
-
 import java.text.DecimalFormat;
-
 import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;

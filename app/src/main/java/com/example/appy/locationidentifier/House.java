@@ -151,9 +151,9 @@ public class House {
         this.distance = distance;
         this.sLatitude = sLatitude;
         this.sLongitude = sLongitude;
-
     }
-    public House(String desc, String subject, String email, String address, String startDate, String endDate, String phone, int spots, Double price, int houseId, boolean isFav) {
+
+    public House(String desc, String subject, String email, String address, String startDate, String endDate, String phone, int spots, double price, int houseId, boolean isFav) {
         this.desc = desc;
         this.subject = subject;
         this.email = email;

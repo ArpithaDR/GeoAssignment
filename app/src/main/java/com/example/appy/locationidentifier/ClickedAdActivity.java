@@ -3,21 +3,17 @@ package com.example.appy.locationidentifier;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
+import android.content.Intent;
 import android.net.Uri;
 import android.renderscript.Double2;
-
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-
 import android.widget.ImageView;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-
 import android.widget.TextView;
 
 import com.example.appy.utility.AsyncResponse;
@@ -53,7 +49,6 @@ public class ClickedAdActivity extends AppCompatActivity {
         Button directionsBtn = (Button) findViewById(R.id.google_maps);
         directionsBtn.setOnClickListener(onClickListener());
         Bundle bundle = getIntent().getExtras();
-
 
         price.setText(bundle.getString("Price"));
         address.setText(bundle.getString("Address"));
