@@ -64,7 +64,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapsActivity" />
+        <activity android:name=".MapsActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".UserProfileActivity"
             android:parentActivityName=".ListOfHouses"/>
         <activity
