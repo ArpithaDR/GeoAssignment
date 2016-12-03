@@ -34,7 +34,8 @@
             android:layout_alignLeft="@+id/clicked_ad_address"
             android:layout_alignStart="@+id/clicked_ad_address"
             android:layout_marginTop="11dp"
-            android:id="@+id/clicked_ad_price" />
+            android:id="@+id/clicked_ad_price"
+            android:textStyle="normal|bold" />
 
         <TextView
             android:text="End Date"
@@ -44,7 +45,8 @@
             android:layout_alignLeft="@+id/clicked_ad_start_date"
             android:layout_alignStart="@+id/clicked_ad_start_date"
             android:layout_marginTop="14dp"
-            android:id="@+id/clicked_ad_end_date" />
+            android:id="@+id/clicked_ad_end_date"
+            android:textStyle="normal|bold" />
 
         <TextView
             android:text="Description"
@@ -54,7 +56,8 @@
             android:layout_alignLeft="@+id/clicked_ad_end_date"
             android:layout_alignStart="@+id/clicked_ad_end_date"
             android:layout_marginTop="12dp"
-            android:id="@+id/clicked_ad_desc" />
+            android:id="@+id/clicked_ad_desc"
+            android:textStyle="normal|bold" />
 
         <TextView
             android:text="Number of Spots"
@@ -64,7 +67,8 @@
             android:id="@+id/clicked_ad_spots"
             android:layout_below="@+id/clicked_ad_price"
             android:layout_alignLeft="@+id/clicked_ad_start_date"
-            android:layout_alignStart="@+id/clicked_ad_start_date" />
+            android:layout_alignStart="@+id/clicked_ad_start_date"
+            android:textStyle="normal|bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -72,9 +76,8 @@
             android:layout_marginTop="11dp"
             android:id="@+id/clicked_ad_subject"
             android:layout_below="@+id/imageView2"
-            android:layout_alignLeft="@+id/clicked_ad_spots"
-            android:layout_alignStart="@+id/clicked_ad_spots"
-            android:text="Subject" />
+            android:text="Subject"
+            android:textStyle="normal|bold" />
 
         <TextView
             android:text="Address"
@@ -84,7 +87,8 @@
             android:id="@+id/clicked_ad_address"
             android:layout_below="@+id/clicked_ad_subject"
             android:layout_alignLeft="@+id/clicked_ad_subject"
-            android:layout_alignStart="@+id/clicked_ad_subject" />
+            android:layout_alignStart="@+id/clicked_ad_subject"
+            android:textStyle="normal|bold" />
 
         <TextView
             android:text="Phone Number"
@@ -94,7 +98,8 @@
             android:id="@+id/clicked_ad_phone"
             android:layout_below="@+id/clicked_ad_desc"
             android:layout_alignLeft="@+id/clicked_ad_user_email"
-            android:layout_alignStart="@+id/clicked_ad_user_email" />
+            android:layout_alignStart="@+id/clicked_ad_user_email"
+            android:textStyle="normal|bold" />
 
         <TextView
             android:text="Email"
@@ -104,7 +109,8 @@
             android:layout_below="@+id/clicked_ad_phone"
             android:layout_alignLeft="@+id/clicked_ad_desc"
             android:layout_alignStart="@+id/clicked_ad_desc"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="12dp"
+            android:textStyle="normal|bold" />
 
         <TextView
             android:text="Start Date"
@@ -114,7 +120,8 @@
             android:id="@+id/clicked_ad_start_date"
             android:layout_below="@+id/clicked_ad_spots"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:textStyle="normal|bold" />
 
 
     </RelativeLayout>

@@ -86,7 +86,7 @@ public class ClickedAdActivity extends AppCompatActivity {
                     byte[] decodedString = Base64.decode(strBase64, 0);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                     ImageView testEncoded = (ImageView) findViewById(R.id.imageView2);
-                    Bitmap scaled = Bitmap.createScaledBitmap(decodedByte, 720, 720, true);
+                    Bitmap scaled = Bitmap.createScaledBitmap(decodedByte, 500, 250, true);
                     testEncoded.setImageBitmap(scaled);
 
                 } catch (JSONException e) {
